@@ -5,6 +5,6 @@ import androidx.fragment.app.Fragment
 /**
  * Родительский фрагмент, который описывает общую логику для всех фрагментов
  */
-open class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment() {
 
 }

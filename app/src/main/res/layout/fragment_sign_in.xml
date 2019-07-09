@@ -16,7 +16,9 @@
             android:layout_width="192dp"
             android:layout_height="192dp"
             android:layout_marginTop="60dp"
-            android:layout_marginBottom="60dp" />
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/hawk_logo_image"
+            android:scaleType="centerCrop" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -27,7 +29,7 @@
                 android:id="@+id/et_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Login" />
+                android:hint="@string/et_email_hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -41,8 +43,7 @@
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight=""
-                android:hint="Password"
+                android:hint="@string/et_password_hint"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,14 +57,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
-                android:text="Login" />
+                android:text="@string/login_sign_in" />
 
             <Button
-                android:id="@+id/btn_restore"
+                android:id="@+id/btn_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="50"
-                android:text="Restore" />
+                android:text="@string/login_sing_up" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
