@@ -1,12 +1,14 @@
-package so.codex.hawk
+package so.codex.hawk.ui.login
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
+import kotlinx.android.synthetic.main.fragment_sign_in.*
+import so.codex.hawk.R
+import so.codex.hawk.base.BaseSingleFragmentActivity
 
 /**
  * Активити, которая отвечает за вход в приложение
  */
-class LoginActivity : FragmentActivity() {
+class LoginActivity : BaseSingleFragmentActivity() {
     companion object {
         /**
          * Ключ, по которому устанавливается значение для открытия необходимого фрагмента.
@@ -25,6 +27,9 @@ class LoginActivity : FragmentActivity() {
         public const val START_SIGN_UP = 101
     }
 
+    override val containerId: Int
+        get() = R.id.frame_container
+
     /**
      * Инициализация экрана
      */
@@ -32,14 +37,19 @@ class LoginActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         intent?.extras?.let {
-            when (it.getInt(LOGIN_ACTIVITY_ACTION_KEY, START_SIGN_IN)) {
+            when (it.getInt(
+                LOGIN_ACTIVITY_ACTION_KEY,
+                START_SIGN_IN
+            )) {
                 START_SIGN_IN -> {
-
+                    replaceFragment(SignInFragment.instance())
                 }
                 START_SIGN_UP -> {
-
+                    replaceAndAdd(SignUpFragment.instance(et_login.text.toString()))
                 }
             }
         }
     }
+
+
 }
