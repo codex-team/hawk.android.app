@@ -4,11 +4,27 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseSingleFragmentActivity
+import so.codex.hawk.router.ILoginRouter
 
 /**
  * Активити, которая отвечает за вход в приложение
  */
-class LoginActivity : BaseSingleFragmentActivity() {
+class LoginActivity : BaseSingleFragmentActivity(), ILoginRouter {
+    override fun showSignIn() {
+        val signUpFragment = supportFragmentManager.findFragmentByTag(SignUpFragment::class.java.simpleName)
+        if (signUpFragment != null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .remove(signUpFragment)
+                    .commit()
+        }
+        replaceFragment(SignInFragment.instance())
+    }
+
+    override fun showSignUp(email: String) {
+        replaceAndAdd(SignUpFragment.instance(email))
+    }
+
     companion object {
         /**
          * Ключ, по которому устанавливается значение для открытия необходимого фрагмента.
@@ -37,10 +53,7 @@ class LoginActivity : BaseSingleFragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         intent?.extras?.let {
-            when (it.getInt(
-                LOGIN_ACTIVITY_ACTION_KEY,
-                START_SIGN_IN
-            )) {
+            when (it.getInt(LOGIN_ACTIVITY_ACTION_KEY, START_SIGN_IN)) {
                 START_SIGN_IN -> {
                     replaceFragment(SignInFragment.instance())
                 }
@@ -48,7 +61,7 @@ class LoginActivity : BaseSingleFragmentActivity() {
                     replaceAndAdd(SignUpFragment.instance(et_login.text.toString()))
                 }
             }
-        }
+        } ?: replaceFragment(SignInFragment.instance())
     }
 
 

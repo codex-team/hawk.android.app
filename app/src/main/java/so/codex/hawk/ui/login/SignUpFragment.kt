@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
+import so.codex.hawk.router.ILoginRouter
 
 /**
  * Фрагмент для регистрации пользователей, для получения экземпляра данного класса,
@@ -26,12 +27,12 @@ class SignUpFragment private constructor() : BaseFragment() {
          * @return Вернет экземпляр класса [SignUpFragment] с установленным аргументом
          */
         fun instance(email: String = "") =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    if(email.isNotEmpty())
-                        putString(EMAIL_KEY, email)
+                SignUpFragment().apply {
+                    arguments = Bundle().apply {
+                        if (email.isNotEmpty())
+                            putString(EMAIL_KEY, email)
+                    }
                 }
-            }
     }
 
     private val email by lazy {
@@ -46,8 +47,11 @@ class SignUpFragment private constructor() : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         et_sign_up.setText(email)
         btn_sign_up.setOnClickListener {
-            if(!et_sign_up.text.isNullOrEmpty()){
+            if (!et_sign_up.text.isNullOrEmpty()) {
                 // TODO презентер, которые обрабатывает нажатие для регистрации
+                if (activity is ILoginRouter) {
+                    (activity as ILoginRouter).showSignIn()
+                }
             }
         }
     }
