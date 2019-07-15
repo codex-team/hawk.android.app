@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Hawk</string>
+
+    <!--Login Activity-->
+    <!--Sign In-->
+    <string name="et_email_hint">Email</string>
+    <string name="et_password_hint">Password</string>
+    <string name="login_sign_in">Sign In</string>
+    <string name="login_sing_up">Sign Up</string>
 </resources>
