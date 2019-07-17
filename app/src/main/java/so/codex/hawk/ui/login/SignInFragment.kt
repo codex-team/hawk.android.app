@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.presenter.SignInPresenter
+import so.codex.codexbl.view.ISignInView
 import so.codex.codexbl.view.base.IBaseView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
@@ -17,7 +18,8 @@ import so.codex.hawk.ui.MainActivity
 /**
  * Фрагмент, которые отвечает за вход в приложение
  */
-class SignInFragment private constructor() : BaseFragment() {
+class SignInFragment private constructor() : BaseFragment(), ISignInView {
+
     override fun showErrorMessage(message: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -31,7 +33,9 @@ class SignInFragment private constructor() : BaseFragment() {
         }
     }
 
-    override val presenters: List<BasePresenter<IBaseView>> = listOf(SignInPresenter()) as List<BasePresenter<IBaseView>>
+    val signInPresenter by lazy {
+        SignInPresenter()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
@@ -42,7 +46,7 @@ class SignInFragment private constructor() : BaseFragment() {
         btn_login.setOnClickListener {
             if (!et_login.text.isNullOrEmpty() && !et_password.text.isNullOrEmpty()) {
                 // TODO сделать презентер, который будет обрабатывать данное нажатие
-                startActivity(Intent(context, MainActivity::class.java))
+                signInPresenter.signIn(et_login.text.toString(), et_password.text.toString())
             }
         }
 
@@ -51,5 +55,16 @@ class SignInFragment private constructor() : BaseFragment() {
                 (activity as ILoginRouter).showSignUp(et_login.text.toString())
             }
         }
+
+        signInPresenter.attached(this)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        signInPresenter.detached()
+    }
+
+    override fun successfulLogin() {
+        startActivity(Intent(context, MainActivity::class.java))
     }
 }

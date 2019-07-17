@@ -5,4 +5,7 @@ import so.codex.codexbl.view.ISignInView
 
 class SignInPresenter: BasePresenter<ISignInView>(){
 
+    fun signIn(email: String, password: String){
+        
+    }
 }

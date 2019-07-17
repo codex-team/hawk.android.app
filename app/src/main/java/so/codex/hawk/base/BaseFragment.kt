@@ -10,7 +10,7 @@ import so.codex.codexbl.view.base.IBaseView
  * Родительский фрагмент, который описывает общую логику для всех фрагментов
  */
 abstract class BaseFragment : Fragment(), IBaseView {
-    abstract val presenters: List<BasePresenter<IBaseView>>
+    /*abstract val presenters: List<BasePresenter<IBaseView>>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,5 +24,5 @@ abstract class BaseFragment : Fragment(), IBaseView {
         presenters.forEach {
             it.detached()
         }
-    }
+    }*/
 }
