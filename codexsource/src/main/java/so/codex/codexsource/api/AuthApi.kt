@@ -2,9 +2,9 @@ package so.codex.codexsource.api
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import so.codex.codexsource.base.AuthEntity
-import so.codex.codexsource.base.interfaces.IAuthApi
-import so.codex.codexsource.response.TokenResponse
+import so.codex.codexbl.output.entity.AuthEntity
+import so.codex.codexbl.output.interfaces.IAuthApi
+import so.codex.codexbl.output.response.TokenResponse
 
 final class AuthApi private constructor(val service: AuthApiMethods) : IAuthApi {
     companion object {

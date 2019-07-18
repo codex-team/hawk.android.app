@@ -8,7 +8,7 @@ import so.codex.codexbl.providers.UserTokenPreferences
 import so.codex.codexbl.providers.UserTokenProvider
 
 val apiModule = module {
-
+    single {  }
 }
 
 val interactorsModule = module {

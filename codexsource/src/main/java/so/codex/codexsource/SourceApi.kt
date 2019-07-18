@@ -1,6 +1,6 @@
 package so.codex.codexsource
 
-import so.codex.codexsource.base.interfaces.IAuthApi
+import so.codex.codexbl.output.interfaces.IAuthApi
 
 interface SourceApi {
     fun getAuthApi(): IAuthApi

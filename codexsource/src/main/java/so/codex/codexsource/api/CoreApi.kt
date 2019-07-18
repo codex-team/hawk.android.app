@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import so.codex.codexsource.SourceApi
-import so.codex.codexsource.base.interfaces.IAuthApi
+import so.codex.codexbl.output.interfaces.IAuthApi
 
 class CoreApi private constructor() : SourceApi {
     companion object {
