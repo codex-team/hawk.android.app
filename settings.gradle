@@ -1,1 +1,1 @@
-include ':app', ':uicomponent', ':codexbl', ':codexsource'
+include ':app', ':uicomponent', ':codexbl', ':codexsource', ':SourceInterfaces'

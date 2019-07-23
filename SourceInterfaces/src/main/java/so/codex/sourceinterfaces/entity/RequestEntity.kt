@@ -1,3 +1,3 @@
-package so.codex.codexbl.output.entity
+package so.codex.sourceinterfaces.entity
 
 data class RequestEntity(val query: String, val params: Any)

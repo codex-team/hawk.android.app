@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
 
     <ImageView
         android:id="@+id/imageView"
@@ -12,12 +12,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/hawk_logo_image"/>
+        app:srcCompat="@drawable/hawk_logo_image" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
@@ -25,7 +24,9 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="36dp"
-        app:cardBackgroundColor="@color/card_hawk_background">
+        app:cardBackgroundColor="@color/card_hawk_background"
+        app:cardCornerRadius="16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,10 +39,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_sign_up"
-                    android:inputType="textEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/et_email_hint"/>
+                    android:hint="@string/et_email_hint"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -50,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:text="@string/login_sing_up"/>
+                android:text="@string/login_sing_up" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

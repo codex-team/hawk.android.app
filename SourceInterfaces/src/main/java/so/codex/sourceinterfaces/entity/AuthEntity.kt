@@ -1,4 +1,4 @@
-package so.codex.codexbl.output.entity
+package so.codex.sourceinterfaces.entity
 
 data class AuthEntity(val email: String, val password: String){
     fun getMutation() = """mutation login(\$email: String!, \$password: String!) {
