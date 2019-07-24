@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_sign_in.*
 import so.codex.codexbl.presenter.SignInPresenter
 import so.codex.codexbl.view.ISignInView
@@ -19,7 +20,7 @@ import so.codex.hawk.ui.MainActivity
 class SignInFragment private constructor() : BaseFragment(), ISignInView {
 
     override fun showErrorMessage(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {

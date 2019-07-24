@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hawk</string>
+    <string name="app_name" translatable="false">Hawk</string>
 
     <!--Login Activity-->
     <!--Sign In-->
@@ -7,4 +7,7 @@
     <string name="et_password_hint">Password</string>
     <string name="login_sign_in">Sign In</string>
     <string name="login_sing_up">Sign Up</string>
+    <string name="sign_up_dialog_title">Information.</string>
+    <string name="sign_up_dialog_message">You receive password on email.</string>
+    <string name="button_name_ok">OK</string>
 </resources>

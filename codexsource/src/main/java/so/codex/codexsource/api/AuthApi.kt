@@ -5,6 +5,7 @@ import io.reactivex.schedulers.Schedulers
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.RequestEntity
+import so.codex.sourceinterfaces.entity.SignUpEntity
 import so.codex.sourceinterfaces.response.TokenResponse
 
 /**
@@ -26,5 +27,9 @@ final class AuthApi private constructor(private val service: AuthApiMethods) : I
     override fun login(auth: AuthEntity): Single<TokenResponse> =
         service.login(RequestEntity(auth.getMutation(), auth))
             .subscribeOn(Schedulers.io()).map { it.data.login }
+
+    override fun signUp(signUp: SignUpEntity): Single<Boolean> =
+            service.signUp(RequestEntity(signUp.getMutation(), signUp))
+                .subscribeOn(Schedulers.io()).map { it.data.signUp }
 
 }

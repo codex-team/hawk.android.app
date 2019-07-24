@@ -18,9 +18,10 @@ class SignInInteractor : ISignInInteractor, KoinComponent {
 
         }.map {
             userTokenDAO.saveUserToken(UserToken(it.accessToken, it.refreshToken))
-        }.onErrorResumeNext {
+        }/*.onErrorResumeNext {
+            it.printStackTrace()
             Single.just(false)
-        }
+        }*/
     }
 
 }
