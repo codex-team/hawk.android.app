@@ -1,11 +1,16 @@
 package so.codex.codexsource.api
 
 import io.reactivex.Single
-import retrofit2.http.GET
-import so.codex.sourceinterfaces.entity.AuthEntity
-import so.codex.sourceinterfaces.response.TokenResponse
+import retrofit2.http.Body
+import retrofit2.http.POST
+import so.codex.sourceinterfaces.entity.RequestEntity
+import so.codex.sourceinterfaces.response.CodexResponse
+import so.codex.sourceinterfaces.response.LoginResponse
 
+/**
+ * Интерфейс, в котором определяются все методы для взаимодействия с API
+ */
 interface AuthApiMethods {
-    @GET("/graphql")
-    fun login(authEntity: AuthEntity): Single<TokenResponse>
+    @POST("/graphql")
+    fun login(@Body requestEntity: RequestEntity): Single<CodexResponse<LoginResponse>>
 }

@@ -3,14 +3,16 @@ package so.codex.codexsource
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
-import com.squareup.moshi.Moshi
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import java.lang.reflect.Type
 
+/**
+ * В данный момент не используется
+ * TODO написать свой конвертр для запросов graphql
+ */
 class MoshiFactory private constructor() : Converter.Factory() {
     companion object {
         val factory by lazy {
@@ -23,7 +25,7 @@ class MoshiFactory private constructor() : Converter.Factory() {
         annotations: Array<Annotation>,
         retrofit: Retrofit
     ): Converter<ResponseBody, *>? {
-        object: JsonAdapter<Any>() {
+        object : JsonAdapter<Any>() {
             override fun fromJson(reader: JsonReader): Any? {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

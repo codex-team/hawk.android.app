@@ -8,12 +8,16 @@ import kotlinx.android.synthetic.main.fragment_sign_up.*
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
+import so.codex.hawk.ui.login.SignUpFragment.Companion.instance
 
 /**
  * Фрагмент для регистрации пользователей, для получения экземпляра данного класса,
  * необходимо вызвать [instance] с необходимыми параметрами
  */
 class SignUpFragment private constructor() : BaseFragment() {
+    override fun showErrorMessage(message: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     companion object {
         /**
@@ -27,12 +31,12 @@ class SignUpFragment private constructor() : BaseFragment() {
          * @return Вернет экземпляр класса [SignUpFragment] с установленным аргументом
          */
         fun instance(email: String = "") =
-                SignUpFragment().apply {
-                    arguments = Bundle().apply {
-                        if (email.isNotEmpty())
-                            putString(EMAIL_KEY, email)
-                    }
+            SignUpFragment().apply {
+                arguments = Bundle().apply {
+                    if (email.isNotEmpty())
+                        putString(EMAIL_KEY, email)
                 }
+            }
     }
 
     private val email by lazy {

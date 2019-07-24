@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_sign_in.*
-import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.presenter.SignInPresenter
 import so.codex.codexbl.view.ISignInView
-import so.codex.codexbl.view.base.IBaseView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
@@ -51,7 +49,7 @@ class SignInFragment private constructor() : BaseFragment(), ISignInView {
         }
 
         btn_sign_up.setOnClickListener {
-            if(activity is ILoginRouter){
+            if (activity is ILoginRouter) {
                 (activity as ILoginRouter).showSignUp(et_login.text.toString())
             }
         }
@@ -66,5 +64,6 @@ class SignInFragment private constructor() : BaseFragment(), ISignInView {
 
     override fun successfulLogin() {
         startActivity(Intent(context, MainActivity::class.java))
+        activity?.finish()
     }
 }
