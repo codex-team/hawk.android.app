@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_sign_in.*
 import so.codex.codexbl.presenter.SignInPresenter
 import so.codex.codexbl.view.ISignInView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
-import so.codex.hawk.router.ILoginRouter
 import so.codex.hawk.ui.MainActivity
 
 /**
@@ -42,18 +40,18 @@ class SignInFragment private constructor() : BaseFragment(), ISignInView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_login.setOnClickListener {
-            if (!et_login.text.isNullOrEmpty() && !et_password.text.isNullOrEmpty()) {
+        /*btn_login.setOnClickListener {
+            *//*if (!et_login.text.isNullOrEmpty() && !et_password.text.isNullOrEmpty()) {
                 // TODO сделать презентер, который будет обрабатывать данное нажатие
                 signInPresenter.signIn(et_login.text.toString(), et_password.text.toString())
-            }
+            }*//*
         }
 
         btn_sign_up.setOnClickListener {
             if (activity is ILoginRouter) {
-                (activity as ILoginRouter).showSignUp(et_login.text.toString())
+                //(activity as ILoginRouter).showSignUp(et_login.text.toString())
             }
-        }
+        }*/
 
         signInPresenter.attached(this)
     }

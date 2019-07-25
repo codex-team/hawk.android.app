@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Codex"/>
+
+    <style name="Codex.Widgets"/>
+
+    <style name="Codex.Widgets.EditTextTheme">
+        <item name="title">test</item>
+
+    </style>
+</resources>

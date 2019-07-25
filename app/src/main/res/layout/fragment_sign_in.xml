@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/hawk_logo_center_image" />
+        android:src="@drawable/hawk_logo_center_image" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#00FFFFFF"
                 app:cardCornerRadius="7dp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_copyright"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
@@ -78,9 +79,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fast auth"
+                            android:textSize="18dp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="10" />
+
+                        <TextView
+                            android:id="@+id/tv_sign_up_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Signup"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:alpha="0.11"
+                        android:background="#dbe6ff" />
+
+                    <!--<com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp">
@@ -91,9 +125,24 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/et_email_hint"
                             android:inputType="textEmailAddress" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>-->
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <so.codex.uicomponent.edittext.EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:title="Email address" />
+
+
+                    <so.codex.uicomponent.edittext.EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:title="Password"
+                        app:inputType="textPassword"/>
+
+                    <!--app:hint="@string/et_password_hint"-->
+
+                    <!--<com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -106,7 +155,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/et_password_hint"
                             android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -118,13 +167,24 @@
                             android:id="@+id/btn_login"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
                             android:text="@string/login_sign_in" />
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+
                         <Button
-                            android:id="@+id/btn_sign_up"
+                            style="@style/CodexTheme.Button.Text"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/login_sing_up" />
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:fontFamily="@font/roboto"
+                            android:gravity="center"
+                            android:text="Recover password"
+                            android:theme="@style/CodexTheme.Button.Text"
+                            tools:text="Recover password" />
                     </LinearLayout>
                 </LinearLayout>
 
