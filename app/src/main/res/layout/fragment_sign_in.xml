@@ -25,7 +25,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="15dp">
@@ -106,7 +106,7 @@
                                 android:layout_weight="10" />
 
                             <Button
-                                android:id="@+id/tv_sign_up_button"
+                                android:id="@+id/btn_sign_up"
                                 style="@style/CodexTheme.Button.Text.Bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -121,6 +121,7 @@
                             android:background="#dbe6ff" />
 
                         <so.codex.uicomponent.edittext.EditText
+                            android:id="@+id/et_login"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
@@ -129,6 +130,7 @@
 
 
                         <so.codex.uicomponent.edittext.EditText
+                            android:id="@+id/et_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:codex_inputType="textPassword"

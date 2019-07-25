@@ -1,6 +1,8 @@
 package so.codex.uicomponent.edittext
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
@@ -9,6 +11,8 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.view_edit_text.view.*
 import so.codex.uicomponent.R
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 class EditText @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.codexEditTextTheme
@@ -45,17 +49,9 @@ class EditText @JvmOverloads constructor(
                             android.R.attr.textColor
                     )
             )
-//            card_background.background = getDrawable
-            //val stateListDrawable = card_background.drawable!!
-            //if(stateListDrawable is StateListDrawable){
-            /*ContextCompat.getDrawable(context ,R.drawable.edit_text_background)!!.let {
-                if(it is GradientDrawable){
-
-                }
-            }*/
             recycle()
         }
-        body_edit_text.setOnFocusChangeListener { v, hasFocus ->
+        body_edit_text.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 card_background.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -72,5 +68,71 @@ class EditText @JvmOverloads constructor(
                 )
             }
         }
+    }
+
+    var text: String by editTextDelegate(body_edit_text)
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return SavedState(super.onSaveInstanceState()).apply {
+            text = body_edit_text.text.toString()
+            id = getId()
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is SavedState) {
+            super.onRestoreInstanceState(state.superState)
+            if (id == state.id) {
+                body_edit_text.setText(state.text)
+            }
+        } else {
+            super.onRestoreInstanceState(state)
+        }
+    }
+
+
+    class SavedState : BaseSavedState {
+        var text: String = ""
+        var id: Int = -1
+
+        constructor(source: Parcel?) : super(source) {
+            text = source?.readString() ?: ""
+            id = source?.readInt() ?: -1
+        }
+
+        constructor(parcelable: Parcelable?) : super(parcelable)
+
+        override fun writeToParcel(out: Parcel?, flags: Int) {
+            super.writeToParcel(out, flags)
+            out?.writeString(text)
+            out?.writeInt(id)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<SavedState> {
+            override fun createFromParcel(parcel: Parcel): SavedState {
+                return SavedState(parcel)
+            }
+
+            override fun newArray(size: Int): Array<SavedState?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+}
+
+fun editTextDelegate(editText: android.widget.EditText): ReadWriteProperty<EditText, String> {
+    return object : ReadWriteProperty<EditText, String> {
+        override fun getValue(thisRef: EditText, property: KProperty<*>): String {
+            return editText.text.toString()
+        }
+
+        override fun setValue(thisRef: EditText, property: KProperty<*>, value: String) {
+            editText.setText(value)
+        }
+
     }
 }
