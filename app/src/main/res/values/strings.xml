@@ -10,4 +10,13 @@
     <string name="sign_up_dialog_title">Information.</string>
     <string name="sign_up_dialog_message">You receive password on email.</string>
     <string name="button_name_ok">OK</string>
+    <string name="iv_description_background_of_sign_in">background_of_sign_in</string>
+    <string name="sign_in_title">Fast Auth</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="sign_in_recover_password">Recover password</string>
+    <string name="sign_in_password">Password</string>
+    <string name="sign_in_email_address">Email address</string>
+    <string name="app_name_hawk">Hawk</string>
+    <string name="time_of_quality">Time of quality</string>
+    <string name="made_by_codex">Made by CodeX</string>
 </resources>

@@ -7,202 +7,177 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/hawk_logo_center_image" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/cardView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hawk_logo_center_image" />
 
-                <TextView
-                    android:id="@+id/tv_title_sign_in"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="29sp"
-                    android:typeface="normal"
-                    tools:text="Hawk" />
-
-                <TextView
-                    android:id="@+id/tv_subtitle_sign_in"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.6"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="#dbe6ff"
-                    tools:text="Time of quality" />
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:cardBackgroundColor="#00FFFFFF"
-                app:cardCornerRadius="7dp"
-                app:layout_constraintBottom_toTopOf="@+id/tv_copyright"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                tools:layout_editor_absoluteX="15dp">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/sign_in_background" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    app:layout_constraintBottom_toTopOf="@+id/cardView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:weightSum="10">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fast auth"
-                            android:textSize="18dp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="10" />
-
-                        <TextView
-                            android:id="@+id/tv_sign_up_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Signup"
-                            android:textSize="18dp" />
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="20dp"
-                        android:alpha="0.11"
-                        android:background="#dbe6ff" />
-
-                    <!--<com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_title_sign_in"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/app_name_hawk"
+                        android:textColor="@android:color/white"
+                        android:textSize="29sp"
+                        android:typeface="normal" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_login"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/et_email_hint"
-                            android:inputType="textEmailAddress" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
-
-                    <so.codex.uicomponent.edittext.EditText
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_subtitle_sign_in"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        app:title="Email address" />
-
-
-                    <so.codex.uicomponent.edittext.EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:title="Password"
-                        app:inputType="textPassword"/>
-
-                    <!--app:hint="@string/et_password_hint"-->
-
-                    <!--<com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:passwordToggleDrawable="@drawable/selector_show_pass"
-                        app:passwordToggleEnabled="true">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/et_password_hint"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center">
-
-                        <Button
-                            android:id="@+id/btn_login"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="@string/login_sign_in" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                        <Button
-                            style="@style/CodexTheme.Button.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@null"
-                            android:fontFamily="@font/roboto"
-                            android:gravity="center"
-                            android:text="Recover password"
-                            android:theme="@style/CodexTheme.Button.Text"
-                            tools:text="Recover password" />
-                    </LinearLayout>
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/time_of_quality"
+                        android:textColor="@color/very_light_blue_60" />
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="7dp"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_copyright"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                    tools:layout_editor_absoluteX="15dp">
 
-            <TextView
-                android:id="@+id/tv_copyright"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:fontFamily="@font/roboto"
-                android:textColor="#dbe6ff"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-                app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2"
-                tools:text="Made by CodeX" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/iv_description_background_of_sign_in"
+                        android:src="@drawable/sign_in_background" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/sign_in_title"
+                                android:textAppearance="@style/CodexTheme.TextTitleAppearance" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="10" />
+
+                            <Button
+                                android:id="@+id/tv_sign_up_button"
+                                style="@style/CodexTheme.Button.Text.Bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/sign_up_button" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="20dp"
+                            android:alpha="0.11"
+                            android:background="#dbe6ff" />
+
+                        <so.codex.uicomponent.edittext.EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="16dp"
+                            app:codex_title="@string/sign_in_email_address" />
+
+
+                        <so.codex.uicomponent.edittext.EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:codex_inputType="textPassword"
+                            app:codex_title="@string/sign_in_password" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/btn_login"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/login_sign_in" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" />
+
+                            <Button
+                                style="@style/CodexTheme.Button.Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="@string/sign_in_recover_password"
+                                android:theme="@style/CodexTheme.Button.Text" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_copyright"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/made_by_codex"
+                    android:textColor="#dbe6ff"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
     </ScrollView>
 
 </FrameLayout>
