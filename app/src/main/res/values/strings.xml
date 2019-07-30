@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Hawk</string>
 
-    <!--Login Activity-->
+    <!--LoginMutation.graphql Activity-->
     <!--Sign In-->
     <string name="et_email_hint">Email</string>
     <string name="et_password_hint">Password</string>
