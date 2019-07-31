@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="et_email_hint">Почта</string>
+    <string name="et_password_hint">Пароль</string>
+    <string name="login_sign_in">Вход</string>
+    <string name="login_sing_up">Регистрация</string>
+    <string name="sign_up_dialog_title">Информация.</string>
+    <string name="sign_up_dialog_message">Вы получите пароль по почте.</string>
+    <string name="button_name_ok">Ок</string>
+</resources>
