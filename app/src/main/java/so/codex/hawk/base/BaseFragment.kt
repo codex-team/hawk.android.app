@@ -1,9 +1,6 @@
 package so.codex.hawk.base
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
-import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.view.base.IBaseView
 
 /**

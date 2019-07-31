@@ -1,7 +1,7 @@
 package so.codex.codexbl.interactors
 
 import io.reactivex.Single
-import so.codex.codexsource.api.CoreApi
+import so.codex.hawkapi.api.CoreApi
 import so.codex.sourceinterfaces.entity.SignUpEntity
 
 class SignUpInteractor : ISignUpInteractor {

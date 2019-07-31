@@ -7,7 +7,7 @@ import org.koin.core.qualifier.named
 import so.codex.codexbl.entity.UserAuth
 import so.codex.codexbl.entity.UserToken
 import so.codex.codexbl.providers.UserTokenDAO
-import so.codex.codexsource.api.CoreApi
+import so.codex.hawkapi.api.CoreApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 
 class SignInInteractor : ISignInInteractor, KoinComponent {
