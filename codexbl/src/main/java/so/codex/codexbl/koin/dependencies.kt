@@ -9,7 +9,7 @@ import so.codex.codexbl.interactors.SignUpInteractor
 import so.codex.codexbl.providers.UserTokenDAO
 import so.codex.codexbl.providers.UserTokenPreferences
 import so.codex.codexbl.providers.UserTokenProvider
-import so.codex.codexsource.api.CoreApi
+import so.codex.hawkapi.api.CoreApi
 
 val apiModule = module {
     single { CoreApi.instance.getAuthApi() }
