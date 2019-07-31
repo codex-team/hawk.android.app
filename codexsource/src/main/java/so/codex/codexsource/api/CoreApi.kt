@@ -3,9 +3,6 @@ package so.codex.codexsource.api
 import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import so.codex.codexsource.SourceApi
 import so.codex.sourceinterfaces.IAuthApi
 
@@ -15,7 +12,7 @@ import so.codex.sourceinterfaces.IAuthApi
  */
 class CoreApi private constructor() : SourceApi {
     companion object {
-        private val baseUrl = "https://api.stage.hawk.so/"
+        private val baseUrl = "https://api.stage.hawk.so/graphql"
 
         /**
          * Ленивая инициализация ретрофита для использования инициализации остальных компонентов для работы с API
@@ -23,6 +20,7 @@ class CoreApi private constructor() : SourceApi {
         val apollo: ApolloClient by lazy {
             ApolloClient.builder()
                     .serverUrl(baseUrl)
+                    .okHttpClient(client)
                     .build()
         }
 
