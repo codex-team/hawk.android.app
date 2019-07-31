@@ -2,6 +2,7 @@ package so.codex.codexsource.api
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import so.codex.codexsource.AuthApiMethodsImpl
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.RequestEntity
@@ -15,7 +16,7 @@ import so.codex.sourceinterfaces.response.TokenResponse
 final class AuthApi private constructor(private val service: AuthApiMethods) : IAuthApi {
     companion object {
         val instance by lazy {
-            AuthApi(CoreApi.retrofit.create(AuthApiMethods::class.java))
+            AuthApi(AuthApiMethodsImpl(CoreApi.apollo))
         }
     }
 
@@ -25,11 +26,11 @@ final class AuthApi private constructor(private val service: AuthApiMethods) : I
      * @return возвращает [TokenResponse], в котором уже есть токен и рефреш токен
      */
     override fun login(auth: AuthEntity): Single<TokenResponse> =
-        service.login(RequestEntity(auth.getMutation(), auth))
+        service.login(auth)
             .subscribeOn(Schedulers.io()).map { it.data.login }
 
     override fun signUp(signUp: SignUpEntity): Single<Boolean> =
-            service.signUp(RequestEntity(signUp.getMutation(), signUp))
+            service.signUp(signUp)
                 .subscribeOn(Schedulers.io()).map { it.data.signUp }
 
 }

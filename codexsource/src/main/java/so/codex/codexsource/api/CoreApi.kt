@@ -1,5 +1,6 @@
 package so.codex.codexsource.api
 
+import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,13 +20,10 @@ class CoreApi private constructor() : SourceApi {
         /**
          * Ленивая инициализация ретрофита для использования инициализации остальных компонентов для работы с API
          */
-        val retrofit: Retrofit by lazy {
-            Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
+        val apollo: ApolloClient by lazy {
+            ApolloClient.builder()
+                    .serverUrl(baseUrl)
+                    .build()
         }
 
         /**
