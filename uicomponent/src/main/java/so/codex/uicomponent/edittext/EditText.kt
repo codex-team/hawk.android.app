@@ -6,7 +6,6 @@ import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.view_edit_text.view.*
@@ -18,7 +17,7 @@ class EditText @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.codexEditTextTheme
 ) : FrameLayout(context, attrs, defStyleAttr) {
     init {
-        View.inflate(context, R.layout.view_edit_text, this)
+        inflate(context, R.layout.view_edit_text, this)
 
         context.obtainStyledAttributes(
                 attrs,
@@ -37,18 +36,21 @@ class EditText @JvmOverloads constructor(
                     InputType.TYPE_NULL
                 }
             }
-            body_edit_text.setTextColor(
+            /*context.theme.obtainStyledAttributes(arrayOf(android.R.attr.editTextColor, android.R.attr.textColor).toIntArray()).apply {
+                body_edit_text.setTextColor(
                     getColor(
-                            R.styleable.EditText_codex_textColor,
-                            android.R.attr.editTextColor
+                        R.styleable.EditText_codex_textColor,
+                        ContextCompat.getColor(context, android.R.color.black)
                     )
-            )
-            title_edit_text.setTextColor(
+                )
+                title_edit_text.setTextColor(
                     getColor(
-                            R.styleable.EditText_codex_titleColor,
-                            android.R.attr.textColor
+                        R.styleable.EditText_codex_titleColor,
+                        ContextCompat.getColor(context, android.R.color.black)
                     )
-            )
+                )
+                recycle()
+            }*/
             recycle()
         }
         body_edit_text.setOnFocusChangeListener { _, hasFocus ->

@@ -2,8 +2,38 @@
 <resources>
     <style name="Codex"/>
 
-    <style name="Codex.Widgets"/>
+    <style name="Codex.Widgets" />
 
     <style name="Codex.Widgets.EditTextTheme">
+        <item name="codex_textColor">@android:color/black</item>
+        <item name="codex_titleColor">@android:color/black</item>
+        <item name="android:textViewStyle">@style/Codex.Widgets.TextView</item>
+        <item name="android:editTextStyle">@style/Codex.Widgets.EditText</item>
+    </style>
+
+    <style name="Codex.TextAppearance" parent="android:TextAppearance">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Codex.TextAppearance.Label" parent="Codex.TextAppearance">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/codex_titleColor</item>
+    </style>
+
+    <style name="Codex.TextAppearance.EditText" parent="Codex.TextAppearance">
+        <item name="android:textColor">@android:color/widget_edittext_dark</item>
+    </style>
+
+    <style name="Codex.Widgets.TextView" parent="android:Widget.TextView">
+        <item name="android:textAppearance">@style/Codex.TextAppearance.Label</item>
+    </style>
+
+    <style name="Codex.Widgets.EditText" parent="android:Widget.EditText">
+        <item name="android:textAppearance">@style/Codex.TextAppearance.EditText</item>
+        <item name="android:textColor">?attr/codex_textColor</item>
     </style>
 </resources>
