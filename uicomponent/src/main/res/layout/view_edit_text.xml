@@ -6,15 +6,14 @@
     android:layout_height="wrap_content"
     android:minWidth="100dp"
     android:orientation="vertical"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-              android:theme="?attr/codexEditTextTheme">
+    android:theme="?attr/codexEditTextTheme">
 
     <TextView
         android:id="@+id/title_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:textColor="?attr/codex_titleColor"
         tools:text="?attr/codex_title" />
 
     <androidx.cardview.widget.CardView
@@ -35,12 +34,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:background="@null"
+            android:includeFontPadding="false"
             android:maxLines="1"
             android:paddingStart="12dp"
             android:paddingTop="12dp"
             android:paddingEnd="4dp"
             android:paddingBottom="12dp"
             android:singleLine="true"
+            android:textColor="?attr/codex_textColor"
             tools:text="?attr/codex_text" />
     </androidx.cardview.widget.CardView>
 

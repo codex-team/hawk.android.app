@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="boundedCardViewTheme" format="reference" />
+
+    <declare-styleable name="BoundedCardView">
+        <attr name="maxWidth" format="dimension" />
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
     <attr name="codexEditTextTheme" format="reference" />
 
     <declare-styleable name="EditText">
@@ -17,8 +24,4 @@
         <attr name="codex_textViewStyle" format="reference" />
         <attr name="codex_editTextStyle" format="reference" />
     </declare-styleable>
-
-    <!--<declare-styleable name="Codex.EditText.Theme">
-
-    </declare-styleable>-->
 </resources>

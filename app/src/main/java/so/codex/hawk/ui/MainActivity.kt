@@ -1,7 +1,7 @@
 package so.codex.hawk.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import so.codex.hawk.R
 
 class MainActivity : AppCompatActivity() {

@@ -14,6 +14,6 @@
     <string name="sign_in_password">Пароль</string>
     <string name="sign_in_email_address">Почта</string>
     <string name="app_name_hawk">Hawk</string>
-    <string name="time_of_quality">Time of quality</string>
+    <string name="time_of_quality">Time for quality</string>
     <string name="made_by_codex">Made by CodeX</string>
 </resources>
