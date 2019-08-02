@@ -13,10 +13,11 @@
 
     <style name="CodexTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/button_background_accent</item>
+        <item name="android:textColor">@color/very_light_blue</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
-        <item name="android:paddingStart">24dp</item>
-        <item name="android:paddingEnd">24dp</item>
+        <item name="android:paddingStart">26dp</item>
+        <item name="android:paddingEnd">26dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:textAppearance">
