@@ -6,4 +6,6 @@
     <color name="hawk_background">#242732</color>
     <color name="card_hawk_background">#2F3341</color>
     <color name="edit_text_background">#191c25</color>
+    <color name="very_light_blue">#dbe6ff</color>
+    <color name="very_light_blue_60">#99DBE6FF</color>
 </resources>

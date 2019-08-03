@@ -17,7 +17,7 @@ import so.codex.hawk.ui.MainActivity
 /**
  * Фрагмент, которые отвечает за вход в приложение
  */
-class SignInFragment private constructor() : BaseFragment(), ISignInView {
+class SignInFragment : BaseFragment(), ISignInView {
 
     override fun showErrorMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
@@ -37,21 +37,22 @@ class SignInFragment private constructor() : BaseFragment(), ISignInView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        retainInstance = true
         return inflater.inflate(R.layout.fragment_sign_in, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_login.setOnClickListener {
-            if (!et_login.text.isNullOrEmpty() && !et_password.text.isNullOrEmpty()) {
+            if (et_login.text.isNotEmpty() && et_password.text.isNotEmpty()) {
                 // TODO сделать презентер, который будет обрабатывать данное нажатие
-                signInPresenter.signIn(et_login.text.toString(), et_password.text.toString())
+                signInPresenter.signIn(et_login.text, et_password.text)
             }
         }
 
         btn_sign_up.setOnClickListener {
             if (activity is ILoginRouter) {
-                (activity as ILoginRouter).showSignUp(et_login.text.toString())
+                (activity as ILoginRouter).showSignUp(et_login.text)
             }
         }
 

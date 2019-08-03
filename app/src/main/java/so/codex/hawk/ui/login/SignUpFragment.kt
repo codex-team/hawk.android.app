@@ -18,7 +18,7 @@ import so.codex.hawk.ui.login.SignUpFragment.Companion.instance
  * Фрагмент для регистрации пользователей, для получения экземпляра данного класса,
  * необходимо вызвать [instance] с необходимыми параметрами
  */
-class SignUpFragment private constructor() : BaseFragment(), ISignUpView {
+class SignUpFragment: BaseFragment(), ISignUpView {
     override fun showErrorMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
@@ -52,6 +52,7 @@ class SignUpFragment private constructor() : BaseFragment(), ISignUpView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        retainInstance = true
         return inflater.inflate(R.layout.fragment_sign_up, container, false)
     }
 

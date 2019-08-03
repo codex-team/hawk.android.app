@@ -58,7 +58,7 @@ class LoginActivity : BaseSingleFragmentActivity(), ILoginRouter {
                     replaceFragment(SignInFragment.instance())
                 }
                 START_SIGN_UP -> {
-                    replaceAndAdd(SignUpFragment.instance(et_login.text.toString()))
+                    replaceAndAdd(SignUpFragment.instance(et_login.text))
                 }
             }
         } ?: replaceFragment(SignInFragment.instance())

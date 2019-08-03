@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="boundedCardViewTheme" format="reference" />
+
+    <declare-styleable name="BoundedCardView">
+        <attr name="maxWidth" format="dimension" />
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
+    <attr name="codexEditTextTheme" format="reference" />
+
+    <declare-styleable name="EditText">
+        <attr name="codex_title" format="string" />
+        <attr name="codex_hint" format="string" />
+        <attr name="codex_text" format="string" />
+        <attr name="codex_backgroundColor" format="color" />
+        <attr name="codex_borderColor" format="color" />
+        <attr name="codex_titleColor" format="color" />
+        <attr name="codex_textColor" format="color" />
+        <attr name="codex_inputType" format="enum">
+            <enum name="text" value="0" />
+            <enum name="textPassword" value="1" />
+        </attr>
+        <attr name="codex_textViewStyle" format="reference" />
+        <attr name="codex_editTextStyle" format="reference" />
+    </declare-styleable>
+</resources>
