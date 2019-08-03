@@ -72,7 +72,7 @@ class EditText @JvmOverloads constructor(
         }
     }
 
-    var text: String by editTextDelegate(body_edit_text)
+    public var text: String by editTextDelegate(body_edit_text)
 
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {

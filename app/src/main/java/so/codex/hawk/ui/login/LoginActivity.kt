@@ -1,6 +1,7 @@
 package so.codex.hawk.ui.login
 
 import android.os.Bundle
+import kotlinx.android.synthetic.main.fragment_sign_in.*
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseSingleFragmentActivity
 import so.codex.hawk.router.ILoginRouter
@@ -57,7 +58,7 @@ class LoginActivity : BaseSingleFragmentActivity(), ILoginRouter {
                     replaceFragment(SignInFragment.instance())
                 }
                 START_SIGN_UP -> {
-                    //replaceAndAdd(SignUpFragment.instance(et_login.text.toString()))
+                    replaceAndAdd(SignUpFragment.instance(et_login.text))
                 }
             }
         } ?: replaceFragment(SignInFragment.instance())
