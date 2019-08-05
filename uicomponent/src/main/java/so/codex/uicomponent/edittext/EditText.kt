@@ -16,8 +16,12 @@ import kotlin.reflect.KProperty
 class EditText @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.codexEditTextTheme
 ) : FrameLayout(context, attrs, defStyleAttr) {
+    private val editView: android.widget.EditText
+
     init {
-        inflate(context, R.layout.view_edit_text, this)
+        val view = inflate(context, R.layout.view_edit_text, this)
+
+        editView = view.findViewById(R.id.body_edit_text)
 
         context.obtainStyledAttributes(
                 attrs,
@@ -25,10 +29,10 @@ class EditText @JvmOverloads constructor(
                 defStyleAttr,
                 R.style.Codex_Widgets_EditTextTheme
         ).apply {
-            body_edit_text.setText(getString(R.styleable.EditText_codex_text) ?: "")
-            body_edit_text.hint = getString(R.styleable.EditText_codex_hint) ?: ""
+            editView.setText(getString(R.styleable.EditText_codex_text) ?: "")
+            editView.hint = getString(R.styleable.EditText_codex_hint) ?: ""
             title_edit_text.text = getString(R.styleable.EditText_codex_title) ?: ""
-            body_edit_text.inputType = when (getInt(R.styleable.EditText_codex_inputType, 0)) {
+            editView.inputType = when (getInt(R.styleable.EditText_codex_inputType, 0)) {
                 0 -> InputType.TYPE_CLASS_TEXT
                 1 -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 else -> {
@@ -53,7 +57,7 @@ class EditText @JvmOverloads constructor(
             }*/
             recycle()
         }
-        body_edit_text.setOnFocusChangeListener { _, hasFocus ->
+        editView.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 card_background.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -72,21 +76,33 @@ class EditText @JvmOverloads constructor(
         }
     }
 
-    public var text: String by editTextDelegate(body_edit_text)
+    public var text: String by editTextDelegate(editView)
+
+    // so.codex.uicomponent.edittext.EditText{122728f V.E...... ......I. 0,0-0,0 #7f0a004a app:id/et_login} || so.codex.uicomponent.edittext.EditText{4a0f8bd V.E...... ......I. 0,0-0,0 #7f0a004b app:id/et_password}
+    //
 
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {
-            text = body_edit_text.text.toString()
+            text = editView.text.toString()
             id = getId()
+            requestFocus = editView.isFocused
+            if(editView.isFocused)
+                position = editView.selectionStart
         }
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is SavedState) {
-            super.onRestoreInstanceState(state.superState)
             if (id == state.id) {
-                body_edit_text.setText(state.text)
+                editView.post {
+                    editView.setText(state.text)
+                    if(state.requestFocus){
+                        editView.requestFocus()
+                        editView.setSelection(state.position)
+                    }
+                }
             }
+            super.onRestoreInstanceState(state.superState)
         } else {
             super.onRestoreInstanceState(state)
         }
@@ -96,10 +112,14 @@ class EditText @JvmOverloads constructor(
     class SavedState : BaseSavedState {
         var text: String = ""
         var id: Int = -1
+        var requestFocus = false
+        var position = text.length
 
         constructor(source: Parcel?) : super(source) {
             text = source?.readString() ?: ""
             id = source?.readInt() ?: -1
+            requestFocus = (source?.readByte() ?: 0.toByte()) != 0.toByte()
+            position = source?.readInt() ?: text.length
         }
 
         constructor(parcelable: Parcelable?) : super(parcelable)
@@ -108,6 +128,8 @@ class EditText @JvmOverloads constructor(
             super.writeToParcel(out, flags)
             out?.writeString(text)
             out?.writeInt(id)
+            out?.writeByte(if(requestFocus) 1 else 0)
+            out?.writeInt(position)
         }
 
         override fun describeContents(): Int {

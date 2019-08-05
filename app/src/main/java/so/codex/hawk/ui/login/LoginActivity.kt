@@ -1,7 +1,9 @@
 package so.codex.hawk.ui.login
 
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_sign_in.*
+import so.codex.hawk.BuildConfig
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseSingleFragmentActivity
 import so.codex.hawk.router.ILoginRouter
@@ -52,6 +54,7 @@ class LoginActivity : BaseSingleFragmentActivity(), ILoginRouter {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        build_name.text = BuildConfig.VERSION_NAME
         intent?.extras?.let {
             when (it.getInt(LOGIN_ACTIVITY_ACTION_KEY, START_SIGN_IN)) {
                 START_SIGN_IN -> {
