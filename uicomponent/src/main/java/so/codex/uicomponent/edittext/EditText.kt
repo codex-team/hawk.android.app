@@ -10,9 +10,11 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.view_edit_text.view.*
 import so.codex.uicomponent.R
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
+import so.codex.uicomponent.textViewDelegate
 
+/**
+ * Реализация EditText с лейблом и задним фоном, который подсвечивается во время фокуса
+ */
 class EditText @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.codexEditTextTheme
 ) : FrameLayout(context, attrs, defStyleAttr) {
@@ -76,10 +78,7 @@ class EditText @JvmOverloads constructor(
         }
     }
 
-    public var text: String by editTextDelegate(editView)
-
-    // so.codex.uicomponent.edittext.EditText{122728f V.E...... ......I. 0,0-0,0 #7f0a004a app:id/et_login} || so.codex.uicomponent.edittext.EditText{4a0f8bd V.E...... ......I. 0,0-0,0 #7f0a004b app:id/et_password}
-    //
+    public var text: String by textViewDelegate(editView)
 
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {
@@ -145,18 +144,5 @@ class EditText @JvmOverloads constructor(
                 return arrayOfNulls(size)
             }
         }
-    }
-}
-
-fun editTextDelegate(editText: android.widget.EditText): ReadWriteProperty<EditText, String> {
-    return object : ReadWriteProperty<EditText, String> {
-        override fun getValue(thisRef: EditText, property: KProperty<*>): String {
-            return editText.text.toString()
-        }
-
-        override fun setValue(thisRef: EditText, property: KProperty<*>, value: String) {
-            editText.setText(value)
-        }
-
     }
 }
