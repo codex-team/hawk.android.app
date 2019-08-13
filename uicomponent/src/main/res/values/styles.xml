@@ -37,4 +37,12 @@
         <item name="android:textAppearance">@style/Codex.TextAppearance.EditText</item>
         <item name="android:textColor">?attr/codex_textColor</item>
     </style>
+
+    <style name="Codex.Widgets.BorderedImageViewStyle">
+
+    </style>
+
+    <style name="Codex.Widgets.ProjectItemViewStyle">
+
+    </style>
 </resources>

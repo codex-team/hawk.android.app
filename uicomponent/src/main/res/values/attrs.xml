@@ -24,4 +24,16 @@
         <attr name="codex_textViewStyle" format="reference" />
         <attr name="codex_editTextStyle" format="reference" />
     </declare-styleable>
+
+    <attr name="projectItemViewStyle" format="reference" />
+
+    <declare-styleable name="ProjectItemView">
+        <attr name="src" format="reference" />
+    </declare-styleable>
+
+    <attr name="borderedImageViewStyle" format="reference" />
+
+    <declare-styleable name="BorderedImageView">
+        <attr name="corners" format="dimension" />
+    </declare-styleable>
 </resources>
