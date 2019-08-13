@@ -5,4 +5,7 @@ import so.codex.codexbl.view.IAuthorizedView
 
 class AuthorizedPresenter : BasePresenter<IAuthorizedView>() {
 
+    fun checkAuthorization() {
+
+    }
 }
