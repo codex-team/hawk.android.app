@@ -2,6 +2,7 @@ package so.codex.hawk.base
 
 import androidx.fragment.app.Fragment
 import so.codex.codexbl.view.base.IBaseView
+import so.codex.hawk.router.IBaseRouter
 
 /**
  * Родительский фрагмент, который описывает общую логику для всех фрагментов
@@ -22,4 +23,12 @@ abstract class BaseFragment : Fragment(), IBaseView {
             it.detached()
         }
     }*/
+
+    inline fun <reified R : IBaseRouter> getRouter(): R {
+        return when {
+            parentFragment is R -> parentFragment as R
+            activity is R -> activity as R
+            else -> throw ClassCastException()
+        }
+    }
 }

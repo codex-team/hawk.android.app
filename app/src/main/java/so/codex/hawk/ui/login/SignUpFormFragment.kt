@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.fragment_sign_up.*
+import kotlinx.android.synthetic.main.fragment_sign_up_form.*
 import so.codex.codexbl.presenter.SignUpPresenter
 import so.codex.codexbl.view.ISignUpView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
-import so.codex.hawk.ui.login.SignUpFragment.Companion.instance
+import so.codex.hawk.ui.login.SignUpFormFragment.Companion.instance
 
 /**
  * Фрагмент для регистрации пользователей, для получения экземпляра данного класса,
  * необходимо вызвать [instance] с необходимыми параметрами
  */
-class SignUpFragment: BaseFragment(), ISignUpView {
+class SignUpFormFragment : BaseFragment(), ISignUpView {
     override fun showErrorMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
@@ -32,10 +32,10 @@ class SignUpFragment: BaseFragment(), ISignUpView {
         /**
          * Функция для создания экземпляров данного класса
          * @param email - строка, которая будет вставлена в поле Email. Параметр не обязательный
-         * @return Вернет экземпляр класса [SignUpFragment] с установленным аргументом
+         * @return Вернет экземпляр класса [SignUpFormFragment] с установленным аргументом
          */
         fun instance(email: String = "") =
-            SignUpFragment().apply {
+            SignUpFormFragment().apply {
                 arguments = Bundle().apply {
                     if (email.isNotEmpty())
                         putString(EMAIL_KEY, email)
@@ -53,16 +53,20 @@ class SignUpFragment: BaseFragment(), ISignUpView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
+        return inflater.inflate(R.layout.fragment_sign_up_form, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        et_sign_up.setText(email)
+        et_login.text = email
         btn_sign_up.setOnClickListener {
-            if (!et_sign_up.text.isNullOrEmpty()) {
-                signUpPresenter.submit(et_sign_up.text.toString())
+            if (et_login.text.isNotEmpty()) {
+                signUpPresenter.submit(et_login.text)
             }
+        }
+
+        btn_back.setOnClickListener {
+            activity?.onBackPressed()
         }
 
         signUpPresenter.attached(this)

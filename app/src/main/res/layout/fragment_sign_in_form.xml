@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<so.codex.uicomponent.cardview.BoundedCardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                                               xmlns:tools="http://schemas.android.com/tools"
+                                               android:layout_width="wrap_content"
+                                               android:layout_height="wrap_content"
+                                               android:translationZ="5dp"
+                                               app:cardBackgroundColor="#00FFFFFF"
+                                               app:cardCornerRadius="7dp"
+                                               app:cardElevation="4dp"
+                                               app:cardMaxElevation="4dp"
+                                               app:maxWidth="300dp"
+                                               tools:targetApi="lollipop">
+
+    <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/iv_description_background_of_sign_in"
+            android:src="@drawable/sign_in_background"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_in_title"
+                    android:textAppearance="@style/CodexTheme.TextTitleAppearance"/>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"/>
+
+            <Button
+                    android:id="@+id/btn_sign_up"
+                    style="@style/CodexTheme.Button.Text.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_up_button"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:alpha="0.11"
+                android:background="#dbe6ff"/>
+
+        <so.codex.uicomponent.edittext.EditText
+                android:id="@+id/et_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="12dp"
+                app:codex_title="@string/sign_in_email_address"/>
+
+
+        <so.codex.uicomponent.edittext.EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:codex_inputType="textPassword"
+                app:codex_title="@string/sign_in_password"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:includeFontPadding="false"
+                    android:text="@string/login_sign_in"
+                    android:typeface="normal"/>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+            <Button
+                    style="@style/CodexTheme.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/sign_in_recover_password"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</so.codex.uicomponent.cardview.BoundedCardView>

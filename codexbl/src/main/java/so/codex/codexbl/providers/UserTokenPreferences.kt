@@ -1,6 +1,7 @@
 package so.codex.codexbl.providers
 
 import android.content.Context
+import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.entity.UserToken
 
 class UserTokenPreferences(context: Context) : UserTokenDAO {
@@ -9,6 +10,7 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
     companion object {
         const val TOKEN_PREFERENCES_KEY = "token_preferences_key"
         const val REFRESH_TOKEN_PREFERENCES_KEY = "refresh_token_preferences_key"
+        const val LAST_SIGNIN_EMAIL_PREFERENCE_KEY = "last_signin_email_preference_key"
     }
 
     override fun getUserToken(): UserToken? {
@@ -24,6 +26,25 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
                 .apply()
         return true
     }
+
+    override fun saveSession(sessionData: SessionData): Boolean {
+        saveUserToken(sessionData.toUserToken())
+        preferences.edit()
+            .putString(LAST_SIGNIN_EMAIL_PREFERENCE_KEY, sessionData.email)
+            .apply()
+        return true
+    }
+
+    override fun getLastSession(): SessionData? {
+        return getUserToken().let {
+            val email = preferences.getString(LAST_SIGNIN_EMAIL_PREFERENCE_KEY, null)
+            if (email == null || it == null)
+                null
+            else
+                SessionData(email, it.accessToken, it.refreshToken)
+        }
+    }
+
 
     override fun clean() {
         preferences.edit()

@@ -4,4 +4,5 @@ import so.codex.codexbl.entity.SessionData
 
 interface IUserInteractor {
     fun saveSession(session: SessionData): Boolean
+    fun getLastSession(): SessionData?
 }

@@ -1,71 +1,82 @@
 package so.codex.hawk.ui.login
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_sign_in.*
-import so.codex.codexbl.presenter.SignInPresenter
-import so.codex.codexbl.view.ISignInView
+import kotlinx.android.synthetic.main.fragment_sign_in_form.*
 import so.codex.hawk.R
-import so.codex.hawk.base.BaseFragment
+import so.codex.hawk.base.InnerSingleFragment
 import so.codex.hawk.router.ILoginRouter
-import so.codex.hawk.ui.MainActivity
 
-/**
- * Фрагмент, которые отвечает за вход в приложение
- */
-class SignInFragment : BaseFragment(), ISignInView {
+class SignInFragment : InnerSingleFragment(), ILoginRouter {
 
-    override fun showErrorMessage(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
+    override val containerId: Int
+        get() = R.id.cardForm
 
     companion object {
-        /**
-         * Лямьда выражение, которая создает экземпляр фрагмента и возвращает его
-         */
-        val instance = {
-            SignInFragment()
+        fun instance(bundle: Bundle?) = SignInFragment().apply {
+            arguments = bundle
         }
+
+        /**
+         * Ключ, по которому устанавливается значение для открытия необходимого фрагмента.
+         * Для открытия экрана входа, достаточно ничего не указывать или указать этот ключ
+         * со значением [START_SIGN_IN]
+         * Для открытия экрана для регистрации, необходимо указать ключ со значением [START_SIGN_UP]
+         */
+        public const val LOGIN_ACTIVITY_ACTION_KEY = "login_activity_action_key"
+        /**
+         * Значние, для открытия экрана для входа
+         */
+        public const val START_SIGN_IN = 100
+        /**
+         * Значение, для открытия экрана для регистрации нового пользователя
+         */
+        public const val START_SIGN_UP = 101
     }
 
-    val signInPresenter by lazy {
-        SignInPresenter()
+    override fun showSignIn() {
+        val signUpFragment = childFragmentManager.findFragmentByTag(SignUpFormFragment::class.java.simpleName)
+        if (signUpFragment != null) {
+            childFragmentManager
+                .beginTransaction()
+                .remove(signUpFragment)
+                .commit()
+        }
+        replaceFragment(SignInFormFragment.instance())
+    }
+
+    override fun showSignUp(email: String) {
+        replaceAndAdd(SignUpFormFragment.instance(email))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_login.setOnClickListener {
-            if (et_login.text.isNotEmpty() && et_password.text.isNotEmpty()) {
-                // TODO сделать презентер, который будет обрабатывать данное нажатие
-                signInPresenter.signIn(et_login.text, et_password.text)
+        arguments?.let {
+            when (it.getInt(LOGIN_ACTIVITY_ACTION_KEY, START_SIGN_IN)) {
+                START_SIGN_IN -> {
+                    replaceFragment(SignInFormFragment.instance())
+                }
+                START_SIGN_UP -> {
+                    replaceAndAdd(SignUpFormFragment.instance(et_login.text))
+                }
             }
-        }
-
-        btn_sign_up.setOnClickListener {
-            if (activity is ILoginRouter) {
-                (activity as ILoginRouter).showSignUp(et_login.text)
+            if (it.containsKey(LOGIN_ACTIVITY_ACTION_KEY)) {
+                it.remove(LOGIN_ACTIVITY_ACTION_KEY)
             }
-        }
-
-        signInPresenter.attached(this)
+        } ?: replaceFragment(SignInFormFragment.instance())
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        signInPresenter.detached()
+
+    override fun showErrorMessage(message: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun successfulLogin() {
-        startActivity(Intent(context, MainActivity::class.java))
-        activity?.finish()
-    }
+
 }
