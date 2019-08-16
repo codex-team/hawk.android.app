@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="boundedCardViewTheme" format="reference" />
+    <attr name="corners" format="dimension" />
+    <attr name="codex_hintColor" format="color" />
 
     <declare-styleable name="BoundedCardView">
         <attr name="maxWidth" format="dimension" />
@@ -34,6 +36,16 @@
     <attr name="borderedImageViewStyle" format="reference" />
 
     <declare-styleable name="BorderedImageView">
-        <attr name="corners" format="dimension" />
+        <attr name="corners" />
+    </declare-styleable>
+
+    <attr name="customSearchViewStyle" format="reference" />
+
+    <declare-styleable name="CustomSearchView">
+        <attr name="corners" />
+        <attr name="cardBackgroundColor" format="color" />
+        <attr name="imageTint" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="hint" format="string" />
     </declare-styleable>
 </resources>

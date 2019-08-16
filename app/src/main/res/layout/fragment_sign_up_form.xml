@@ -43,11 +43,11 @@
                     android:layout_weight="10"/>
 
             <Button
-                    android:id="@+id/btn_back"
-                    style="@style/CodexTheme.Button.Text.Bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/back"/>
+                android:id="@+id/btn_back"
+                style="@style/CodexTheme.Button.Text.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login_sign_in" />
         </LinearLayout>
 
         <View
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_medium"
                     android:includeFontPadding="false"
-                    android:text="@string/sign_up_button"
+                android:text="@string/register_button"
                     android:typeface="normal"/>
 
             <View

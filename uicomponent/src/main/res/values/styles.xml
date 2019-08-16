@@ -3,11 +3,13 @@
 
     <style name="Codex" />
 
-    <style name="Codex.Widgets" />
-
-    <style name="Codex.Widgets.EditTextTheme">
+    <style name="Codex.Widgets">
         <item name="codex_textColor">@android:color/black</item>
         <item name="codex_titleColor">@android:color/black</item>
+        <item name="codex_hintColor">@android:color/black</item>
+    </style>
+
+    <style name="Codex.Widgets.EditTextTheme">
         <item name="android:textViewStyle">@style/Codex.Widgets.TextView</item>
         <item name="android:editTextStyle">@style/Codex.Widgets.EditText</item>
     </style>
@@ -36,6 +38,19 @@
     <style name="Codex.Widgets.EditText" parent="android:Widget.EditText">
         <item name="android:textAppearance">@style/Codex.TextAppearance.EditText</item>
         <item name="android:textColor">?attr/codex_textColor</item>
+    </style>
+
+    <style name="Codex.Widgets.CustomSearchView" />
+
+    <style name="Codex.Widgets.CustomSearchView.EditText" parent="Codex.Widgets.EditText">
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">?attr/codex_hintColor</item>
+    </style>
+
+    <style name="Codex.Widgets.CustomSearchViewTheme">
+        <item name="android:editTextStyle">@style/Codex.Widgets.CustomSearchView.EditText</item>
+        <item name="editTextStyle">@style/Codex.Widgets.CustomSearchView.EditText</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="Codex.Widgets.BorderedImageViewStyle">

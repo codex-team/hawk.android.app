@@ -13,6 +13,7 @@
     <string name="iv_description_background_of_sign_in">background_of_sign_in</string>
     <string name="sign_in_title">Login</string>
     <string name="sign_up_button">Sign up</string>
+    <string name="register_button">Register</string>
     <string name="sign_in_recover_password">Recover password</string>
     <string name="sign_in_password">Password</string>
     <string name="sign_in_email_address">Email address</string>
