@@ -11,12 +11,12 @@ class UserInteractor : IUserInteractor, KoinComponent {
     private val userTokenDAO: UserTokenDAO by inject(named("preferences"))
 
     override fun saveSession(session: SessionData): Boolean {
-        return userTokenDAO.saveUserToken(session.toUserToken())
+        return userTokenDAO.saveSession(session)
     }
 
     override fun getLastSession(): SessionData? {
         return userTokenDAO.getLastSession().also {
-            Log.i("UserInteractor", "data = it")
+            Log.i("UserInteractor", "data = $it")
         }
     }
 
