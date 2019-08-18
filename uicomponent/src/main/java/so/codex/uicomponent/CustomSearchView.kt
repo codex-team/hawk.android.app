@@ -15,6 +15,7 @@ import android.util.Log
 import android.view.View
 import android.view.ViewPropertyAnimator
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getSystemService
@@ -31,9 +32,14 @@ class CustomSearchView @JvmOverloads constructor(
     private var listener: SearchListener? = null
     private var animation: ViewPropertyAnimator? = null
     private var count = 0
+    
+    private var searchText: EditText
 
     init {
-        View.inflate(context, R.layout.view_search, this)
+        val view = View.inflate(context, R.layout.view_search, this)
+        
+        searchText = view.search_edit_text
+        
         setWillNotDraw(false)
         //corners = dpToPx(5.0f)
         rectF.apply {
@@ -60,13 +66,13 @@ class CustomSearchView @JvmOverloads constructor(
                     getColor(R.styleable.CustomSearchView_imageTint, Color.BLACK),
                     android.graphics.PorterDuff.Mode.SRC_IN
             )
-            /*search_edit_text.setTextColor(
+            /*searchText.setTextColor(
                     getColor(
                             R.styleable.CustomSearchView_textColor,
                             Color.BLACK
                     )
             )*/
-            search_edit_text.hint = getString(R.styleable.CustomSearchView_hint)
+            searchText.hint = getString(R.styleable.CustomSearchView_hint)
             recycle()
         }
         ic_clear.isClickable = true
@@ -78,20 +84,20 @@ class CustomSearchView @JvmOverloads constructor(
     }
 
     private fun requestFocusEditText() {
-        if (!search_edit_text.isFocused) {
-            search_edit_text.requestFocus()
-            search_edit_text.postDelayed({
+        if (!searchText.isFocused) {
+            searchText.requestFocus()
+            searchText.postDelayed({
                                              val keyboard = getSystemService(
                                                      context,
                                                      InputMethodManager::class.java
                                              )
-                                             keyboard!!.showSoftInput(search_edit_text, 0)
-                                         }, 200)
+                                             keyboard!!.showSoftInput(searchText, 0)
+                                         }, 100)
         }
     }
 
     private fun initListeners() {
-        search_edit_text.addTextChangedListener(object : TextWatcher {
+        searchText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -110,7 +116,7 @@ class CustomSearchView @JvmOverloads constructor(
             }
         })
 
-        search_edit_text.setOnFocusChangeListener { v, hasFocus ->
+        searchText.setOnFocusChangeListener { v, hasFocus ->
             count++
             Log.i("SearchView", "${v::class.java.simpleName} $hasFocus $count")
             transit_container.postDelayed({
@@ -119,14 +125,26 @@ class CustomSearchView @JvmOverloads constructor(
                                               )
                                               if (hasFocus) {
                                                   ic_search.visibility = View.GONE
+                                                  searchText.setPadding(
+                                                          dpToPx(7f).toInt(),
+                                                          paddingTop,
+                                                          paddingEnd,
+                                                          paddingBottom
+                                                  )
                                               } else {
                                                   ic_search.visibility = View.VISIBLE
+                                                  searchText.setPadding(
+                                                          dpToPx(4f).toInt(),
+                                                          paddingTop,
+                                                          paddingEnd,
+                                                          paddingBottom
+                                                  )
                                               }
-                                          }, 100)
+                                          }, 300)
             //TransitionManager.beginDelayedTransition(transit_container)
         }
         ic_clear.setOnClickListener {
-            search_edit_text.setText("")
+            searchText.setText("")
         }
     }
 
@@ -191,22 +209,22 @@ class CustomSearchView @JvmOverloads constructor(
 
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {
-            text = search_edit_text.text.toString()
+            text = searchText.text.toString()
             id = getId()
-            requestFocus = search_edit_text.isFocused
-            if (search_edit_text.isFocused)
-                position = search_edit_text.selectionStart
+            requestFocus = searchText.isFocused
+            if (searchText.isFocused)
+                position = searchText.selectionStart
         }
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is SavedState) {
             if (id == state.id) {
-                search_edit_text.post {
-                    search_edit_text.setText(state.text)
+                searchText.post {
+                    searchText.setText(state.text)
                     if (state.requestFocus) {
-                        search_edit_text.requestFocus()
-                        search_edit_text.setSelection(state.position)
+                        searchText.requestFocus()
+                        searchText.setSelection(state.position)
                     }
                 }
             }
