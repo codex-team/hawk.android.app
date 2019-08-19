@@ -15,7 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:textColor="?attr/codex_titleColor"
         tools:text="?attr/codex_title" />
 
     <androidx.cardview.widget.CardView
@@ -43,7 +42,6 @@
             android:paddingEnd="4dp"
             android:paddingBottom="12dp"
             android:singleLine="true"
-            android:textColor="?attr/codex_textColor"
             tools:text="?attr/codex_text" />
     </androidx.cardview.widget.CardView>
 
