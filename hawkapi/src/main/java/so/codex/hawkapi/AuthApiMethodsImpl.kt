@@ -6,6 +6,7 @@ import io.reactivex.Single
 import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity
+import so.codex.sourceinterfaces.entity.TokenEntity
 import so.codex.sourceinterfaces.response.LoginResponse
 import so.codex.sourceinterfaces.response.SignUpResponse
 import so.codex.sourceinterfaces.response.TokenResponse
@@ -33,6 +34,18 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
             )
         ).handleHttpErrorsSingle().map {
             SignUpResponse(it.signUp)
+        }
+    }
+
+    override fun refreshToken(token: TokenEntity): Single<TokenResponse> {
+        return Rx2Apollo.from(
+                apolloClient.mutate(
+                        RefreshTokensMutation.builder()
+                                .refreshToken(token.refreshToken)
+                                .build()
+                )
+        ).handleHttpErrorsSingle().map {
+            TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)
         }
     }
 

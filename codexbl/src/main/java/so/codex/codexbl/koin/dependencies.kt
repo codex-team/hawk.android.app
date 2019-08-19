@@ -10,12 +10,14 @@ import so.codex.hawkapi.api.CoreApi
 
 val apiModule = module {
     single { CoreApi.instance.getAuthApi() }
+    single { CoreApi.instance.getWorkspaceApi() }
 }
 
 val interactorsModule = module {
     factory<ISignInInteractor> { SignInInteractor() }
     factory<ISignUpInteractor> { SignUpInteractor() }
     factory<IUserInteractor> { UserInteractor() }
+    factory<IWorkspaceInteractor> { WorkspaceInteractor() }
 }
 
 val providersModule = module {

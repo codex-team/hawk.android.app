@@ -7,6 +7,7 @@ import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity
+import so.codex.sourceinterfaces.entity.TokenEntity
 import so.codex.sourceinterfaces.response.TokenResponse
 
 /**
@@ -14,6 +15,7 @@ import so.codex.sourceinterfaces.response.TokenResponse
  * Реализует интерфейс [IAuthApi]
  */
 class AuthApi private constructor(private val service: AuthApiMethods) : IAuthApi {
+
     companion object {
         val instance by lazy {
             AuthApi(AuthApiMethodsImpl(CoreApi.apollo))
@@ -32,5 +34,9 @@ class AuthApi private constructor(private val service: AuthApiMethods) : IAuthAp
     override fun signUp(signUp: SignUpEntity): Single<Boolean> =
             service.signUp(signUp)
                 .subscribeOnIO().map { it.signUp }
+
+    override fun refreshToken(token: TokenEntity): Single<TokenResponse> =
+            service.refreshToken(token)
+                .subscribeOnIO()
 
 }
