@@ -3,7 +3,7 @@ package so.codex.hawkapi
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.Single
-import so.codex.hawkapi.api.AuthApiMethods
+import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity
 import so.codex.sourceinterfaces.response.LoginResponse

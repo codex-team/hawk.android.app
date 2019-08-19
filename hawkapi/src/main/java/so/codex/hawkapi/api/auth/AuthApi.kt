@@ -1,8 +1,9 @@
-package so.codex.hawkapi.api
+package so.codex.hawkapi.api.auth
 
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import so.codex.hawkapi.AuthApiMethodsImpl
+import so.codex.hawkapi.api.CoreApi
+import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity
@@ -12,7 +13,7 @@ import so.codex.sourceinterfaces.response.TokenResponse
  * Данный класс является singleton, в котором определена логика того, как взаимодействовать с сервером, во что завернуть объект и какой отдать.
  * Реализует интерфейс [IAuthApi]
  */
-final class AuthApi private constructor(private val service: AuthApiMethods) : IAuthApi {
+class AuthApi private constructor(private val service: AuthApiMethods) : IAuthApi {
     companion object {
         val instance by lazy {
             AuthApi(AuthApiMethodsImpl(CoreApi.apollo))
@@ -26,10 +27,10 @@ final class AuthApi private constructor(private val service: AuthApiMethods) : I
      */
     override fun login(auth: AuthEntity): Single<TokenResponse> =
             service.login(auth)
-                .subscribeOn(Schedulers.io()).map { it.login }
+                .subscribeOnIO().map { it.login }
 
     override fun signUp(signUp: SignUpEntity): Single<Boolean> =
             service.signUp(signUp)
-                .subscribeOn(Schedulers.io()).map { it.signUp }
+                .subscribeOnIO().map { it.signUp }
 
 }

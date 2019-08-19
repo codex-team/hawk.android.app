@@ -4,7 +4,10 @@ import com.apollographql.apollo.ApolloClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import so.codex.hawkapi.SourceApi
+import so.codex.hawkapi.api.auth.AuthApi
+import so.codex.hawkapi.api.workspace.WorkspaceApi
 import so.codex.sourceinterfaces.IAuthApi
+import so.codex.sourceinterfaces.IWorkspaceApi
 
 /**
  * Ядро, в коротом определяются все API, с помощью которых можно будет взаимодействовать с сервером
@@ -46,4 +49,6 @@ class CoreApi private constructor() : SourceApi {
      * @see IAuthApi
      */
     override fun getAuthApi(): IAuthApi = AuthApi.instance
+
+    override fun getWorkspaceApi(): IWorkspaceApi = WorkspaceApi.instance
 }

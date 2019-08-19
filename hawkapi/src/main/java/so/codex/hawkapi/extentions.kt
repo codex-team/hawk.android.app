@@ -3,6 +3,7 @@ package so.codex.hawkapi
 import com.apollographql.apollo.api.Response
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import so.codex.hawkapi.exceptions.MultiHttpErrorsException
 import so.codex.hawkapi.exceptions.SomethingWentWrongException
 
@@ -19,15 +20,20 @@ fun <T: Response<O?>, O: Any?> Observable<T?>.handleHttpErrorsSingle() : Single<
         }
     }
 }
-fun <T: Response<*>> Observable<T?>.handleHttpErrors() : Observable<T> {
+
+fun <T : Response<O?>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O> {
     return flatMap {
         when {
-            it.data() == null -> Observable.error<T>(Throwable("login data is null"))
+            it.data() == null -> Observable.error<O>(Throwable("login data is null"))
+            it.data() != null -> Observable.just(it.data()!!)
             it.hasErrors() -> {
                 val errors = it.errors()
-                Observable.error<T>(MultiHttpErrorsException("Multi errors", errors.map { it.message() ?: "" }))
+                Observable.error<O>(MultiHttpErrorsException("Multi errors", errors.map { it.message() ?: "" }))
             }
-            else -> Observable.error<T>(SomethingWentWrongException())
+            else -> Observable.error<O>(SomethingWentWrongException())
         }
     }
 }
+
+fun <T> Observable<T>.subscribeOnIO(): Observable<T> = subscribeOn(Schedulers.io())
+fun <T> Single<T>.subscribeOnIO(): Single<T> = subscribeOn(Schedulers.io())
