@@ -20,4 +20,7 @@ class UserInteractor : IUserInteractor, KoinComponent {
         }
     }
 
+    override fun clear() {
+        userTokenDAO.clean()
+    }
 }

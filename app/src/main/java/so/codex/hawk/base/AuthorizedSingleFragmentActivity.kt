@@ -1,11 +1,10 @@
-package so.codex.hawk.ui
+package so.codex.hawk.base
 
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import so.codex.codexbl.presenter.AuthorizedPresenter
 import so.codex.codexbl.view.IAuthorizedView
-import so.codex.hawk.base.BaseSingleFragmentActivity
 import so.codex.hawk.router.ILogoutRouter
 import so.codex.hawk.ui.login.LoginActivity
 
@@ -38,6 +37,10 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
     override fun onStop() {
         super.onStop()
         mAuthPresenter.detached()
+    }
+
+    fun pressLogout() {
+        mAuthPresenter.clearAndLogout()
     }
 
     override fun logout() {

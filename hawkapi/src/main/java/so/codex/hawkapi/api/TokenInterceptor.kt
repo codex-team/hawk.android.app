@@ -2,29 +2,35 @@ package so.codex.hawkapi.api
 
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.util.concurrent.atomic.AtomicReference
 
 class TokenInterceptor : Interceptor {
     companion object {
         val instance = TokenInterceptor()
     }
 
-    private var token: String = ""
+    private var token = AtomicReference<String>("")
 
     fun updateToken(token: String) {
-        this.token = token
+        this.token.set(token)
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val origin = chain.request()
-        return if (token.isNotEmpty())
-            chain.proceed(
-                origin.newBuilder()
+        val localToken = token.get()
+        val response = if (localToken.isNotEmpty()) {
+            val request = origin.newBuilder()
                     .method(origin.method, origin.body)
-                    .addHeader("Authorization", "Bearer $token")
+                    .addHeader("Authorization", "Bearer $localToken")
                     .build()
+            chain.proceed(
+                    request
             )
-        else
+        } else {
             chain.proceed(chain.request())
+        }
+
+        return response
     }
 
 }

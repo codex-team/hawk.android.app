@@ -1,9 +1,9 @@
 package so.codex.hawk.base
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import so.codex.codexbl.main.StartKoinComponent
 
-class HawkApplication : Application() {
+class HawkApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         StartKoinComponent.start(this)

@@ -20,4 +20,9 @@ class AuthorizedPresenter() : BasePresenter<IAuthorizedView>(), KoinComponent {
             })
             view?.logout()
     }
+
+    fun clearAndLogout() {
+        userInteractor.clear()
+        view?.logout()
+    }
 }

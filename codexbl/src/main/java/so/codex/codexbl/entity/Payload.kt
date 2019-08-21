@@ -1,8 +1,8 @@
-package so.codex.sourceinterfaces.entity
+package so.codex.codexbl.entity
 
 import java.util.*
 
-data class EventPayloadEntity(
+data class Payload(
         val title: String,
         val timestamp: Date
 )

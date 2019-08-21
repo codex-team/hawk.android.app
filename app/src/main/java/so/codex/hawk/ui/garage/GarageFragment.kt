@@ -12,6 +12,7 @@ import so.codex.codexbl.presenter.workspace.WorkspacePresenter
 import so.codex.codexbl.view.workspace.IWorkspaceView
 import so.codex.hawk.R
 import so.codex.hawk.adapters.ProjectsItemsAdapter
+import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
 
 class GarageFragment : BaseFragment(), IWorkspaceView {
@@ -28,7 +29,12 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
             rv_project_list.visibility = View.VISIBLE
             tv_empty_workspace.visibility = View.GONE
         }
-        rv_project_list.adapter
+        if (rv_project_list.adapter is ProjectsItemsAdapter) {
+            (rv_project_list.adapter as ProjectsItemsAdapter).data = workspace.fold(mutableListOf()) { list, w ->
+                list.addAll(w.projects)
+                list
+            }
+        }
     }
 
     override fun showLoader() {
@@ -62,6 +68,12 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         }
         rv_project_list.adapter = ProjectsItemsAdapter()
         rv_project_list.layoutManager = LinearLayoutManager(context)
+
+        fa_exit.setOnClickListener {
+            if (activity is AuthorizedSingleFragmentActivity) {
+                (activity as AuthorizedSingleFragmentActivity).pressLogout()
+            }
+        }
         presenter.loadAllWorkspaces()
     }
 

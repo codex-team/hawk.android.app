@@ -1,7 +1,6 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.Observable
 import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
@@ -16,19 +15,17 @@ import so.codex.sourceinterfaces.response.WorkspaceResponse
 class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods {
     override fun getWorkspaces(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         TokenInterceptor.instance.updateToken(token)
-        return Rx2Apollo.from(
-            apolloClient.query(
-//                GetWorkspacesQuery(null, null, null)
+        return apolloClient.query(
                 GetWorkspacesQuery.builder()
-                    .build()
-            )
-        ).handleHttpErrorsSingle().map {
-            mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
-                it.workspaces?.map { it!! }?.forEach {
-                    add(it.toFullWorkspaceResponse())
-                } ?: listOf<WorkspaceResponse<FullWorkspaceEntity>>()
-            }
-        }.flattenAsObservable { it }
+                        .build()
+        ).toRxJava()
+                .handleHttpErrorsSingle().map {
+                    mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
+                        it.workspaces?.map { it!! }?.forEach {
+                            add(it.toFullWorkspaceResponse())
+                        } ?: listOf<WorkspaceResponse<FullWorkspaceEntity>>()
+                    }
+                }.flattenAsObservable { it }
     }
 
     private fun GetWorkspacesQuery.Workspace.toFullWorkspaceResponse(): WorkspaceResponse<FullWorkspaceEntity> {
@@ -48,14 +45,14 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
 
     private fun GetWorkspacesQuery.Project.Fragments.toProjectEntity(): ProjectEntity {
         return ProjectEntity(
-            this.projectsList.id(),
-            "",
-            this.projectsList.name(),
-            "",
-            "",
-            this.projectsList.image() ?: "",
-            null,
-            this.projectsList.events()?.map {
+                this.projectsList.id(),
+                "",
+                this.projectsList.name(),
+                projectsList.description() ?: "",
+                "",
+                this.projectsList.image() ?: "",
+                null,
+                this.projectsList.events()?.map {
                 it.fragments().toEventEntity()
             } ?: listOf()
         )
@@ -71,8 +68,8 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
 
     private fun EventsList.Payload.toEventPayloadEntity(): EventPayloadEntity {
         return EventPayloadEntity(
-            this.title(),
-            this.timestamp() as Long
+                this.title(),
+                this.timestamp()
         )
     }
 }

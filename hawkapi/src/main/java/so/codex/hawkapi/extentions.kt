@@ -1,7 +1,9 @@
 package so.codex.hawkapi
 
+import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Error
 import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.exception.ApolloException
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -10,7 +12,7 @@ import so.codex.hawkapi.exceptions.BaseHttpException
 import so.codex.hawkapi.exceptions.MultiHttpErrorsException
 import so.codex.hawkapi.exceptions.SomethingWentWrongException
 
-fun <T: Response<O?>, O: Any?> Observable<T?>.handleHttpErrorsSingle() : Single<O> {
+fun <T : Response<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O> {
     return firstOrError().flatMap {
         when {
             it.hasErrors() -> {
@@ -27,7 +29,7 @@ fun <T: Response<O?>, O: Any?> Observable<T?>.handleHttpErrorsSingle() : Single<
     }
 }
 
-fun <T : Response<O?>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O> {
+fun <T : Response<O>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O> {
     return flatMap {
         when {
             it.data() == null -> Observable.error<O>(Throwable("login data is null"))
@@ -41,6 +43,22 @@ fun <T : Response<O?>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O
             }
             else -> Observable.error<O>(SomethingWentWrongException())
         }
+    }
+}
+
+fun <T> ApolloCall<T>.toRxJava(): Observable<Response<T>> {
+    return Observable.create<Response<T>> {
+        val call = clone()
+        call.enqueue(object : ApolloCall.Callback<T>() {
+            override fun onFailure(e: ApolloException) {
+                it.onError(e)
+            }
+
+            override fun onResponse(response: Response<T>) {
+                it.onNext(response)
+            }
+
+        })
     }
 }
 

@@ -1,13 +1,19 @@
 package so.codex.hawkapi.api
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.response.CustomTypeAdapter
+import com.apollographql.apollo.response.CustomTypeValue
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import so.codex.hawkapi.SourceApi
 import so.codex.hawkapi.api.auth.AuthApi
 import so.codex.hawkapi.api.workspace.WorkspaceApi
+import so.codex.hawkapi.type.CustomType
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.IWorkspaceApi
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Ядро, в коротом определяются все API, с помощью которых можно будет взаимодействовать с сервером
@@ -24,7 +30,20 @@ class CoreApi private constructor() : SourceApi {
             ApolloClient.builder()
                     .serverUrl(baseUrl)
                     .okHttpClient(client)
+                    .addCustomTypeAdapter(CustomType.DATETIME, customDateTimeAdapter)
                     .build()
+        }
+
+        private val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+        private val customDateTimeAdapter = object : CustomTypeAdapter<Date> {
+            override fun encode(value: Date): CustomTypeValue<*> {
+                return CustomTypeValue.GraphQLString(dateFormat.format(value))
+            }
+
+            override fun decode(value: CustomTypeValue<*>): Date {
+                return dateFormat.parse(value.value.toString())
+            }
         }
 
         /**
@@ -36,8 +55,8 @@ class CoreApi private constructor() : SourceApi {
             }
 
             OkHttpClient.Builder()
-                .addInterceptor(interceptor)
                 .addInterceptor(TokenInterceptor.instance)
+                    .addInterceptor(interceptor)
                 .build()
         }
 

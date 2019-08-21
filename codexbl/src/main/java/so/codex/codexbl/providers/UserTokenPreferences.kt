@@ -13,12 +13,14 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         const val LAST_SIGNIN_EMAIL_PREFERENCE_KEY = "last_signin_email_preference_key"
     }
 
+    @Synchronized
     override fun getUserToken(): UserToken? {
         val token = preferences.getString(TOKEN_PREFERENCES_KEY, null)
         val refresh = preferences.getString(REFRESH_TOKEN_PREFERENCES_KEY, null)
         return if (token == null || refresh == null) null else UserToken(token, refresh)
     }
 
+    @Synchronized
     override fun saveUserToken(userToken: UserToken): Boolean {
         preferences.edit()
                 .putString(TOKEN_PREFERENCES_KEY, userToken.accessToken)
@@ -27,14 +29,16 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         return true
     }
 
+    @Synchronized
     override fun saveSession(sessionData: SessionData): Boolean {
         saveUserToken(sessionData.toUserToken())
         preferences.edit()
-            .putString(LAST_SIGNIN_EMAIL_PREFERENCE_KEY, sessionData.email)
-            .apply()
+                .putString(LAST_SIGNIN_EMAIL_PREFERENCE_KEY, sessionData.email)
+                .apply()
         return true
     }
 
+    @Synchronized
     override fun getLastSession(): SessionData? {
         return getUserToken().let {
             val email = preferences.getString(LAST_SIGNIN_EMAIL_PREFERENCE_KEY, null)
@@ -45,7 +49,7 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         }
     }
 
-
+    @Synchronized
     override fun clean() {
         preferences.edit()
                 .remove(TOKEN_PREFERENCES_KEY)
