@@ -3,6 +3,7 @@ package so.codex.hawkapi
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.rx2.Rx2Apollo
 import io.reactivex.Observable
+import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.hawkapi.fragment.EventsList
 import so.codex.hawkapi.fragment.ProjectsList
@@ -14,8 +15,10 @@ import so.codex.sourceinterfaces.response.WorkspaceResponse
 
 class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods {
     override fun getWorkspaces(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
+        TokenInterceptor.instance.updateToken(token)
         return Rx2Apollo.from(
             apolloClient.query(
+//                GetWorkspacesQuery(null, null, null)
                 GetWorkspacesQuery.builder()
                     .build()
             )

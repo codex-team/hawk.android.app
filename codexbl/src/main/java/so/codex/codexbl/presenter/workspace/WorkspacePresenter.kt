@@ -2,14 +2,12 @@ package so.codex.codexbl.presenter.workspace
 
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import so.codex.codexbl.base.BasePresenter
+import so.codex.codexbl.base.LoaderPresenter
 import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.view.workspace.IWorkspaceView
 
-class WorkspacePresenter : BasePresenter<IWorkspaceView>(), KoinComponent {
+class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
     private val workspaceInteractor: IWorkspaceInteractor by inject()
-
-
 
     override fun onAttach() {
         super.onAttach()
@@ -19,7 +17,24 @@ class WorkspacePresenter : BasePresenter<IWorkspaceView>(), KoinComponent {
         super.onDetach()
     }
 
-    fun getAllWorkspaces() {
+    fun loadAllWorkspaces() {
+        compositeDisposable.of(
+            workspaceInteractor
+                .getWorkspaces()
+                .attachLoader()
+                .subscribe({
+                    if (!it.isNullOrEmpty())
+                        view?.showWorkspaces(it)
+                    else
+                        view?.showEmptyWorkspace()
+                }, {
+                    it.printStackTrace()
+                    view?.showErrorMessage(it.message ?: " error")
+                })
+        )
+    }
 
+    fun unsubscribe() {
+        compositeDisposable.dispose()
     }
 }

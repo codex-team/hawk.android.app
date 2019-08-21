@@ -40,9 +40,7 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
     override fun refreshToken(token: TokenEntity): Single<TokenResponse> {
         return Rx2Apollo.from(
                 apolloClient.mutate(
-                        RefreshTokensMutation.builder()
-                                .refreshToken(token.refreshToken)
-                                .build()
+                    RefreshTokensMutation(token.refreshToken)
                 )
         ).handleHttpErrorsSingle().map {
             TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)

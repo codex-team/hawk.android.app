@@ -35,7 +35,10 @@ class CoreApi private constructor() : SourceApi {
                 level = HttpLoggingInterceptor.Level.BODY
             }
 
-            OkHttpClient.Builder().addInterceptor(interceptor).build()
+            OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .addInterceptor(TokenInterceptor.instance)
+                .build()
         }
 
         val instance by lazy {

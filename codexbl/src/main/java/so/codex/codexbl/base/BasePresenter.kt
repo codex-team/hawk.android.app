@@ -3,6 +3,7 @@ package so.codex.codexbl.base
 import so.codex.codexbl.view.base.IBaseView
 
 abstract class BasePresenter<V> where V : IBaseView {
+    protected val compositeDisposable = CompositeDisposable()
     var view: V? = null
         private set(value) {
             field = value

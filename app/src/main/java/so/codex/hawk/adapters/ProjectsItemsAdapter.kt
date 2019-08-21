@@ -3,10 +3,14 @@ package so.codex.hawk.adapters
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import so.codex.codexbl.entity.Workspace
 import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.ProjectItemView
 
-class ProjectItemsAdapter : RecyclerView.Adapter<ProjectItemsAdapter.ProjectItemViewHolder>() {
+class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectItemViewHolder>() {
+
+    var data = listOf<Workspace>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectItemViewHolder {
         val view = ProjectItemView(parent.context)
         view.layoutParams = ViewGroup.LayoutParams(
@@ -16,8 +20,9 @@ class ProjectItemsAdapter : RecyclerView.Adapter<ProjectItemsAdapter.ProjectItem
         return ProjectItemViewHolder(view)
     }
 
+
     override fun getItemCount(): Int {
-        return 3
+        return data.size
     }
 
     override fun onBindViewHolder(holder: ProjectItemViewHolder, position: Int) {
