@@ -61,7 +61,7 @@ class ProjectItemView @JvmOverloads constructor(
                 )
                 val canvas = Canvas(defaultImage!!)
                 val fontPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                    textSize = 16f * resources.displayMetrics.density + 0.5f
+                    textSize = 14f * resources.displayMetrics.density + 0.5f
                     typeface = Typeface.create("roboto", Typeface.BOLD)
                     color = view.tv_title.currentTextColor
                 }
