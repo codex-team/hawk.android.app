@@ -3,11 +3,13 @@ package so.codex.uicomponent.edittext
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
+import android.text.InputFilter
 import android.text.InputType
 import android.util.AttributeSet
 import android.util.Log
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.getColorOrThrow
 import kotlinx.android.synthetic.main.view_edit_text.view.*
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
@@ -42,21 +44,23 @@ class EditText @JvmOverloads constructor(
                     InputType.TYPE_NULL
                 }
             }
-            /*context.theme.obtainStyledAttributes(arrayOf(android.R.attr.editTextColor, android.R.attr.textColor).toIntArray()).apply {
-                body_edit_text.setTextColor(
-                    getColor(
-                        R.styleable.EditText_codex_textColor,
-                        ContextCompat.getColor(context, android.R.color.black)
-                    )
-                )
-                title_edit_text.setTextColor(
-                    getColor(
-                        R.styleable.EditText_codex_titleColor,
-                        ContextCompat.getColor(context, android.R.color.black)
-                    )
-                )
-                recycle()
-            }*/
+            if (hasValue(R.styleable.EditText_codex_titleColor)) {
+                title_edit_text.setTextColor(getColorOrThrow(R.styleable.EditText_codex_titleColor))
+            }
+            if (hasValue(R.styleable.EditText_codex_textColor)) {
+                editView.setTextColor(getColorOrThrow(R.styleable.EditText_codex_textColor))
+            }
+            if (!getBoolean(R.styleable.EditText_codex_hasSpacing, true)) {
+                editView.filters = editView.filters.toMutableList().apply {
+                    add(InputFilter { source, start, end, dest, dstart, dend ->
+                        if (source.contains("\\s+".toRegex())) {
+                            source.replace("\\s+".toRegex(), "")
+                        } else {
+                            null
+                        }
+                    })
+                }.toTypedArray()
+            }
             recycle()
         }
         editView.setOnFocusChangeListener { _, hasFocus ->
@@ -105,6 +109,12 @@ class EditText @JvmOverloads constructor(
         } else {
             super.onRestoreInstanceState(state)
         }
+    }
+
+    fun addFilter(inputFilter: InputFilter) {
+        editView.filters = editView.filters.toMutableList().apply {
+            add(inputFilter)
+        }.toTypedArray()
     }
 
 

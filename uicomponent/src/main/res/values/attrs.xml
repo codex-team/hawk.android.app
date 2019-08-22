@@ -23,6 +23,7 @@
             <enum name="text" value="0" />
             <enum name="textPassword" value="1" />
         </attr>
+        <attr name="codex_hasSpacing" format="boolean" />
         <attr name="codex_textViewStyle" format="reference" />
         <attr name="codex_editTextStyle" format="reference" />
     </declare-styleable>

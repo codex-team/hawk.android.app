@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/hawk_background</item>
         <item name="android:buttonStyle">@style/CodexTheme.Button</item>
-        <!--<item name="codexEditTextTheme">@style/CodexTheme.EditText</item>-->
+        <item name="codexEditTextTheme">@style/CodexTheme.EditText</item>
         <item name="customSearchViewStyle">@style/CodexTheme.SearchView</item>
     </style>
 
