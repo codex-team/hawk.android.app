@@ -62,6 +62,23 @@ fun <T> ApolloCall<T>.toRxJava(): Observable<Response<T>> {
     }
 }
 
+fun <T> ApolloCall<T>.toRxJava(before: () -> Unit): Observable<Response<T>> {
+    return Observable.create<Response<T>> {
+        before()
+        val call = clone()
+        call.enqueue(object : ApolloCall.Callback<T>() {
+            override fun onFailure(e: ApolloException) {
+                it.onError(e)
+            }
+
+            override fun onResponse(response: Response<T>) {
+                it.onNext(response)
+            }
+
+        })
+    }
+}
+
 private fun Error.convert(): BaseHttpException =
     customAttributes().let {
         return if (it.containsKey("extensions")) {

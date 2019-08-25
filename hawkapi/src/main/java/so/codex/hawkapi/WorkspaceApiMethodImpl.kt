@@ -30,16 +30,16 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
 
     private fun GetWorkspacesQuery.Workspace.toFullWorkspaceResponse(): WorkspaceResponse<FullWorkspaceEntity> {
         return WorkspaceResponse(
-            FullWorkspaceEntity(
-                this.id,
-                this.name ?: "",
-                "",
-                this.image ?: "",
-                listOf(),
-                this.projects?.map {
-                    it!!.fragments().toProjectEntity()
-                } ?: listOf()
-            )
+                FullWorkspaceEntity(
+                        this.id,
+                        this.name ?: "",
+                        "",
+                        this.image ?: "",
+                        listOf(),
+                        this.projects?.map {
+                            it!!.fragments().toProjectEntity()
+                        } ?: listOf()
+                )
         )
     }
 
@@ -53,16 +53,16 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
                 this.projectsList.image() ?: "",
                 null,
                 this.projectsList.events()?.map {
-                it.fragments().toEventEntity()
-            } ?: listOf()
+                    it.fragments().toEventEntity()
+                } ?: listOf()
         )
     }
 
     private fun ProjectsList.Event.Fragments.toEventEntity(): EventEntity {
         return EventEntity(
-            this.eventsList().id(),
-            "",
-            this.eventsList().payload().toEventPayloadEntity()
+                this.eventsList().id(),
+                "",
+                this.eventsList().payload().toEventPayloadEntity()
         )
     }
 

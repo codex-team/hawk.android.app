@@ -1,5 +1,6 @@
 package so.codex.hawkapi.api
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.util.concurrent.atomic.AtomicReference
@@ -12,6 +13,7 @@ class TokenInterceptor : Interceptor {
     private var token = AtomicReference<String>("")
 
     fun updateToken(token: String) {
+        Log.i("TokenInterceptor", "token updated $token")
         this.token.set(token)
     }
 

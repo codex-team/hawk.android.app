@@ -1,6 +1,7 @@
 package so.codex.codexbl.providers
 
 import android.content.Context
+import android.util.Log
 import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.entity.UserToken
 
@@ -17,11 +18,14 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
     override fun getUserToken(): UserToken? {
         val token = preferences.getString(TOKEN_PREFERENCES_KEY, null)
         val refresh = preferences.getString(REFRESH_TOKEN_PREFERENCES_KEY, null)
-        return if (token == null || refresh == null) null else UserToken(token, refresh)
+        return if (token == null || refresh == null) null else UserToken(token, refresh).also {
+            Log.i("UserTokenPreference", "get user token = $it")
+        }
     }
 
     @Synchronized
     override fun saveUserToken(userToken: UserToken): Boolean {
+        Log.i("UserTokenPreference", "save $userToken")
         preferences.edit()
                 .putString(TOKEN_PREFERENCES_KEY, userToken.accessToken)
                 .putString(REFRESH_TOKEN_PREFERENCES_KEY, userToken.refreshToken)

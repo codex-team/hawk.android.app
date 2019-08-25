@@ -3,6 +3,7 @@ package so.codex.hawkapi.api.auth
 import io.reactivex.Single
 import so.codex.hawkapi.AuthApiMethodsImpl
 import so.codex.hawkapi.api.CoreApi
+import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
@@ -38,5 +39,8 @@ class AuthApi private constructor(private val service: AuthApiMethods) : IAuthAp
     override fun refreshToken(token: TokenEntity): Single<TokenResponse> =
             service.refreshToken(token)
                 .subscribeOnIO()
+                    .doOnSuccess {
+                        TokenInterceptor.instance.updateToken(it.accessToken)
+                    }
 
 }

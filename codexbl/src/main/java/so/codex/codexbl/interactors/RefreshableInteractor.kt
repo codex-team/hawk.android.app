@@ -7,6 +7,7 @@ import org.koin.core.inject
 import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.exceptions.NoAuthorizedException
 import so.codex.codexbl.interactors.interfaces.IRefreshableInteractor
+import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.TokenEntity
@@ -34,11 +35,10 @@ open class RefreshableInteractor() : IRefreshableInteractor, KoinComponent {
             it.flatMap {
                 if (it is AccessTokenExpiredException && token.get().isNotEmpty() && !first) {
                     first = true
-                    authApi.refreshToken(TokenEntity(userInteractor.getLastSession()!!.refreshToken))
-                            .delay(100, TimeUnit.MILLISECONDS)
+                    val lastSession = userInteractor.getLastSession()!!
+                    authApi.refreshToken(TokenEntity(lastSession.refreshToken))
                             .doOnSuccess {
                                 Log.i("RefreshableInteractor", "update token ${it.accessToken} and refresh token ${it.refreshToken}")
-                                val lastSession = userInteractor.getLastSession()!!
                                 token.set(it.accessToken)
                                 userInteractor.saveSession(
                                         SessionData(
@@ -47,10 +47,12 @@ open class RefreshableInteractor() : IRefreshableInteractor, KoinComponent {
                                                 it.refreshToken
                                         )
                                 )
-                            }.toObservable()
+                            }.delay(100, TimeUnit.MILLISECONDS).toObservable()
                 } else {
                     Observable.error(it)
                 }
+            }.doOnNext {
+                Log.i("RefreshableInteractor", "Already to next")
             }
         }
     }

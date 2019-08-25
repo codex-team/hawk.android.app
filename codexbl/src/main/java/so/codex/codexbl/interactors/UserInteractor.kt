@@ -11,6 +11,7 @@ class UserInteractor : IUserInteractor, KoinComponent {
     private val userTokenDAO: UserTokenDAO by inject(named("preferences"))
 
     override fun saveSession(session: SessionData): Boolean {
+        Log.i("UserInteractor", "saveSession = $session")
         return userTokenDAO.saveSession(session)
     }
 
