@@ -40,7 +40,13 @@ class ProjectItemView @JvmOverloads constructor(
 
     var title by textViewDelegate(view.tv_title)
     var message by textViewDelegate(view.tv_message)
-    var count by textViewDelegate(view.tv_count)
+    var count by textViewDelegate(view.tv_count) { v, text ->
+        if (text.isEmpty() || text == "0") {
+            v.visibility = View.GONE
+        } else {
+            v.visibility = View.VISIBLE
+        }
+    }
     var uuid: String = ""
 
     private var defaultImage: Bitmap? = null

@@ -66,8 +66,12 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         rv_refresh_layout.setOnRefreshListener {
             presenter.loadAllWorkspaces()
         }
-        rv_project_list.adapter = ProjectsItemsAdapter()
-        rv_project_list.layoutManager = LinearLayoutManager(context)
+
+        rv_project_list.apply {
+            adapter = ProjectsItemsAdapter()
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+        }
 
         fa_exit.setOnClickListener {
             if (activity is AuthorizedSingleFragmentActivity) {

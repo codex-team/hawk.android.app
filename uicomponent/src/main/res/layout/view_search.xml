@@ -15,7 +15,9 @@
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:layout_marginStart="7dp"
-        android:src="@drawable/ic_search_black_24dp" />
+        android:padding="3dp"
+        android:src="@drawable/ic_search_black_24dp"
+        tools:layout_gravity="center" />
 
     <EditText
         android:id="@+id/search_edit_text"
