@@ -49,4 +49,28 @@
         <attr name="textColor" format="color" />
         <attr name="hint" format="string" />
     </declare-styleable>
+
+    <attr name="plotViewStyle" format="reference" />
+
+    <declare-styleable name="PlotView">
+        <attr name="colorStyle" format="enum">
+            <enum name="color" value="0" />
+            <enum name="gradient" value="1" />
+        </attr>
+        <attr name="startColor" format="color" />
+        <attr name="endColor" format="color" />
+        <attr name="plotPaddingLeft" format="dimension" />
+        <attr name="plotPaddingRight" format="dimension" />
+        <attr name="plotPaddingTop" format="dimension" />
+        <attr name="plotPaddingBottom" format="dimension" />
+        <attr name="plotCount" format="integer" />
+        <attr name="labelFontStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+        </attr>
+        <attr name="labelFontSize" format="dimension" />
+        <attr name="labelFontColor" format="color" />
+        <attr name="labelFontFamily" format="string" />
+    </declare-styleable>
 </resources>
