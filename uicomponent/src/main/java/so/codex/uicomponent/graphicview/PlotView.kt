@@ -9,12 +9,14 @@ import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
+import android.graphics.Rect
 import android.graphics.Shader
 import android.graphics.Typeface
 import android.text.TextPaint
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import so.codex.uicomponent.R
 import kotlin.math.roundToInt
@@ -52,7 +54,7 @@ class PlotView @JvmOverloads constructor(
      * Отступы графика снизу
      * По умолчанию: 12dp
      */
-    private var plotPaddingBottom: Float = 12.toDp()
+    private var plotPaddingBottom: Float = 30.toDp()
 
     /**
      * Отступы графика сверху
@@ -92,6 +94,14 @@ class PlotView @JvmOverloads constructor(
      * По умолчанию: цвет серый
      */
     private var labelFontColor = Color.GRAY
+
+    private var isTouched = false
+
+    private var selectedPoint: Point? = null
+
+    private var animation: ObjectAnimator = ObjectAnimator.ofFloat(this, "phase", 1f, 0f).apply {
+        duration = 2000
+    }
 
     init {
         context.obtainStyledAttributes(
@@ -161,6 +171,9 @@ class PlotView @JvmOverloads constructor(
      */
     public var data by Delegates.observable(listOf<Point>()) { _, old, new ->
         handleData(new)
+        if (isAttachedToWindow) {
+            animation.start()
+        }
     }
 
     /**
@@ -197,10 +210,6 @@ class PlotView @JvmOverloads constructor(
                 path.lineTo(x, y)
             }
             measure = PathMeasure(path, false)
-            ObjectAnimator.ofFloat(this, "phase", 1f, 0f).apply {
-                duration = 2000
-                start()
-            }
         }
     }
 
@@ -238,33 +247,44 @@ class PlotView @JvmOverloads constructor(
      */
     private fun handleLabels(new: List<String>) {
         post {
-            val lastLabels = new.takeLast(plotCount)
+            val lastLabels = new.takeLast(plotCount - 1).take(plotCount - 2)
             val width = mWidth
-            val step = width / (lastLabels.size - 1)
+            val offset = labelPaint.descent() - labelPaint.ascent()
+            val height = mHeight + paddingTop + plotPaddingTop + offset
+            val step = width / (lastLabels.size + 1)
             Log.i("PlotView", "step = $step")
             val betweenPadding = 2.toDp()
-            mXLabel = List(lastLabels.size - 2) {
-                Label(
-                        TextUtils.ellipsize(
-                                lastLabels[it + 1],
-                                labelPaint,
-                                step - betweenPadding * 2,
-                                TextUtils.TruncateAt.END
-                        ),
-                        (step * (it + 1)) - (step - betweenPadding * 2) / 2 + betweenPadding * 2,
-                        height - 2.toDp()
-                ).also { l ->
-                    Log.i("PlotView", "Label$it text = ${l.text} x = ${l.x} y = ${l.y}")
+            mXLabel = mutableListOf<Label>().apply {
+                lastLabels.forEachIndexed { ind, it ->
+                    addAll(it.toLabelList(step, betweenPadding, height, ind + 1))
                 }
             }
         }
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        animation.start()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        animation.cancel()
+    }
 
     override fun invalidate() {
         super.invalidate()
-        //handleData(data)
-        //handleLabels(xLabel)
+        if (!animation.isStarted || !animation.isRunning || !isTouched) {
+            invalidateData()
+        }
+        if (isTouched) {
+            isTouched = false
+        }
+    }
+
+    private fun invalidateData() {
+        handleData(data)
+        handleLabels(xLabel)
     }
 
     /**
@@ -295,14 +315,64 @@ class PlotView @JvmOverloads constructor(
         super.onDraw(canvas)
 
         canvas.drawPath(path, paint)
+        canvas.drawLine(
+                0f,
+                mHeight + paddingTop + plotPaddingTop,
+                width + paddingStart + plotPaddingLeft,
+                mHeight + paddingTop + plotPaddingTop,
+                paint
+        )
         mXLabel.forEach {
             canvas.drawText(it.text.toString(), it.x, it.y, labelPaint)
         }
+    }
 
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            isTouched = true
+
+        }
+        return super.onTouchEvent(event)
     }
 
     fun Int.toDp(): Float = resources.displayMetrics.density * this
 
     data class Point(val x: Int, val y: Int)
+
+    /**
+     * Использутеся внутри класса [PlotView] для отображения надписей под графиком
+     * @param text Текст, который будет отображаться под графиком соответствующий точке
+     * @param x Х координата в плоскости
+     * @param y Y координата в плоскости
+     */
     private data class Label(val text: CharSequence, val x: Float, val y: Float)
+
+    private fun String.toLabelList(step: Float, betweenPadding: Float, y: Float, offset: Int): List<Label> {
+        val lineOffset = labelPaint.descent() - labelPaint.ascent()
+        return this.split(" ").mapIndexed { index, text ->
+            val ellipsizedText = TextUtils.ellipsize(
+                    text,
+                    labelPaint,
+                    step - betweenPadding * 2,
+                    TextUtils.TruncateAt.END
+            )
+            val measureText = labelPaint.measureText(ellipsizedText.toString())
+            val textRect = Rect()
+            labelPaint.getTextBounds(text, 0, text.length, textRect)
+            val offsetText = (step - betweenPadding * 2) / 2
+            Label(
+                    ellipsizedText.toString(),
+                    step * offset - textRect.exactCenterX(),
+                    y + lineOffset * index
+            ).also { l ->
+                Log.i(
+                        "PlotView",
+                        "Label$offset text = ${l.text} x = ${l.x} y = ${l.y} step = ${step * offset} offsetText = $offsetText measureText = $measureText"
+                )
+            }
+        }
+    }
+
+
+    private data class PlotPoint(val x: Float, val y: Float, val point: Point)
 }
