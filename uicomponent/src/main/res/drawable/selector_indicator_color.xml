@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item app:is_less="true" android:color="#0f0" />
+    <item app:is_more="true" android:color="#f00" />
+
+    <item android:color="#0ff" />
+</selector>

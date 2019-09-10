@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item app:is_more="true" android:drawable="@drawable/ic_indicator_more" />
+    <item app:is_less="true" android:drawable="@drawable/ic_indicator_less" />
+
+    <item android:drawable="@drawable/ic_indicator_default" />
+</selector>

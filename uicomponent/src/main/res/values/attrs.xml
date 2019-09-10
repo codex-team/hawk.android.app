@@ -3,6 +3,8 @@
     <attr name="boundedCardViewTheme" format="reference" />
     <attr name="corners" format="dimension" />
     <attr name="codex_hintColor" format="color" />
+    <attr name="count" format="integer" />
+    <attr name="baseCount" format="integer" />
 
     <declare-styleable name="BoundedCardView">
         <attr name="maxWidth" format="dimension" />
@@ -72,5 +74,26 @@
         <attr name="labelFontSize" format="dimension" />
         <attr name="labelFontColor" format="color" />
         <attr name="labelFontFamily" format="string" />
+    </declare-styleable>
+
+    <attr name="valueIndicatorStyle" format="reference" />
+
+    <declare-styleable name="ValueIndicator">
+        <attr name="count" />
+        <attr name="baseCount" />
+        <attr name="colorMore" format="color" />
+        <attr name="colorEqual" format="color" />
+        <attr name="colorLess" format="color" />
+        <attr name="fontSize" format="dimension" />
+    </declare-styleable>
+
+    <attr name="valueIndicatorViewStyle" format="reference" />
+
+    <declare-styleable name="ValueIndicatorView">
+        <attr name="is_more" format="boolean" />
+        <attr name="is_less" format="boolean" />
+        <attr name="count" />
+        <attr name="baseCount" />
+        <attr name="drawableTint" format="reference" />
     </declare-styleable>
 </resources>

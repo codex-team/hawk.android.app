@@ -19,6 +19,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import so.codex.uicomponent.R
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
@@ -54,7 +55,7 @@ class PlotView @JvmOverloads constructor(
      * Отступы графика снизу
      * По умолчанию: 12dp
      */
-    private var plotPaddingBottom: Float = 30.toDp()
+    private var plotPaddingBottom: Float = 39.toDp()
 
     /**
      * Отступы графика сверху
@@ -238,6 +239,28 @@ class PlotView @JvmOverloads constructor(
         handleLabels(new)
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        var widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        var heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        val suggestHeight = ceil(56.toDp() + plotPaddingBottom + paddingTop + paddingBottom + plotPaddingTop).toInt()
+
+        heightSize = when (heightMode) {
+            MeasureSpec.EXACTLY -> {
+                Math.max(heightSize, suggestHeight)
+            }
+            MeasureSpec.AT_MOST -> {
+                Math.min(heightSize, suggestHeight)
+            }
+            else -> {
+                suggestHeight
+            }
+        }
+        setMeasuredDimension(widthSize, heightSize)
+    }
+
     /**
      * В данном методе берется количество точек из [data], кроме первой и последней и берется
      * значение из [new], если текст влазит в доступное место, то отображается нормально, иначе
@@ -264,7 +287,9 @@ class PlotView @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        animation.start()
+        post {
+            animation.start()
+        }
     }
 
     override fun onDetachedFromWindow() {
