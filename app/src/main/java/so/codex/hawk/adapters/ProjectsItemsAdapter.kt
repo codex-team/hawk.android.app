@@ -9,8 +9,16 @@ import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.ProjectItemView
 import kotlin.properties.Delegates
 
+/**
+ * Адаптер, который показывает список элементов workspaces
+ */
 class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectItemViewHolder>() {
 
+    /**
+     * Список проектов, которые будут отображаться в [RecyclerView]. Используется делегат, которые
+     * вызывает расширение, для выявления различий между старым и новым списком и обновляет
+     * необходимые позиции
+     */
     var data: List<Project> by Delegates.observable(listOf()) { _, old, new ->
         notify(old, new) { left, right ->
             left == right
@@ -25,7 +33,6 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
         )
         return ProjectItemViewHolder(view)
     }
-
 
     override fun getItemCount(): Int {
         return data.size

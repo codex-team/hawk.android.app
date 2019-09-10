@@ -8,22 +8,12 @@ import so.codex.hawk.router.IBaseRouter
  * Родительский фрагмент, который описывает общую логику для всех фрагментов
  */
 abstract class BaseFragment : Fragment(), IBaseView {
-    /*abstract val presenters: List<BasePresenter<IBaseView>>
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenters.forEach {
-            it.attached(this)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenters.forEach {
-            it.detached()
-        }
-    }*/
-
+    /**
+     * Получение роутера с типом [R]. Проверяет, является ли родительский фрагмент или активити
+     * наследником данного типа [R], если такой имеется, то возвращаем его, если нет, то бросаем
+     * исключение [ClassCastException]
+     * @return Возвращает роутер с указанным типом [R]
+     */
     inline fun <reified R : IBaseRouter> getRouter(): R {
         return when {
             parentFragment is R -> parentFragment as R

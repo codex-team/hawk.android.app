@@ -3,8 +3,18 @@ package so.codex.codexbl.view.workspace
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.view.base.ILoaderView
 
+/**
+ * Интерфейс c объявленными методами для работы с [Workspace], с помощью которого можно
+ * взаимодействовать с UI
+ */
 interface IWorkspaceView : ILoaderView {
-    fun showWorkspaces(workspace: List<Workspace>)
+    /**
+     * Показать все проекты из списка [Workspace]
+     */
+    fun showProjects(workspaces: List<Workspace>)
 
-    fun showEmptyWorkspace()
+    /**
+     * Вызывается, если в списке [Workspace] нет созданных проектов
+     */
+    fun showEmptyProjects()
 }

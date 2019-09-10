@@ -15,41 +15,68 @@ import so.codex.hawk.adapters.ProjectsItemsAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
 
+/**
+ * Фрагмент для отображение проектов, которые хранятся в воркспейсе
+ * Реализует интерфейс [IWorkspaceView], где определены основные методы для взаимодействия с
+ * Workspace
+ */
 class GarageFragment : BaseFragment(), IWorkspaceView {
     companion object {
+        /**
+         * Для получения объекта
+         */
         fun instance() = GarageFragment()
     }
 
+    /**
+     * Лениява инициализация презентора, который будет обрабатывать события
+     */
     private val presenter by lazy {
         WorkspacePresenter()
     }
 
-    override fun showWorkspaces(workspace: List<Workspace>) {
+    /**
+     * Показать все проекты, которые есть в [Workspace]
+     * @param workspaces список воркспейсов, в которых есть проекты
+     */
+    override fun showProjects(workspaces: List<Workspace>) {
         if (rv_project_list.visibility == View.GONE) {
             rv_project_list.visibility = View.VISIBLE
             tv_empty_workspace.visibility = View.GONE
         }
         if (rv_project_list.adapter is ProjectsItemsAdapter) {
-            (rv_project_list.adapter as ProjectsItemsAdapter).data = workspace.fold(mutableListOf()) { list, w ->
+            (rv_project_list.adapter as ProjectsItemsAdapter).data = workspaces.fold(mutableListOf()) { list, w ->
                 list.addAll(w.projects)
                 list
             }
         }
     }
 
+    /**
+     * Показать прогресс бар
+     */
     override fun showLoader() {
         rv_refresh_layout.isRefreshing = true
     }
 
+    /**
+     * Скрыть прогресс бар
+     */
     override fun hideLoader() {
         rv_refresh_layout.isRefreshing = false
     }
 
-    override fun showEmptyWorkspace() {
+    /**
+     * Показать сообщение, что список проектов пустой
+     */
+    override fun showEmptyProjects() {
         rv_project_list.visibility = View.GONE
         tv_empty_workspace.visibility = View.VISIBLE
     }
 
+    /**
+     * Показать ошибку, если она возникла
+     */
     override fun showErrorMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }

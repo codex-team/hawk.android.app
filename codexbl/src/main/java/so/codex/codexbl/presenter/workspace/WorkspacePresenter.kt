@@ -24,9 +24,9 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
                 .attachLoader()
                 .subscribe({
                     if (!it.isNullOrEmpty())
-                        view?.showWorkspaces(it)
+                        view?.showProjects(it)
                     else
-                        view?.showEmptyWorkspace()
+                        view?.showEmptyProjects()
                 }, {
                     it.printStackTrace()
                     view?.showErrorMessage(it.message ?: " error")

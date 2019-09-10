@@ -24,6 +24,11 @@ class LoginActivity : BaseSingleFragmentActivity() {
         replaceFragment(SignInFragment.instance(intent?.extras))
     }
 
+    /**
+     * Обработка события вызываемого по нажатию кнопки назад, проверяет, если ли в фрагментах
+     * еще дочернии фрагменты, то вызываем у них это событие, если все они вернули false, то
+     * обрабатываем это событие
+     */
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {
             supportFragmentManager.popBackStack()
