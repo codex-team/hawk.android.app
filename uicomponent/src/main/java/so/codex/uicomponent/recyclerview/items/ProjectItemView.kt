@@ -16,8 +16,12 @@ import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 import so.codex.utils.getColorById
 
+/**
+ * Композиция View, которые являются списком для показа проектов в списке
+ * @author Shiplayer
+ */
 class ProjectItemView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.projectItemViewStyle
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.projectItemViewStyle
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     val view: View = View.inflate(context, R.layout.view_project_item, this)
@@ -25,10 +29,10 @@ class ProjectItemView @JvmOverloads constructor(
 
     init {
         context.obtainStyledAttributes(
-                attrs,
-                R.styleable.ProjectItemView,
-                defStyleAttr,
-                R.style.Codex_Widgets_ProjectItemViewStyle
+            attrs,
+            R.styleable.ProjectItemView,
+            defStyleAttr,
+            R.style.Codex_Widgets_ProjectItemViewStyle
         ).apply {
             val drawable = getDrawable(R.styleable.ProjectItemView_src)
             if (drawable != null) {
@@ -59,11 +63,11 @@ class ProjectItemView @JvmOverloads constructor(
         logoImage.post {
             if (defaultImage == null) {
                 val firstChar = title.split(" ").fold("") { acc, s -> acc + s.first() }.toString()
-                        .toUpperCase()
+                    .toUpperCase()
                 defaultImage = Bitmap.createBitmap(
-                        logoImage.width,
-                        logoImage.height,
-                        Bitmap.Config.ARGB_8888
+                    logoImage.width,
+                    logoImage.height,
+                    Bitmap.Config.ARGB_8888
                 )
                 val canvas = Canvas(defaultImage!!)
                 val fontPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {

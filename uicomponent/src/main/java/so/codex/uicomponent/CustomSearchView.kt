@@ -21,25 +21,52 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getSystemService
 import kotlinx.android.synthetic.main.view_search.view.*
 
-
+/**
+ * Реализация композиции View для поиска с использованием анимации
+ */
 class CustomSearchView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.customSearchViewStyle
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.customSearchViewStyle
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    /**
+     * Радиус углов для закругления формы
+     */
     private var corners: Float
+    /**
+     * Кисть для рисования заднего фона
+     */
     private val paint = Paint()
+    /**
+     * Размеры формы, которой мы собираемся нарисовать
+     */
     private val rectF = RectF()
+    /**
+     * Во время изменения текста, вызывается [listener]
+     */
     private var listener: SearchListener? = null
+    /**
+     * Храним ссылку на анимацию, чтоб во время уничтожения отменить данную анимацию и успешно
+     * очистить объект
+     */
     private var animation: ViewPropertyAnimator? = null
+    /**
+     * FOR DEBUG
+     */
     private var count = 0
-    
+
+    /**
+     * View в котором изменяется текст для поиска
+     */
     private var searchText: EditText
 
+    /**
+     * Инициализация необходимых переменных и получения необходимых значений из стилей
+     */
     init {
         val view = View.inflate(context, R.layout.view_search, this)
-        
+
         searchText = view.search_edit_text
-        
+
         setWillNotDraw(false)
         //corners = dpToPx(5.0f)
         rectF.apply {
@@ -47,24 +74,25 @@ class CustomSearchView @JvmOverloads constructor(
             top = 0f
         }
         paint.isAntiAlias = true
+
         context.obtainStyledAttributes(
-                attrs,
-                R.styleable.CustomSearchView,
-                defStyleAttr,
-                R.style.Codex_Widgets_CustomSearchViewTheme
+            attrs,
+            R.styleable.CustomSearchView,
+            defStyleAttr,
+            R.style.Codex_Widgets_CustomSearchViewTheme
         ).apply {
             paint.color = getColor(
-                    R.styleable.CustomSearchView_cardBackgroundColor,
-                    Color.TRANSPARENT
+                R.styleable.CustomSearchView_cardBackgroundColor,
+                Color.TRANSPARENT
             )
             corners = getDimension(R.styleable.CustomSearchView_corners, 0f)
             ic_search.setColorFilter(
-                    getColor(R.styleable.CustomSearchView_imageTint, Color.BLACK),
-                    android.graphics.PorterDuff.Mode.SRC_IN
+                getColor(R.styleable.CustomSearchView_imageTint, Color.BLACK),
+                android.graphics.PorterDuff.Mode.SRC_IN
             )
             ic_clear.setColorFilter(
-                    getColor(R.styleable.CustomSearchView_imageTint, Color.BLACK),
-                    android.graphics.PorterDuff.Mode.SRC_IN
+                getColor(R.styleable.CustomSearchView_imageTint, Color.BLACK),
+                android.graphics.PorterDuff.Mode.SRC_IN
             )
             /*searchText.setTextColor(
                     getColor(
@@ -83,27 +111,31 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
+
     private fun requestFocusEditText() {
         if (!searchText.isFocused) {
             searchText.requestFocus()
-            searchText.postDelayed({
-                                             val keyboard = getSystemService(
-                                                     context,
-                                                     InputMethodManager::class.java
-                                             )
-                                             keyboard!!.showSoftInput(searchText, 0)
-                                         }, 100)
+            searchText.postDelayed(
+                {
+                    val keyboard = getSystemService(
+                        context,
+                        InputMethodManager::class.java
+                    )
+                    keyboard!!.showSoftInput(searchText, 0)
+                },
+                100
+            )
         }
     }
 
     private fun initListeners() {
         searchText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -119,28 +151,31 @@ class CustomSearchView @JvmOverloads constructor(
         searchText.setOnFocusChangeListener { v, hasFocus ->
             count++
             Log.i("SearchView", "${v::class.java.simpleName} $hasFocus $count")
-            transit_container.postDelayed({
-                                              TransitionManager.beginDelayedTransition(
-                                                      transit_container
-                                              )
-                                              if (hasFocus) {
-                                                  ic_search.visibility = View.GONE
-                                                  searchText.setPadding(
-                                                          dpToPx(7f).toInt(),
-                                                          paddingTop,
-                                                          paddingEnd,
-                                                          paddingBottom
-                                                  )
-                                              } else {
-                                                  ic_search.visibility = View.VISIBLE
-                                                  searchText.setPadding(
-                                                          dpToPx(4f).toInt(),
-                                                          paddingTop,
-                                                          paddingEnd,
-                                                          paddingBottom
-                                                  )
-                                              }
-                                          }, 300)
+            transit_container.postDelayed(
+                {
+                    TransitionManager.beginDelayedTransition(
+                        transit_container
+                    )
+                    if (hasFocus) {
+                        ic_search.visibility = View.GONE
+                        searchText.setPadding(
+                            dpToPx(7f).toInt(),
+                            paddingTop,
+                            paddingEnd,
+                            paddingBottom
+                        )
+                    } else {
+                        ic_search.visibility = View.VISIBLE
+                        searchText.setPadding(
+                            dpToPx(4f).toInt(),
+                            paddingTop,
+                            paddingEnd,
+                            paddingBottom
+                        )
+                    }
+                },
+                300
+            )
             //TransitionManager.beginDelayedTransition(transit_container)
         }
         ic_clear.setOnClickListener {
@@ -207,6 +242,10 @@ class CustomSearchView @JvmOverloads constructor(
         canvas?.drawRoundRect(rectF, corners, corners, paint)
     }
 
+    interface SearchListener {
+        fun search(text: String)
+    }
+
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {
             text = searchText.text.toString()
@@ -232,10 +271,6 @@ class CustomSearchView @JvmOverloads constructor(
         } else {
             super.onRestoreInstanceState(state)
         }
-    }
-
-    interface SearchListener {
-        fun search(text: String)
     }
 
     class SavedState : BaseSavedState {

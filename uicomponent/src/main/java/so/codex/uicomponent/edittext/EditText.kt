@@ -15,10 +15,12 @@ import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 
 /**
- * Реализация EditText с лейблом и задним фоном, который подсвечивается во время фокуса
+ * Реализация EditText с лейблом и задним фоном, который подсвечивается во время фокуса.
+ * Используется как композиция более сложных View
+ * @author Shiplayer
  */
 class EditText @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.codexEditTextTheme
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.codexEditTextTheme
 ) : FrameLayout(context, attrs, defStyleAttr) {
     private val editView: android.widget.EditText
 
@@ -28,11 +30,12 @@ class EditText @JvmOverloads constructor(
         editView = view.findViewById(R.id.body_edit_text)
 
         context.obtainStyledAttributes(
-                attrs,
-                R.styleable.EditText,
-                defStyleAttr,
-                R.style.Codex_Widgets_EditTextTheme
+            attrs,
+            R.styleable.EditText,
+            defStyleAttr,
+            R.style.Codex_Widgets_EditTextTheme
         ).apply {
+
             editView.setText(getString(R.styleable.EditText_codex_text) ?: "")
             editView.hint = getString(R.styleable.EditText_codex_hint) ?: ""
             title_edit_text.text = getString(R.styleable.EditText_codex_title) ?: ""
@@ -66,30 +69,45 @@ class EditText @JvmOverloads constructor(
         editView.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 card_background.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                context,
-                                R.drawable.edit_text_background_selected
-                        )
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.edit_text_background_selected
+                    )
                 )
             } else {
                 card_background.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                context,
-                                R.drawable.edit_text_background
-                        )
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.edit_text_background
+                    )
                 )
             }
         }
     }
 
+    /**
+     * Добавление фильтра к [editView]
+     * @param inputFilter Фильтр, в которм установлено условие, по которому будет запрешать ввод
+     * какого-либо текста
+     */
+    fun addFilter(inputFilter: InputFilter) {
+        editView.filters = editView.filters.toMutableList().apply {
+            add(inputFilter)
+        }.toTypedArray()
+    }
+
     public var text: String by textViewDelegate(editView)
 
+
+    /**
+     * Ниже описаны методы и класс необходимые для сохранения состояния данного View
+     */
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {
             text = editView.text.toString()
             id = getId()
             requestFocus = editView.isFocused
-            if(editView.isFocused)
+            if (editView.isFocused)
                 position = editView.selectionStart
         }
     }
@@ -99,7 +117,7 @@ class EditText @JvmOverloads constructor(
             if (id == state.id) {
                 editView.post {
                     editView.setText(state.text)
-                    if(state.requestFocus){
+                    if (state.requestFocus) {
                         editView.requestFocus()
                         editView.setSelection(state.position)
                     }
@@ -110,13 +128,6 @@ class EditText @JvmOverloads constructor(
             super.onRestoreInstanceState(state)
         }
     }
-
-    fun addFilter(inputFilter: InputFilter) {
-        editView.filters = editView.filters.toMutableList().apply {
-            add(inputFilter)
-        }.toTypedArray()
-    }
-
 
     class SavedState : BaseSavedState {
         var text: String = ""
@@ -137,7 +148,7 @@ class EditText @JvmOverloads constructor(
             super.writeToParcel(out, flags)
             out?.writeString(text)
             out?.writeInt(id)
-            out?.writeByte(if(requestFocus) 1 else 0)
+            out?.writeByte(if (requestFocus) 1 else 0)
             out?.writeInt(position)
         }
 
