@@ -6,7 +6,12 @@ import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.interactors.IUserInteractor
 import so.codex.codexbl.view.IAuthorizedView
 
-class AuthorizedPresenter() : BasePresenter<IAuthorizedView>(), KoinComponent {
+/**
+ * Презентор для проверки прользователя, авторизован ли он, если нет, то очищаем данные и
+ * разлогиниваем
+ * @author Shiplayer
+ */
+class AuthorizedPresenter : BasePresenter<IAuthorizedView>(), KoinComponent {
     private val userInteractor: IUserInteractor by inject()
 
     override fun onAttach() {

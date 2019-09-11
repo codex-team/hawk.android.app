@@ -6,6 +6,10 @@ import so.codex.codexbl.base.LoaderPresenter
 import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.view.workspace.IWorkspaceView
 
+/**
+ * Презентор, который отвечает на события, происходящие с Workspace.
+ * @author Shiplayer
+ */
 class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
     private val workspaceInteractor: IWorkspaceInteractor by inject()
 
@@ -19,18 +23,18 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
 
     fun loadAllWorkspaces() {
         compositeDisposable.of(
-            workspaceInteractor
-                .getWorkspaces()
-                .attachLoader()
-                .subscribe({
-                    if (!it.isNullOrEmpty())
-                        view?.showProjects(it)
-                    else
-                        view?.showEmptyProjects()
-                }, {
-                    it.printStackTrace()
-                    view?.showErrorMessage(it.message ?: " error")
-                })
+                workspaceInteractor
+                        .getWorkspaces()
+                        .attachLoader()
+                        .subscribe({
+                                       if (!it.isNullOrEmpty())
+                                           view?.showProjects(it)
+                                       else
+                                           view?.showEmptyProjects()
+                                   }, {
+                                       it.printStackTrace()
+                                       view?.showErrorMessage(it.message ?: " error")
+                                   })
         )
     }
 

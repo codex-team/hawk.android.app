@@ -8,7 +8,14 @@ import so.codex.codexbl.entity.UserAuth
 import so.codex.hawkapi.api.CoreApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 
+/**
+ * Интерактор, в котором реализованы методы из интерфейса [ISignInInteractor], взаимодействие с API
+ * @author Shiplayer
+ */
 class SignInInteractor : ISignInInteractor, KoinComponent {
+    /**
+     * Использовается для получения токена и сохранения сессии
+     */
     private val userInteractor by inject<IUserInteractor>()
 
     override fun signIn(userAuth: UserAuth): Single<Boolean> {

@@ -8,6 +8,10 @@ import so.codex.codexbl.koin.apiModule
 import so.codex.codexbl.koin.interactorsModule
 import so.codex.codexbl.koin.providersModule
 
+/**
+ * Класс для инициализации дерева зависимостей Koin. Необходиом вызывать его в Application
+ * @author Shiplayer
+ */
 class StartKoinComponent {
     companion object {
         fun start(applicationContext: Context) {
@@ -15,11 +19,11 @@ class StartKoinComponent {
                 androidLogger()
                 androidContext(applicationContext)
                 modules(
-                    listOf(
-                        apiModule,
-                        interactorsModule,
-                        providersModule
-                    )
+                        listOf(
+                                apiModule,
+                                interactorsModule,
+                                providersModule
+                        )
                 )
             }
         }
