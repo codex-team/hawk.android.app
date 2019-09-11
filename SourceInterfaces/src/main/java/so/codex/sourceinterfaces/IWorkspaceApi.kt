@@ -7,7 +7,15 @@ import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity
 import so.codex.sourceinterfaces.entity.WorkspaceWithUsersEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
+/**
+ * Интерфейс с обявленными методами для получения необходимой информации по Workspace. Несет
+ * ответственность только за Workspace.
+ * @author Shiplayer
+ */
 interface IWorkspaceApi {
+    /**
+     * Получить только Workspace без лишней информации, такой как проекты
+     */
     fun getOnlyWorkspace(token: String): Observable<WorkspaceResponse<WorkspaceEntity>>
 
     fun getWorkspaceWithUsers(token: String): Observable<WorkspaceResponse<WorkspaceWithUsersEntity>>
