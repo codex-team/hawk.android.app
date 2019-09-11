@@ -3,6 +3,7 @@ package so.codex.hawkapi.api.workspace
 import io.reactivex.Observable
 import so.codex.hawkapi.WorkspaceApiMethodImpl
 import so.codex.hawkapi.api.CoreApi
+import so.codex.hawkapi.api.workspace.WorkspaceApi.Companion.instance
 import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IWorkspaceApi
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
@@ -11,6 +12,13 @@ import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity
 import so.codex.sourceinterfaces.entity.WorkspaceWithUsersEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
+/**
+ * Является singleton, для получения экземпляра класса необходимо обратиться к переменной [instance].
+ * Данный класс предоставляет методы для отправки запросов на сервер.
+ * @constructor Приватный конструктор, в котором происходит инициализация сервиса, через который
+ * будет отправляться запрос на севрер
+ * @author Shiplayer
+ */
 class WorkspaceApi private constructor(private val service: WorkspacesApiMethods) : IWorkspaceApi {
     companion object {
         val instance by lazy {

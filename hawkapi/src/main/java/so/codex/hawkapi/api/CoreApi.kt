@@ -18,6 +18,7 @@ import java.util.*
 /**
  * Ядро, в коротом определяются все API, с помощью которых можно будет взаимодействовать с сервером
  * [SourceApi] - интерфейс, в котором определены все необходимы API компоненты, которые отвечают за опреленные запросы
+ * @author Shiplayer
  */
 class CoreApi private constructor() : SourceApi {
     companion object {
@@ -34,8 +35,14 @@ class CoreApi private constructor() : SourceApi {
                     .build()
         }
 
+        /**
+         * Паттерн времени, по которму можно будет сконвертировать в Long
+         */
         private val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
+        /**
+         * Реализация конвертирования Date из GraphQL в джавовский Date
+         */
         private val customDateTimeAdapter = object : CustomTypeAdapter<Date> {
             override fun encode(value: Date): CustomTypeValue<*> {
                 return CustomTypeValue.GraphQLString(dateFormat.format(value))
@@ -55,9 +62,9 @@ class CoreApi private constructor() : SourceApi {
             }
 
             OkHttpClient.Builder()
-                .addInterceptor(TokenInterceptor.instance)
+                    .addInterceptor(TokenInterceptor.instance)
                     .addInterceptor(interceptor)
-                .build()
+                    .build()
         }
 
         val instance by lazy {
@@ -72,5 +79,11 @@ class CoreApi private constructor() : SourceApi {
      */
     override fun getAuthApi(): IAuthApi = AuthApi.instance
 
+    /**
+     * Метод, который возвращает API для взаимодействия с сервером для получения информации о Workspace
+     * @return Возвращает интерфейс [IWorkspaceApi], в котором есть все необходимые методы для
+     * получения информации о Workspace
+     * @see IWorkspaceApi
+     */
     override fun getWorkspaceApi(): IWorkspaceApi = WorkspaceApi.instance
 }

@@ -14,6 +14,7 @@ import so.codex.sourceinterfaces.response.TokenResponse
 /**
  * Данный класс является singleton, в котором определена логика того, как взаимодействовать с сервером, во что завернуть объект и какой отдать.
  * Реализует интерфейс [IAuthApi]
+ * @author Shiplayer
  */
 class AuthApi private constructor(private val service: AuthApiMethods) : IAuthApi {
 
