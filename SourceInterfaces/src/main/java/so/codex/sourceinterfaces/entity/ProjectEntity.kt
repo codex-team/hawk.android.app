@@ -1,16 +1,15 @@
 package so.codex.sourceinterfaces.entity
 
 /**
- * Структура данных, которой можно взаимодействовать между уровнями Интеракторов и
- * Репозиториями/API.
- * @param id Уникальный индификатор проекта
- * @param token
- * @param name Название проекта
- * @param description Описание проекта
- * @param url Прямая ссылка на проект
- * @param image Ссылка на логотип проекта
- * @param uidAdded Пользователь, который создал данный проект
- * @param events События, которые произошли в проекте
+ * Data class contain information about project and events that occurred
+ * @property id Unique identifier of project
+ * @property token
+ * @property name Name of project
+ * @property description Description of project
+ * @property url Link on project
+ * @property image URL of image
+ * @property uidAdded Owner of project
+ * @property events Event that occurred in the project
  * @author Shiplayer
  */
 data class ProjectEntity(

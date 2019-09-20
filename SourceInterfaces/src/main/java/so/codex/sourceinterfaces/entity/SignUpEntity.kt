@@ -1,9 +1,8 @@
 package so.codex.sourceinterfaces.entity
 
 /**
- * Структура данных, которой можно взаимодействовать между уровнями Интеракторов и
- * Репозиториями/API.
- * @param email Почта, по которой пользователь будет зарегистрирован
+ * Entity for sending information about user for registration from domain layer to api.
+ * @property email Email address for registration of new user
  * @author Shiplayer
  */
 data class SignUpEntity(val email: String)

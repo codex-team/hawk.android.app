@@ -1,17 +1,17 @@
 package so.codex.sourceinterfaces.entity
 
 /**
- * Здесь описаны основные объекты, которыми можно взаимодействовать между уровнями Интеракторов и
- * Репозиториями/API.
+ * In this file defined classes for different types of Workspace. All classes used for communication between domain and
+ * repository/api layer.
  * @author Shiplayer
  */
 
 /**
- * Родительский класс, в котором описаны основные поля для Workspace
- * @param id Уникальный номер Workspace
- * @param name Строка содержащая название Workspace
- * @param description Строка содержащая описание данного Workspace
- * @param image Строка содержащая ссылку на картинку
+ * Main class with declared common properties for Workspace
+ * @property id Unique identifier of Workspace
+ * @property name Name of Workspace
+ * @property description Common information about Workspace
+ * @property image Link of image
  */
 sealed class WorkspaceEntity(
     open val id: String,
@@ -21,13 +21,12 @@ sealed class WorkspaceEntity(
 )
 
 /**
- * Класс, в котором описано дополнительное поле для проектов
- * @param id Уникальный номер Workspace
- * @param name Строка содержащая название Workspace
- * @param description Строка содержащая описание данного Workspace
- * @param image Строка содержащая ссылку на картинку
- * @param projects Список [ProjectEntity], в которых описана информация о проектах, которые
- * находятся в данных Workspaces
+ * Workspace with additional property for list of projects
+ * @property id Unique identifier of Workspace
+ * @property name Name of Workspace
+ * @property description Common information about Workspace
+ * @property image Link of image
+ * @property projects List of [ProjectEntity], with common information about projects with events
  * @see ProjectEntity
  * @see WorkspaceEntity
  */
@@ -45,12 +44,12 @@ data class WorkspaceWithProjectsEntity(
 )
 
 /**
- * Класс, в котором описано дополнительное поле для пользователей
- * @param id Уникальный номер Workspace
- * @param name Строка содержащая название Workspace
- * @param description Строка содержащая описание данного Workspace
- * @param image Строка содержащая ссылку на картинку
- * @param users Список пользователей, у которых есть доступ к данному Workspace
+ * Workspace with property of allowed users
+ * @property id Unique identifier of Workspace
+ * @property name Name of Workspace
+ * @property description Common information about Workspace
+ * @property image Link of image
+ * @property users List of user that have access to Workspace
  * @see UserEntity
  * @see WorkspaceEntity
  */
@@ -68,14 +67,13 @@ data class WorkspaceWithUsersEntity(
 )
 
 /**
- * Класс, в котором описано дополнительное поле для пользователей и проектов
- * @param id Уникальный номер Workspace
- * @param name Строка содержащая название Workspace
- * @param description Строка содержащая описание данного Workspace
- * @param image Строка содержащая ссылку на картинку
- * @param projects Список [ProjectEntity], в которых описана информация о проектах, которые
- * находятся в данных Workspaces
- * @param users Список пользователей, у которых есть доступ к данному Workspace
+ * Workspace that contains all information with additional fields
+ * @property id Unique identifier of Workspace
+ * @property name Name of Workspace
+ * @property description Common information about Workspace
+ * @property image Link of image
+ * @property projects List of [ProjectEntity], with common information about projects with events
+ * @property users List of user that have access to Workspace
  * @see ProjectEntity
  * @see UserEntity
  * @see WorkspaceEntity

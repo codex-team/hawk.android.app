@@ -7,31 +7,28 @@ import so.codex.sourceinterfaces.entity.TokenEntity
 import so.codex.sourceinterfaces.response.TokenResponse
 
 /**
- * Интерфейс с обявленными методами для взаимодействия с авторизацией, регистрации и обновлением
- * токена.
+ * Interface with declared method for sending http requests. The interface is only responsible for user authorization.
  * @author Shiplayer
  */
 interface IAuthApi {
     /**
-     * Отправляет запрос на авторизацию
-     * @param auth Объект, по которому берется почта и пароль для авторизации
-     * @return Возвращает [Single] с объектом [TokenResponse], в котором хранится токен и refresh
-     * токен для обновления сессии
+     * Send request to sign in application
+     * @param auth Contain information that need for authorization
+     * @return Return [Single] with [TokenResponse], that have response from server with access token and refresh token.
      */
     fun login(auth: AuthEntity): Single<TokenResponse>
 
     /**
-     * Отправляется запрос на регистрацию нового пользователя
-     * @param signUp Содержит email, по которому будет зарегистрирован новый пользователь
-     * @return Возвращает [Single] с булевским значением, true если пользователь зарегистрирован,
-     * false иначе
+     * Send request to sign up of new user
+     * @param signUp Information for sign up of User
+     * @return Return [Single] with boolean value, if user successfully sing up, then return true else false.
      */
     fun signUp(signUp: SignUpEntity): Single<Boolean>
 
     /**
-     * Отправляет запрос на обновление токена
-     * @param token Объект содержит refresh токен необходимого для обновления токен для API запросов
-     * @return Возвращает [Single] с объектом [TokenResponse], содержит access token и refresh token
+     * Send request to update of session and get new access and refresh token
+     * @param token Contain refresh token for updating session data
+     * @return Return [Single] with [TokenResponse], that contain new information of access and refresh token
      */
     fun refreshToken(token: TokenEntity): Single<TokenResponse>
 }

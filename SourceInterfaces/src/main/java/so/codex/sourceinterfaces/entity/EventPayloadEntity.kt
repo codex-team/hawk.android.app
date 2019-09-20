@@ -3,10 +3,9 @@ package so.codex.sourceinterfaces.entity
 import java.util.*
 
 /**
- * Структура данных, которой можно взаимодействовать между уровнями Интеракторов и
- * Репозиториями/API.
- * @param title
- * @param timestamp Время, когда произошло данное событие
+ * Information about event.
+ * @property title Event title
+ * @property timestamp Occurrence time
  * @author Shiplayer
  */
 data class EventPayloadEntity(

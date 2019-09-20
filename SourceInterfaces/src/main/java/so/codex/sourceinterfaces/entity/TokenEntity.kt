@@ -1,9 +1,9 @@
 package so.codex.sourceinterfaces.entity
 
 /**
- * Структура данных, которой можно взаимодействовать между уровнями Интеракторов и
- * Репозиториями/API.
- * @param refreshToken Токен, с помощью которого можно будет обновить сессию и токен
+ * Entity contain information that needed for updating session. Used only for sending information from domain to
+ * Repository/Api layer
+ * @property refreshToken Token that require for updating session
  * @author Shiplayer
  */
 data class TokenEntity(val refreshToken: String)

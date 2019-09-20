@@ -8,19 +8,36 @@ import so.codex.sourceinterfaces.entity.WorkspaceWithUsersEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
 /**
- * Интерфейс с обявленными методами для получения необходимой информации по Workspace. Несет
- * ответственность только за Workspace.
+ * Interface with declared method for sending http requests. The interface is only responsible for getting information
+ * of Workspace.
  * @author Shiplayer
  */
 interface IWorkspaceApi {
     /**
-     * Получить только Workspace без лишней информации, такой как проекты
+     * Send request for getting Workspace with common information
+     * @param token Access token for identification of user and access to api methods
+     * @return [Observable] with response of request
      */
     fun getOnlyWorkspace(token: String): Observable<WorkspaceResponse<WorkspaceEntity>>
 
+    /**
+     * Send request for getting Workspace with allowed users
+     * @param token Access token for identification of user and access to api methods
+     * @return [Observable] with response of request.
+     */
     fun getWorkspaceWithUsers(token: String): Observable<WorkspaceResponse<WorkspaceWithUsersEntity>>
 
+    /**
+     * Send request for getting Workspace with project information and events
+     * @param token Access token for identification of user and access to api methods
+     * @return [Observable] with response of request.
+     */
     fun getWorkspaceWithProjects(token: String): Observable<WorkspaceResponse<WorkspaceWithProjectsEntity>>
 
+    /**
+     * Send request for getting Workspace with full information of Workspace with allowed users and projects.
+     * @param token Access token for identification of user and access to api methods
+     * @return [Observable] with response of request.
+     */
     fun getFullWorkspace(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>>
 }
