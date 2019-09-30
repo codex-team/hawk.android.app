@@ -5,7 +5,7 @@ import so.codex.hawkapi.api.CoreApi
 import so.codex.sourceinterfaces.entity.SignUpEntity
 
 /**
- * Интерактор, в котором реализованы методы из интерфейса [ISignUpInteractor], взаимодействие с API
+ * The Interactor with implementation methods from [ISignUpInteractor] for communication with API.
  * @author Shiplayer
  */
 class SignUpInteractor : ISignUpInteractor {

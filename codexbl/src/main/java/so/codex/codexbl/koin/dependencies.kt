@@ -16,13 +16,12 @@ import so.codex.codexbl.providers.UserTokenProvider
 import so.codex.hawkapi.api.CoreApi
 
 /**
- * Здесь описаны все зависимости, в которые необходимо будет внедрить некоторый инстанс с помощью
- * Koin
+ * Here describe all dependencies for dependency injection
  * @author Shiplayer
  */
 
 /**
- * Модули для внедрения API классов, для получения необходимой информации
+ * Modules for dependencies API classes and getting necessary information
  */
 val apiModule = module {
     single { CoreApi.instance.getAuthApi() }
@@ -30,7 +29,7 @@ val apiModule = module {
 }
 
 /**
- * Интеракторы, необходимые для взаимодействия с более низкими по уровню компонентами
+ * All interactors for communication
  */
 val interactorsModule = module {
     factory<ISignInInteractor> { SignInInteractor() }
@@ -40,6 +39,7 @@ val interactorsModule = module {
 }
 
 /**
+ * Provide storage or other providers
  * Предоставляют какое-то хранилище для какой-то информации
  */
 val providersModule = module {

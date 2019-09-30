@@ -9,10 +9,10 @@ import so.codex.codexbl.koin.interactorsModule
 import so.codex.codexbl.koin.providersModule
 
 /**
- * Класс для инициализации дерева зависимостей Koin. Необходиом вызывать его в Application
+ * Class for initialized tree of dependencies.
  * @author Shiplayer
  */
-class StartKoinComponent {
+class CodexKoinComponent {
     companion object {
         fun start(applicationContext: Context) {
             startKoin {

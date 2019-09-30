@@ -1,8 +1,9 @@
 package so.codex.codexbl.exceptions
 
 /**
- * Исключение, которое обозначает, что данный запрос требует авторизации. Следовательно был
- * отправлен запрос без токена или он перестал быть валидным
+ * The Exception denote that current the request require authorization. Hence was sent request with out access token or
+ * was expired.
+ * @property message Message of Exception
  * @author Shiplayer
  */
 data class NoAuthorizedException(override val message: String = "") : Throwable(

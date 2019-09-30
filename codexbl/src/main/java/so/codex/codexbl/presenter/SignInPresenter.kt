@@ -9,12 +9,15 @@ import so.codex.codexbl.interactors.ISignInInteractor
 import so.codex.codexbl.view.ISignInView
 
 /**
- * Презентор для взаимодействия пользователя со входом
+ * Presentor for communication user with sign in
  * @author Shiplayer
  */
 class SignInPresenter : BasePresenter<ISignInView>(), KoinComponent {
     private val signInInteractor: ISignInInteractor by inject()
 
+    /**
+     * Sign in in application
+     */
     fun signIn(email: String, password: String) {
         compositeDisposable.of(
                 signInInteractor.signIn(UserAuth(email, password))

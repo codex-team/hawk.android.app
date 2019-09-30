@@ -7,21 +7,20 @@ import so.codex.codexbl.interactors.SignUpInteractor
 import so.codex.codexbl.view.ISignUpView
 
 /**
- * Презентор для взаимодействия и обработки событий для регистрации нового пользователя
+ * Presentor for communication and handing events for registration new users
  * @author Shiplayer
  */
 class SignUpPresenter : BasePresenter<ISignUpView>() {
     /**
-     * Интерактор для отправки запроса на регистрацию пользователя
+     * Interactor for sending request and registration of new users
      */
     private val signInInteractor by lazy {
         SignUpInteractor()
     }
 
     /**
-     * Функция, которая проверяет на наличие "собаки" в строке и отправляет запрос через интерактор
-     * @param email Строка, в которой должена содержаться почта, по которой будет зарегистрирован
-     * новый пользователь
+     * Function with checking on validation email and sending request via interactor
+     * @param email String representation like as email of new user
      */
     fun submit(email: String) {
         if (email.contains("@")) {

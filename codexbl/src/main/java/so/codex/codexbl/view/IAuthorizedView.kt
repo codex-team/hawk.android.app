@@ -3,11 +3,11 @@ package so.codex.codexbl.view
 import so.codex.codexbl.view.base.IBaseView
 
 /**
- * Интерфейс в котором определен метод для выхода из приложения, если пользователь не авторизован
+ * Interface with method for logout, if user not authorized
  */
 interface IAuthorizedView : IBaseView {
     /**
-     * Выход из аккаунта
+     * Client logout from application
      */
     fun logout()
 }

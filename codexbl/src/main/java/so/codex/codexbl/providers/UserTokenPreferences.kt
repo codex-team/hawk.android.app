@@ -6,30 +6,28 @@ import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.entity.UserToken
 
 /**
- * Для хранения данных используется [android.content.SharedPreferences] для получения и сохранения
- * пользовательской информации. Реализует интерфейс [UserTokenDAO], в котором объявлены основные
- * методы для взаимодействия с хранилищем
+ * For storage data used [android.content.SharedPreferences] for getting and saving user information.
+ * Implementation interface [UserTokenDAO].
  * @see android.content.SharedPreferences
  * @author Shiplayer
  */
 class UserTokenPreferences(context: Context) : UserTokenDAO {
     /**
-     * Приватный [android.content.SharedPreferences], который предоставляет доступ к сохранению
-     * данных
+     * Private [android.content.SharedPreferences] with access to storage data
      */
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
 
     companion object {
         /**
-         * Ключ, по которому сохраняется токен
+         * Key for saving token
          */
         const val TOKEN_PREFERENCES_KEY = "token_preferences_key"
         /**
-         * Ключ, по которому сохраняется refresh токен
+         * Key for saving refresh token
          */
         const val REFRESH_TOKEN_PREFERENCES_KEY = "refresh_token_preferences_key"
         /**
-         * Ключ, по которому сохраняется последняя почта, по которой входили в приложение
+         * Key for saving last email via sign in in application
          */
         const val LAST_SIGNIN_EMAIL_PREFERENCE_KEY = "last_signin_email_preference_key"
     }

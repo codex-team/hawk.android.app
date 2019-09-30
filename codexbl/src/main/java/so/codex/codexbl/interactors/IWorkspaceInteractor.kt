@@ -5,11 +5,17 @@ import io.reactivex.Single
 import so.codex.codexbl.entity.Workspace
 
 /**
- * Интерфейс, в котором определены методы необходимые для работы с workspace
+ * Interface with declared methods for work with [Workspace] and communication
  * @author Shiplayer
  */
 interface IWorkspaceInteractor {
+    /**
+     * Get Workspaces wrapped in Observable
+     */
     fun getWorkspacesObservable(): Observable<List<Workspace>>
 
+    /**
+     * Get Workspaces
+     */
     fun getWorkspaces(): Single<List<Workspace>>
 }

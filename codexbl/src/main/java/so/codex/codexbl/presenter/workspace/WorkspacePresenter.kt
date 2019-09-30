@@ -7,7 +7,7 @@ import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.view.workspace.IWorkspaceView
 
 /**
- * Презентор, который отвечает на события, происходящие с Workspace.
+ * Presentor that responsible on event from Workspace.
  * @author Shiplayer
  */
 class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
@@ -21,6 +21,9 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
         super.onDetach()
     }
 
+    /**
+     * Getting all workspaces
+     */
     fun loadAllWorkspaces() {
         compositeDisposable.of(
                 workspaceInteractor

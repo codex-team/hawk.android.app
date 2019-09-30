@@ -4,44 +4,39 @@ import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.entity.UserToken
 
 /**
- * Интерфейс, в котором определены основные методы для взаимодействия с хранилищем, где хранится
- * основная информация о пользователе вместе с сессией
+ * Interface that declared common methods for communication with storage, that contain common
+ * information of user with session data
  */
 interface UserTokenDAO {
     /**
-     * Получение объекта [UserToken], в котором хранятся токен и refresh токен
-     * @return возвращает [UserToken], если удалось извлечь из хранилища информацию о токене и
-     * refresh токене, иначе вернет null
+     * Get user token
+     * @return User token representation like as [UserToken], if managed to extract from storage
+     * information of access token and refresh token else null
      */
     fun getUserToken(): UserToken?
 
     /**
-     * Для сохранения токена в хранищиле
-     * @param userToken обязательно в себе хранит токен и refreshToken для сохранения его в
-     * хранилище
-     * @return Возвращает true, если ему удалось успешно сохранить данные в хранилище, в противном
-     * случае вернет false
+     * Save token in storage
+     * @param userToken User token representation
+     * @return Return true if user token successful saved in storage else false
      */
     fun saveUserToken(userToken: UserToken): Boolean
 
     /**
-     * Для сохранения пользовательской сессии в хранилище
-     * @param sessionData содержит в себе ту же информацию, что и [UserToken], но с дополнительной
-     * информацией
-     * @return Возвращает true, если ему удалось успешно сохранить данные в хранилище, в противном
-     * случае вернет false
+     * Save session in storage
+     * @param sessionData Session data representation
+     * @return Return true if session data successful saved in storage else false
      */
     fun saveSession(sessionData: SessionData): Boolean
 
     /**
-     * Для получения последней сохраненной сессии
-     * @return Возвращает заполненный [SessionData], если ему удалось успешно получить данные из
-     * хранилище, в противном случае вернет null
+     * Get last saved session
+     * @return session date representation [SessionData] or null, if last session was not found
      */
     fun getLastSession(): SessionData?
 
     /**
-     * Очищает все пользовательские данные с хранилища
+     * Clear all information of session
      */
     fun clean()
 

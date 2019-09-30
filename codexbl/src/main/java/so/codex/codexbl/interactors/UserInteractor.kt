@@ -8,20 +8,19 @@ import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.providers.UserTokenDAO
 
 /**
- * Интерактор, в котором реализован интерфейс [IUserInteractor], благодаря которму реализовано
- * сохранение, получения и очистки данных для сессии
+ * Interacor for saving and getting information of user
  * @author Shiplayer
  */
 class UserInteractor : IUserInteractor, KoinComponent {
     /**
-     * Объект, который предоставляет доступ и способ сохранения и получения данных
+     * Instance that provide access and way to save and get data
      */
     private val userTokenDAO: UserTokenDAO by inject(named("preferences"))
 
     /**
-     * Метод для сохрани сессии
-     * @param session получает объект [SessionData], в котором указана вся необходимая информация
-     * @return возвращает true, если сохранение удалось успешным, false в противном случаи
+     * Method for saving session
+     * @param session session date representation
+     * @return return true if saved session is successful else false
      */
     override fun saveSession(session: SessionData): Boolean {
         Log.i("UserInteractor", "saveSession = $session")
@@ -29,8 +28,8 @@ class UserInteractor : IUserInteractor, KoinComponent {
     }
 
     /**
-     * Метод для получения последней сессии
-     * @return Возвращает объект [SessionData] или null, если последней сессии не было найдено
+     * Method for getting last saved session
+     * @return session date representation [SessionData] or null, if last session was not found
      */
     override fun getLastSession(): SessionData? {
         return userTokenDAO.getLastSession().also {
@@ -39,7 +38,7 @@ class UserInteractor : IUserInteractor, KoinComponent {
     }
 
     /**
-     * Очищает всю информацию, хранимой в данной структуре
+     * Clear all information of session
      */
     override fun clear() {
         userTokenDAO.clean()

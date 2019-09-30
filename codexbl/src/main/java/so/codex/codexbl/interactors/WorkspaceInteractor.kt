@@ -12,8 +12,8 @@ import so.codex.codexbl.entity.Workspace
 import so.codex.sourceinterfaces.IWorkspaceApi
 
 /**
- * Класс для взаимодействия с репозиторием или апи, которое предоставляет методы для получения
- * необходимой информации для Workspace. В случаи неудачного запроса, будет обновлен токен.
+ * Class for communication with repositories or api that provide methods for getting necessary information
+ * of Workspace.
  * @author Shiplayer
  */
 class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinComponent {

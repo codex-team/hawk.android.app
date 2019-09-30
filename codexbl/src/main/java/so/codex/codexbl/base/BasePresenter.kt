@@ -3,9 +3,9 @@ package so.codex.codexbl.base
 import so.codex.codexbl.view.base.IBaseView
 
 /**
- * Основной презентр, в котором определяются методы для всех остальных. Презентор может
- * присоединится к виью через интерфейс [IBaseView], благодаря которому он может взаимодействоваться
- * с UI, показывать ошибки и обрабатывать пользовательские события
+ * Base presenter with common method for other presenters. Presenter can connected to view via
+ * interface [IBaseView] for communication to UI, like as showing error and handling user or custom
+ * events.
  * @author Shiplayer
  */
 abstract class BasePresenter<V> where V : IBaseView {
@@ -16,8 +16,8 @@ abstract class BasePresenter<V> where V : IBaseView {
         }
 
     /**
-     * Присоединить [view] к презентору. Означает, что [view] уже создано и отображено на экране и
-     * с ней уже можно взаимодействовать
+     * Attach [view] to presenter. This method should be called after [view] was created and showed
+     * on screen for communication with it.
      */
     fun attached(view: V) {
         this.view = view
@@ -25,7 +25,7 @@ abstract class BasePresenter<V> where V : IBaseView {
     }
 
     /**
-     * Присваевает null к [view], т.к. View скрыто или уничтожено
+     * Assign null to view if [view] is destroyed or hidden.
      */
     fun detached() {
         this.view = null
@@ -33,12 +33,12 @@ abstract class BasePresenter<V> where V : IBaseView {
     }
 
     /**
-     * Событие, которое вызываются, когда вью присоединилась к презентору
+     * Event that invoked if [view] is attached to presenter.
      */
     open fun onAttach() {}
 
     /**
-     * Событие, которое вызываются, когда вью уничтожелась
+     * Event that invoked if [view] is destroyed
      */
     open fun onDetach() {}
 }

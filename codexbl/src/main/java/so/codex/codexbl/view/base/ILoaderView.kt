@@ -1,17 +1,17 @@
 package so.codex.codexbl.view.base
 
 /**
- * Интерфейс, в котором обявлены методы для взаимодействия со скрытием или показом индикатора
- * загрузки
+ * Interface that have method for communication with progress bar
+ * @author Shiplayer
  */
 interface ILoaderView : IBaseView {
     /**
-     * Показать индикатор загрузки
+     * Show indicator of loading
      */
     fun showLoader()
 
     /**
-     * Скрыть индикатор загрузки
+     * Hide indicator of loading
      */
     fun hideLoader()
 }

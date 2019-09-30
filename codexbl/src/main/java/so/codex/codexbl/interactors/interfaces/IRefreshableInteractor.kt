@@ -4,24 +4,23 @@ import io.reactivex.Observable
 import io.reactivex.Single
 
 /**
- * Интерфейс с методами, необходимыми для получения токена и, если он не действительный,
- * обновления токена
+ * Interface with declared methods for getting or auto refreshing token
  * @author Shiplayer
  */
 interface IRefreshableInteractor {
     /**
-     * Получение токена из хранилища
+     * Getting token
      */
     val token: String
     //fun getToken(): String
 
     /**
-     * Метод, с помощью которого будет обновлен токен, если он устарел
+     * Method for refreshing token if it expired
      */
     fun <T> Observable<T>.refreshToken(): Observable<T>
 
     /**
-     * Метод, с помощью которого будет обновлен токен, если он устарел
+     * Method for refreshing token if it expired
      */
     fun <T> Single<T>.refreshTokenSingle(): Single<T>
 }

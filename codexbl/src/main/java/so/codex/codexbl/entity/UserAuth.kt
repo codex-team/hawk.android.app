@@ -1,7 +1,12 @@
 package so.codex.codexbl.entity
 
 /**
- * Структура данных, которая использутеся для передачи данных со слоя Presenter к слою Interactor
+ * User Authorization representation
+ * @property email Email of user
+ * @property password Password of user
  * @author Shiplayer
  */
-data class UserAuth(val email: String, val password: String)
+data class UserAuth(
+        val email: String,
+        val password: String
+)

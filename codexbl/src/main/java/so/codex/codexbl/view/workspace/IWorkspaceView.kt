@@ -4,17 +4,17 @@ import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.view.base.ILoaderView
 
 /**
- * Интерфейс c объявленными методами для работы с [Workspace], с помощью которого можно
- * взаимодействовать с UI
+ * Interface with declared method for work with [Workspace] and communication with UI
  */
 interface IWorkspaceView : ILoaderView {
     /**
-     * Показать все проекты из списка [Workspace]
+     * Show all projects from list of [Workspace]
+     * @param workspaces Workspace representation
      */
     fun showProjects(workspaces: List<Workspace>)
 
     /**
-     * Вызывается, если в списке [Workspace] нет созданных проектов
+     * Show text if list of [Workspace] is empty
      */
     fun showEmptyProjects()
 }

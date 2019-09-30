@@ -5,14 +5,14 @@ import io.reactivex.Single
 import so.codex.codexbl.view.base.ILoaderView
 
 /**
- * Презентор, в котором происходит взаимодействие с элементом [ILoaderView].
+ * The presenter that can communicate to [ILoaderView] for showing and hiding loader element.
  * @author Shiplayer
  */
 abstract class LoaderPresenter<V> : BasePresenter<V>() where V : ILoaderView {
 
     /**
-     * Присоединить к [Observable] лоадер, когда он подпишется, показать лоадер, иначе скрыть его.
-     * Если возникла ошибка, то скрыть лоадер и вызвать [ILoaderView.showErrorMessage]
+     * Attach observable to loader then it subscribed and show loader else hidden it.
+     * If error occurred, then hide loader and invoke method [ILoaderView.showErrorMessage]
      */
     fun <T> Observable<T>.attachLoader(): Observable<T> =
             doOnSubscribe {
@@ -25,8 +25,8 @@ abstract class LoaderPresenter<V> : BasePresenter<V>() where V : ILoaderView {
             }
 
     /**
-     * Присоединить к [Single] лоадер, когда он подпишется, показать лоадер, иначе скрыть его.
-     * Если возникла ошибка, то скрыть лоадер и вызвать [ILoaderView.showErrorMessage]
+     * Attach single to loader then it subscribed and show loader else hidden it.
+     * If error occurred, then hide loader and invoke method [ILoaderView.showErrorMessage]
      */
     fun <T> Single<T>.attachLoader(): Single<T> =
             doOnSubscribe {

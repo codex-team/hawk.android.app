@@ -9,12 +9,12 @@ import so.codex.hawkapi.api.CoreApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 
 /**
- * Интерактор, в котором реализованы методы из интерфейса [ISignInInteractor], взаимодействие с API
+ * The Interactor with implementation methods from [ISignInInteractor] for communication with API.
  * @author Shiplayer
  */
 class SignInInteractor : ISignInInteractor, KoinComponent {
     /**
-     * Использовается для получения токена и сохранения сессии
+     * Used for getting and saving session
      */
     private val userInteractor by inject<IUserInteractor>()
 

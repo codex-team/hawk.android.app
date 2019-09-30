@@ -3,7 +3,7 @@ package so.codex.codexbl.base
 import io.reactivex.disposables.Disposable
 
 /**
- * Композиция [Disposable] создана для упращения хранения и быстрого завершения rx потоков
+ * Composition of [Disposable] created for simplify storage and quick completion of rx streams
  * @author Shiplayer
  */
 class CompositeDisposable {
