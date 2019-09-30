@@ -15,7 +15,7 @@ import so.codex.hawk.router.ILoginRouter
 import so.codex.hawk.ui.MainActivity
 
 /**
- * Фрагмент-форма, которая отвечает за вход в приложение
+ * Fragment form for sign in
  */
 class SignInFormFragment : BaseFragment(), ISignInView {
 

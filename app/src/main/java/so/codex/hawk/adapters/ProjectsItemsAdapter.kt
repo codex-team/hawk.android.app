@@ -10,14 +10,13 @@ import so.codex.uicomponent.recyclerview.items.ProjectItemView
 import kotlin.properties.Delegates
 
 /**
- * Адаптер, который показывает список элементов workspaces
+ * UI element for showing projects
  */
 class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectItemViewHolder>() {
 
     /**
-     * Список проектов, которые будут отображаться в [RecyclerView]. Используется делегат, которые
-     * вызывает расширение, для выявления различий между старым и новым списком и обновляет
-     * необходимые позиции
+     * List of project that showed in RecyclerView. Used delegate for change old elements in the list on new elements
+     * and update element on this position.
      */
     var data: List<Project> by Delegates.observable(listOf()) { _, old, new ->
         notify(old, new) { left, right ->
@@ -42,15 +41,22 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
         holder.bind(data[position])
     }
 
+    /**
+     * Class that representation of project in recycler view
+     */
     class ProjectItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        /**
+         * Data binding [project] with UI elements
+         * @param project Project that showed in UI
+         */
         fun bind(project: Project) {
             if (itemView is ProjectItemView) {
                 itemView.uuid = project.id
                 if (project.image.isNotEmpty())
                     Picasso.get()
-                            .load(project.image)
-                            .error(R.drawable.ic_error_outline_black_24dp)
-                            .into(itemView.logoImage)
+                        .load(project.image)
+                        .error(R.drawable.ic_error_outline_black_24dp)
+                        .into(itemView.logoImage)
                 else
                     itemView.setDefaultImage()
                 itemView.title = project.name

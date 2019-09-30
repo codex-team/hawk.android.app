@@ -16,28 +16,27 @@ import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
 
 /**
- * Фрагмент для отображение проектов, которые хранятся в воркспейсе
- * Реализует интерфейс [IWorkspaceView], где определены основные методы для взаимодействия с
- * Workspace
+ * Fragment for showing all information about Garage, showing list of project
+ * Implementation interface [IWorkspaceView], where declared method for communication with workspace
  */
 class GarageFragment : BaseFragment(), IWorkspaceView {
     companion object {
         /**
-         * Для получения объекта
+         * Create and getting fragment
          */
         fun instance() = GarageFragment()
     }
 
     /**
-     * Лениява инициализация презентора, который будет обрабатывать события
+     * Initialize presenter of workspace
      */
     private val presenter by lazy {
         WorkspacePresenter()
     }
 
     /**
-     * Показать все проекты, которые есть в [Workspace]
-     * @param workspaces список воркспейсов, в которых есть проекты
+     * Show all projects in [Workspace]
+     * @param workspaces list of [Workspace] that contain projects
      */
     override fun showProjects(workspaces: List<Workspace>) {
         if (rv_project_list.visibility == View.GONE) {
@@ -53,21 +52,21 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
     }
 
     /**
-     * Показать прогресс бар
+     * Show progress bar
      */
     override fun showLoader() {
         rv_refresh_layout.isRefreshing = true
     }
 
     /**
-     * Скрыть прогресс бар
+     * Hide progress bar
      */
     override fun hideLoader() {
         rv_refresh_layout.isRefreshing = false
     }
 
     /**
-     * Показать сообщение, что список проектов пустой
+     * Show message if list of projects is empty
      */
     override fun showEmptyProjects() {
         rv_project_list.visibility = View.GONE
@@ -75,7 +74,7 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
     }
 
     /**
-     * Показать ошибку, если она возникла
+     * Show error if it occurred
      */
     override fun showErrorMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()

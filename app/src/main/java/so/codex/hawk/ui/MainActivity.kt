@@ -5,6 +5,9 @@ import so.codex.hawk.R
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.ui.garage.GarageFragment
 
+/**
+ * Main activity that showed after authorization
+ */
 class MainActivity : AuthorizedSingleFragmentActivity() {
     override val containerId: Int = R.id.container
 

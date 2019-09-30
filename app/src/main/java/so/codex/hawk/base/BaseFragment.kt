@@ -5,14 +5,13 @@ import so.codex.codexbl.view.base.IBaseView
 import so.codex.hawk.router.IBaseRouter
 
 /**
- * Родительский фрагмент, который описывает общую логику для всех фрагментов
+ * Base fragment that contain common ui logic for all fragments
  */
 abstract class BaseFragment : Fragment(), IBaseView {
     /**
-     * Получение роутера с типом [R]. Проверяет, является ли родительский фрагмент или активити
-     * наследником данного типа [R], если такой имеется, то возвращаем его, если нет, то бросаем
-     * исключение [ClassCastException]
-     * @return Возвращает роутер с указанным типом [R]
+     * Get router with type [R]. Check if parent fragment or activity implement [R] then return that fragment as [R] else
+     * throw exception of [ClassCastException]
+     * @return Router with type of [R]
      */
     inline fun <reified R : IBaseRouter> getRouter(): R {
         return when {

@@ -1,17 +1,17 @@
 package so.codex.hawk.router
 
 /**
- * Роутер, в котором определены методы для вызыва их на экране с авторизацией
+ * Router with declared method for showing fragment on Authorization activity
  */
 interface ILoginRouter : IBaseRouter {
     /**
-     * Показать форму для входа
+     * Show fragment for sign in.
      */
     fun showSignIn()
 
     /**
-     * Показать форму для регистрации
-     * @param email строка, которая будет вставлено как почта для регистрации
+     * Show fragment for registration
+     * @param email string that insert in edit view in sign up fragment
      */
     fun showSignUp(email: String = "")
 }

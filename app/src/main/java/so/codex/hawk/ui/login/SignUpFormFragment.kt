@@ -12,11 +12,9 @@ import so.codex.codexbl.view.ISignUpView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
-import so.codex.hawk.ui.login.SignUpFormFragment.Companion.instance
 
 /**
- * Фрагмент для регистрации пользователей, для получения экземпляра данного класса,
- * необходимо вызвать [instance] с необходимыми параметрами
+ * Fragment form for sign up of new users
  */
 class SignUpFormFragment : BaseFragment(), ISignUpView {
     override fun showErrorMessage(message: String) {
@@ -25,14 +23,14 @@ class SignUpFormFragment : BaseFragment(), ISignUpView {
 
     companion object {
         /**
-         * Ключ, по которому передается значение, которое должно быть вставлено в поле Email.
+         * Key by save email in shared preferences or sending via bundle like as arguments
          */
         public const val EMAIL_KEY = "email_key"
 
         /**
-         * Функция для создания экземпляров данного класса
-         * @param email - строка, которая будет вставлена в поле Email. Параметр не обязательный
-         * @return Вернет экземпляр класса [SignUpFormFragment] с установленным аргументом
+         * Function for creating instance of fragment
+         * @param email string that inserted in edit text view
+         * @return instance of [SignUpFormFragment] with arguments
          */
         fun instance(email: String = "") =
             SignUpFormFragment().apply {

@@ -9,13 +9,12 @@ import so.codex.hawk.router.ILogoutRouter
 import so.codex.hawk.ui.login.LoginActivity
 
 /**
- * Абстрактный класс, который отвечает за то, авторизирован ли пользователь. Также расширает
- * класс [BaseSingleFragmentActivity] и интерфейс [ILogoutRouter]
+ * Abstract class that responsibility on authorization of user. Extend class of [BaseSingleFragmentActivity] and
+ * implement interface of [ILogoutRouter].
  */
 abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), ILogoutRouter {
     /**
-     * Реализация [IAuthorizedView] как анонимный класс, чтобы другие активити не могли получить
-     * к нему доступ
+     * Implementation [IAuthorizedView] like as anonymous class.
      */
     private val mAuthorizedView: IAuthorizedView = object : IAuthorizedView {
         override fun showErrorMessage(message: String) {
@@ -29,12 +28,12 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
     }
 
     /**
-     * Презентор, которые проверяет авторизирован ли пользователь
+     * Presenter that responsibility of authorization of user
      */
     private val mAuthPresenter = AuthorizedPresenter()
 
     /**
-     * Во время создания активити, презентор [mAuthPresenter] присоединяется к [mAuthorizedView]
+     * How will the activity be created then the [mAuthPresenter] is attached to the [mAuthorizedView]
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +53,14 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
     }
 
     /**
-     * Если пользователь нажал на кнопку выхода, то отправляем событие в презентор [mAuthPresenter]
+     * If user pressed button back, notify about it the [mAuthPresenter]
      */
     fun pressLogout() {
         mAuthPresenter.clearAndLogout()
     }
 
     /**
-     * Во время события выхода, удаляем все задачи в стеке и запускаем активити [LoginActivity]
+     * In while logout, remove and clear all activity in stack and start new activity [LoginActivity]
      */
     override fun logout() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

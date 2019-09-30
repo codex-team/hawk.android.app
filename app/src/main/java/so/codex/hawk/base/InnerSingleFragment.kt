@@ -5,20 +5,25 @@ import androidx.fragment.app.Fragment
 import so.codex.hawk.router.IBaseRouter
 
 /**
- * Используется для отображение внутреннего сменяющегося фрагмента, с сохранением конкретного
- * фрагмента, который был виден последний раз
+ * Abstract class for showing inner changed container with fragment with saving state of current fragment, that last
+ * showed.
  */
 abstract class InnerSingleFragment : BaseFragment(), IBaseRouter {
+    /**
+     * Unique identification container that can change fragment on layout
+     */
     abstract val containerId: Int
 
     companion object {
+        /**
+         * Key for saving last opened fragment [containerId] for restoring state
+         */
         private const val SAVED_INNER_FRAGMENT_NAME_KEY = "saved_inner_fragment_name_key"
     }
 
     /**
-     * Находит фрагмент в стеке, если он там есть, если его нет, то просто вставляет его в
-     * [containerId] без добавления в стек
-     * @param fragment инстансе фрагмента, которого хотим заменить
+     * Find fragment in stake, if it exist else then insert it in [containerId] with out adding in stack
+     * @param fragment instance of fragment that need to replace.
      */
     override fun replaceFragment(fragment: Fragment) {
         val oldFragment = childFragmentManager.findFragmentByTag(fragment::class.java.simpleName)
@@ -30,10 +35,10 @@ abstract class InnerSingleFragment : BaseFragment(), IBaseRouter {
     }
 
     /**
-     * Находит фрагмент в стеке, если он там есть, если его нет, то просто вставляет его в
-     * [containerId], а также добавляет его в стек, для дальнейшего переиспользования
-     * @param fragment инстансе фрагмента, которого хотим заменить
-     * @param tag уникальное название фрагмента, которого можно будет найти в стеке
+     * Find fragment in stake, if it exist else then insert it in [containerId] and adding in stack for reused it in
+     * future or retain state of fragment
+     * @param fragment instance of fragment that need to replace.
+     * @param tag Unique name of fragment by it we can find in stack
      */
     override fun replaceAndAdd(fragment: Fragment, tag: String?) {
         val oldFragment = childFragmentManager.findFragmentByTag(
@@ -52,9 +57,8 @@ abstract class InnerSingleFragment : BaseFragment(), IBaseRouter {
     }
 
     /**
-     * Находит фрагмент в стеке по [tag], если он там есть, если его нет, то просто вставляет его в
-     * [containerId]
-     * @param tag Уникальное название фрагмента в стеке
+     * Find fragment in stack by tag and replace fragment in [containerId] on it
+     * @param tag Unique name of fragment by it we can find in stack
      */
     private fun replaceByFragmentName(tag: String) {
         val oldFragment = childFragmentManager.findFragmentByTag(tag)
@@ -84,10 +88,10 @@ abstract class InnerSingleFragment : BaseFragment(), IBaseRouter {
     }
 
     /**
-     * Проверяем, если в нашем стеке нет больше фрагментов, то выходим, в противном случае,
-     * вызываем у каждого вложенного фрагмента [InnerSingleFragment.onBackPressed]
-     * @return возвращает true, если удалось удалить из стека фрагмент и false, если не удалось или
-     * элементы все уже произвели данное событие
+     * Check if in stack of fragment not have any fragment then invoke back press else invoke of every inner fragment
+     * event of back pressed
+     * @return return true, if all fragmented deleted from stack and false if we have any fragment in stack that not
+     * invoked event of back pressed
      */
     fun onBackPressed(): Boolean {
         return if (childFragmentManager.backStackEntryCount > 0) {

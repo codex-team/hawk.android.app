@@ -1,7 +1,7 @@
 package so.codex.hawk.router
 
 /**
- * Роутер, который отвечает за выход из аккаунта
+ * Router that responsibility for logout of user
  */
 interface ILogoutRouter : IBaseRouter {
     fun logout()
