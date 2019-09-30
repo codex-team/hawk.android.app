@@ -1,7 +1,7 @@
 package so.codex.hawkapi.exceptions
 
 /**
- * Основной класс, который обозначает, что произошла какая то ошибка во время выполнения HTTP зароса.
+ * Main exception that responsible for errors in message
  * Наследует [Exception]
  * @author Shiplayer
  */

@@ -4,22 +4,19 @@ import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.IWorkspaceApi
 
 /**
- * Интерфейс, в котором определены все методы, которые возвращают соответсвутющие компоненты для взаимодействия с сервером
+ * Interface that declared all necessary api providers for communication with server
  * @author Shiplayer
  */
 interface SourceApi {
     /**
-     * Интерфейс для получени методов доступа к классу, который будет отправлять запросы для
-     * авторизации или обновления токена
-     * @return Интерфейс с методами, с помощью которых можно авторизоваться, зарегистрироваться и
-     * обновить токен
+     * Provide interface with method that need for work with Authentication
+     * @return Implemented interface that ready for communication
      */
     fun getAuthApi(): IAuthApi
 
     /**
-     * Полчения методов доступа к классу, который предоставит необходимые методы для отправки
-     * запросов необходимых для получения информации о Workspace
-     * @return Интерфейс с методами, с помощью которых можно получить необходимую информацию о Workspace
+     * Provide interface with method that need for work with Workspace
+     * @return Implemented interface that ready for communication
      */
     fun getWorkspaceApi(): IWorkspaceApi
 }

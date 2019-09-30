@@ -3,7 +3,6 @@ package so.codex.hawkapi.api.workspace
 import io.reactivex.Observable
 import so.codex.hawkapi.WorkspaceApiMethodImpl
 import so.codex.hawkapi.api.CoreApi
-import so.codex.hawkapi.api.workspace.WorkspaceApi.Companion.instance
 import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IWorkspaceApi
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
@@ -13,10 +12,9 @@ import so.codex.sourceinterfaces.entity.WorkspaceWithUsersEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
 /**
- * Является singleton, для получения экземпляра класса необходимо обратиться к переменной [instance].
- * Данный класс предоставляет методы для отправки запросов на сервер.
- * @constructor Приватный конструктор, в котором происходит инициализация сервиса, через который
- * будет отправляться запрос на севрер
+ * Implementation of interface [IWorkspaceApi]. Class is singleton with provide method for communication with server
+ * and getting information of workspace via sending api request to the server.
+ * @constructor Have private constructor for initialize singleton instance of class
  * @author Shiplayer
  */
 class WorkspaceApi private constructor(private val service: WorkspacesApiMethods) : IWorkspaceApi {
@@ -26,18 +24,26 @@ class WorkspaceApi private constructor(private val service: WorkspacesApiMethods
         }
     }
 
+    // TODO documentation for getting only information about workspace
     override fun getOnlyWorkspace(token: String): Observable<WorkspaceResponse<WorkspaceEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    // TODO documentation for getting information about workspace with users
     override fun getWorkspaceWithUsers(token: String): Observable<WorkspaceResponse<WorkspaceWithUsersEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    // TODO documentation for getting information about workspace with projects
     override fun getWorkspaceWithProjects(token: String): Observable<WorkspaceResponse<WorkspaceWithProjectsEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    /**
+     * Getting all information of Workspace with users and projects.
+     * @param token User access token
+     * @return [FullWorkspaceEntity] wrapped in [WorkspaceResponse]
+     */
     override fun getFullWorkspace(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         return service.getWorkspaces(token).subscribeOnIO()
     }

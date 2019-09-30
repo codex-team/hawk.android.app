@@ -16,8 +16,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Ядро, в коротом определяются все API, с помощью которых можно будет взаимодействовать с сервером
- * [SourceApi] - интерфейс, в котором определены все необходимы API компоненты, которые отвечают за опреленные запросы
+ * Main class of API that can provide interfaces api for communication with server, sending and getting information.
+ * [SourceApi] - interface that declared method for providing api for communication with server.
  * @author Shiplayer
  */
 class CoreApi private constructor() : SourceApi {
@@ -25,7 +25,7 @@ class CoreApi private constructor() : SourceApi {
         private val baseUrl = "https://api.stage.hawk.so/graphql"
 
         /**
-         * Ленивая инициализация ретрофита для использования инициализации остальных компонентов для работы с API
+         * Lazy initializing apollo.
          */
         val apollo: ApolloClient by lazy {
             ApolloClient.builder()
@@ -36,12 +36,12 @@ class CoreApi private constructor() : SourceApi {
         }
 
         /**
-         * Паттерн времени, по которму можно будет сконвертировать в Long
+         * For converting String to Long
          */
         private val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
         /**
-         * Реализация конвертирования Date из GraphQL в джавовский Date
+         * Converting Date from GrapghQL to Data from Java
          */
         private val customDateTimeAdapter = object : CustomTypeAdapter<Date> {
             override fun encode(value: Date): CustomTypeValue<*> {
@@ -54,7 +54,8 @@ class CoreApi private constructor() : SourceApi {
         }
 
         /**
-         * Ленивая инициализация клиента
+         * Lazy initializing of client with http logger and token interceptor.
+         * @see TokenInterceptor
          */
         private val client by lazy {
             val interceptor = HttpLoggingInterceptor().apply {
@@ -67,22 +68,24 @@ class CoreApi private constructor() : SourceApi {
                     .build()
         }
 
+        /**
+         * Singleton of CoreApi
+         */
         val instance by lazy {
             CoreApi()
         }
     }
 
     /**
-     * Метод, который возвращает API для взаимодействия с сервером во время авторизации
-     * @return Возвращает интерфейс [IAuthApi], в котором есть все необходимые методы для авторизации
+     * Provide interface for working with Authorization.
+     * @return Interface [IAuthApi], that implemented methods for sending request.
      * @see IAuthApi
      */
     override fun getAuthApi(): IAuthApi = AuthApi.instance
 
     /**
-     * Метод, который возвращает API для взаимодействия с сервером для получения информации о Workspace
-     * @return Возвращает интерфейс [IWorkspaceApi], в котором есть все необходимые методы для
-     * получения информации о Workspace
+     * Provide interface for working with Workspaces.
+     * @return Interface [IWorkspaceApi], that implemented methods for sending request.
      * @see IWorkspaceApi
      */
     override fun getWorkspaceApi(): IWorkspaceApi = WorkspaceApi.instance

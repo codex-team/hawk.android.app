@@ -1,7 +1,7 @@
 package so.codex.hawkapi.exceptions
 
 /**
- * Класс ялвяется [Exception], который возникает в случае, если у токена истек срок валидности
+ * An exception is described that the access token has expired and is no longer valid
  * @see BaseHttpException
  * @author Shiplayer
  */

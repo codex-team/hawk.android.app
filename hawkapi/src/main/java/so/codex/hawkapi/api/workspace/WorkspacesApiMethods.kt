@@ -5,7 +5,7 @@ import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
 /**
- * Интерфейс, в котором обявлены методы для взаимодействия с API
+ * Declared methods for sending request only for getting information of Workspace or working with it
  * @author Shiplayer
  */
 interface WorkspacesApiMethods {

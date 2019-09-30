@@ -1,9 +1,9 @@
 package so.codex.hawkapi.exceptions
 
 /**
- * Возникает, когда во время выполнения HTTP запроса происходит больше чем одна ошибка.
- * @param message сообщение, в которое содержит какое то обяснение, причина возникновения
- * @param errors Список сообщений основных ошибок, которые произошли
+ * If on sending request, we getting in message more that one error that occurred on the server
+ * @param message Contain a description of the error or errors that occurred on the server
+ * @param errors List of errors
  * @see BaseHttpException
  * @author Shiplayer
  */

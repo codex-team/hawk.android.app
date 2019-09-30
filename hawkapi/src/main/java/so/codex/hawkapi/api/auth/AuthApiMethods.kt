@@ -11,7 +11,7 @@ import so.codex.sourceinterfaces.response.SignUpResponse
 import so.codex.sourceinterfaces.response.TokenResponse
 
 /**
- * Интерфейс, в котором определяются все методы для взаимодействия с API
+ * Declared methods for sending request only for authorization
  * @author Shiplayer
  */
 interface AuthApiMethods {

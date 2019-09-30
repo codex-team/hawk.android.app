@@ -12,44 +12,52 @@ import so.codex.sourceinterfaces.response.SignUpResponse
 import so.codex.sourceinterfaces.response.TokenResponse
 
 /**
- * Класс, который использует [ApolloClient] для отправки GraphQL запросов, конвертирует их в RxJava2.
- * Также определены расширения для некоторых объектов, для более удобного конвертирования из одного
- * объекта в другой. Реализуте интерфейс [AuthApiMethods] для реализции отправки запросов.
- * @constructor принимает [ApolloClient] для отправки GraphQL запросов
+ * Class that used [ApolloClient] for sending GraphQL request and converted response to RxJava2.
+ * Implementation interface [AuthApiMethods] for handling and converting requests and responses to RxJava2.
  * @see AuthApiMethods
  * @author Shiplayer
  */
 class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethods {
+
+    /**
+     * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Login.
+     */
     override fun login(authEntity: AuthEntity): Single<LoginResponse> {
         return Rx2Apollo.from(
-                apolloClient.mutate(
-                        LoginMutation.builder()
-                                .email(authEntity.email)
-                                .password(authEntity.password)
-                                .build()
-                )
+            apolloClient.mutate(
+                LoginMutation.builder()
+                    .email(authEntity.email)
+                    .password(authEntity.password)
+                    .build()
+            )
         ).handleHttpErrorsSingle().map {
             LoginResponse(TokenResponse(it.login.accessToken, it.login.refreshToken))
         }
     }
 
+    /**
+     * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of SignUp.
+     */
     override fun signUp(signUpEntity: SignUpEntity): Single<SignUpResponse> {
         return Rx2Apollo.from(
-                apolloClient.mutate(
-                        SignUpMutation.builder()
-                                .email(signUpEntity.email)
-                                .build()
-                )
+            apolloClient.mutate(
+                SignUpMutation.builder()
+                    .email(signUpEntity.email)
+                    .build()
+            )
         ).handleHttpErrorsSingle().map {
             SignUpResponse(it.signUp)
         }
     }
 
+    /**
+     * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Token.
+     */
     override fun refreshToken(token: TokenEntity): Single<TokenResponse> {
         return Rx2Apollo.from(
-                apolloClient.mutate(
-                        RefreshTokensMutation(token.refreshToken)
-                )
+            apolloClient.mutate(
+                RefreshTokensMutation(token.refreshToken)
+            )
         ).handleHttpErrorsSingle().map {
             TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)
         }

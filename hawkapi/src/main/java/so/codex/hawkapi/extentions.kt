@@ -13,14 +13,13 @@ import so.codex.hawkapi.exceptions.MultiHttpErrorsException
 import so.codex.hawkapi.exceptions.SomethingWentWrongException
 
 /**
- * Здесь определены основные расширения некоторых классов.
+ * In here declared common extensions for working RxJava and ApolloCalls.
  * @author Shiplayer
  */
 
 /**
- * Расширение [Observable] для обработки ошибок, которые могут возникнуть во время отправки запроса
- * @return Возвращает уже [Single] с уже раскрытым объектом от [Response] в его тип, который он
- * содержит.
+ * Extension [Observable] for handing errors, that make occurred in while request or on the server.
+ * @return [Single] with unwrapped instance in [Response] to type that it contains
  */
 fun <T : Response<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O> {
     return firstOrError().flatMap {
@@ -40,9 +39,8 @@ fun <T : Response<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O
 }
 
 /**
- * Расширение [Observable] для обработки ошибок, которые могут возникнуть во время отправки запроса
- * @return Возвращает [Observable] с уже раскрытым объектом от [Response] в его тип, который он
- * содержит.
+ * Extension [Observable] for handing errors, that make occurred in while request or on the server.
+ * @return [Observable] with unwrapped instance in [Response] to type that it contains
  */
 fun <T : Response<O>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O> {
     return flatMap {
@@ -62,9 +60,8 @@ fun <T : Response<O>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O>
 }
 
 /**
- * Конвертирует [ApolloCall] в Rx поток, который можно будет еще раз вызвать, если произошла ошибка
- * и нужно будет отправить запрос заново.
- * @return Возвращает [Observable] аналогичный [ApolloCall]
+ * Convert [ApolloCall] to [Observable], that may call again if error occurred and send request again
+ * @return [Observable] similar [ApolloCall]
  */
 fun <T> ApolloCall<T>.toRxJava(): Observable<Response<T>> {
     return Observable.create<Response<T>> {
@@ -83,11 +80,9 @@ fun <T> ApolloCall<T>.toRxJava(): Observable<Response<T>> {
 }
 
 /**
- * Конвертирует [ApolloCall] в Rx поток, который можно будет еще раз вызвать, если произошла ошибка
- * и нужно будет отправить запрос заново.
- * @param before лямба выражение, которое выполняется во время конвертации для выполнения каких либо
- * действий
- * @return Возвращает [Observable] аналогичный [ApolloCall]
+ * Convert [ApolloCall] to [Observable], that may call again if error occurred and send request again
+ * @param before lambda, that need invoke before sending request
+ * @return [Observable] similar [ApolloCall]
  */
 fun <T> ApolloCall<T>.toRxJava(before: () -> Unit): Observable<Response<T>> {
     return Observable.create<Response<T>> {
@@ -107,7 +102,7 @@ fun <T> ApolloCall<T>.toRxJava(before: () -> Unit): Observable<Response<T>> {
 }
 
 /**
- * Конвертирует ошибку из GraphQL [Error] в [BaseHttpException]
+ * Convert error of GraphQL [Error] to [BaseHttpException]
  */
 private fun Error.convert(): BaseHttpException =
         customAttributes().let {
@@ -120,5 +115,12 @@ private fun Error.convert(): BaseHttpException =
                 BaseHttpException(this.message())
         }
 
+/**
+ * Work in other thread for IO communication
+ */
 fun <T> Observable<T>.subscribeOnIO(): Observable<T> = subscribeOn(Schedulers.io())
+
+/**
+ * Work in other thread for IO communication
+ */
 fun <T> Single<T>.subscribeOnIO(): Single<T> = subscribeOn(Schedulers.io())
