@@ -15,8 +15,8 @@ import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 
 /**
- * Реализация EditText с лейблом и задним фоном, который подсвечивается во время фокуса.
- * Используется как композиция более сложных View
+ * Implementation of custom editView with title and background. Used like as composition of complex
+ * view
  * @author Shiplayer
  */
 class EditText @JvmOverloads constructor(
@@ -86,9 +86,8 @@ class EditText @JvmOverloads constructor(
     }
 
     /**
-     * Добавление фильтра к [editView]
-     * @param inputFilter Фильтр, в которм установлено условие, по которому будет запрешать ввод
-     * какого-либо текста
+     * Add filter to [editView]
+     * @param inputFilter Filter for text
      */
     fun addFilter(inputFilter: InputFilter) {
         editView.filters = editView.filters.toMutableList().apply {
@@ -100,7 +99,7 @@ class EditText @JvmOverloads constructor(
 
 
     /**
-     * Ниже описаны методы и класс необходимые для сохранения состояния данного View
+     * Methods and class for saving instance state after changing system settings
      */
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {

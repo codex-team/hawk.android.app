@@ -3,7 +3,7 @@ package so.codex.utils
 import android.graphics.Color
 
 /**
- * Вспомогательные переменные и функции
+ * Helped variables and methods
  */
 
 private val colors = arrayOf(
@@ -19,6 +19,9 @@ private val colors = arrayOf(
     Color.parseColor(it)
 }
 
+/**
+ * Get color by Id
+ */
 fun getColorById(id: String): Int {
     val ch = id.last()
     return when (ch) {

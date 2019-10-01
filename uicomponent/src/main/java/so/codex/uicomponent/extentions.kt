@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * Делегаты для взаимодействия с [TextView], получение строки в установки текста через [String]
+ * Delegates for communication with [TextView], getting text and set text as String
  */
 fun textViewDelegate(textView: TextView): ReadWriteProperty<Any, String> {
     return object : ReadWriteProperty<Any, String> {
@@ -22,9 +22,8 @@ fun textViewDelegate(textView: TextView): ReadWriteProperty<Any, String> {
 }
 
 /**
- * Делегаты для взаимодействия с [TextView], получение строки в установки текста через [String]
- * с выполнением условия [condition]
- * @param condition Условие которое будет вызываться каждый раз при установки значения
+ * Delegates for communication with [TextView], getting text and set text as String and use condition.
+ * @param condition Condition that invoked every time then text is set
  */
 fun textViewDelegate(textView: TextView, condition: (View, String) -> Unit): ReadWriteProperty<Any, String> {
     return object : ReadWriteProperty<Any, String> {

@@ -17,7 +17,7 @@ import so.codex.uicomponent.textViewDelegate
 import so.codex.utils.getColorById
 
 /**
- * Композиция View, которые являются списком для показа проектов в списке
+ * Composition of view for showing elements of Project in list
  * @author Shiplayer
  */
 class ProjectItemView @JvmOverloads constructor(
@@ -59,6 +59,9 @@ class ProjectItemView @JvmOverloads constructor(
         logoImage.setImageResource(resourceId)
     }
 
+    /**
+     * Generate default image for logo by name of project
+     */
     fun setDefaultImage() {
         logoImage.post {
             if (defaultImage == null) {

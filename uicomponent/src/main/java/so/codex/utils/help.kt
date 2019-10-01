@@ -6,6 +6,9 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
 import androidx.annotation.ColorInt
 
+/**
+ * Set color for Drawable
+ */
 fun Drawable.overrideColor(@ColorInt colorInt: Int) {
     when (this) {
         is GradientDrawable -> setColor(colorInt)

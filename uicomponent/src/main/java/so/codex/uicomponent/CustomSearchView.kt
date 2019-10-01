@@ -22,31 +22,30 @@ import androidx.core.content.ContextCompat.getSystemService
 import kotlinx.android.synthetic.main.view_search.view.*
 
 /**
- * Реализация композиции View для поиска с использованием анимации
+ * Implementation composition of view for searching and using animation
  */
 class CustomSearchView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.customSearchViewStyle
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     /**
-     * Радиус углов для закругления формы
+     * Radius of corners for rounded form
      */
     private var corners: Float
     /**
-     * Кисть для рисования заднего фона
+     * Brush for painting background
      */
     private val paint = Paint()
     /**
-     * Размеры формы, которой мы собираемся нарисовать
+     * Size of form
      */
     private val rectF = RectF()
     /**
-     * Во время изменения текста, вызывается [listener]
+     * In while changing of text to invoke [listener]
      */
     private var listener: SearchListener? = null
     /**
-     * Храним ссылку на анимацию, чтоб во время уничтожения отменить данную анимацию и успешно
-     * очистить объект
+     * Save references of animation. If view destroyed then free memory
      */
     private var animation: ViewPropertyAnimator? = null
     /**
@@ -55,12 +54,12 @@ class CustomSearchView @JvmOverloads constructor(
     private var count = 0
 
     /**
-     * View в котором изменяется текст для поиска
+     * View for changing of text for searching
      */
     private var searchText: EditText
 
     /**
-     * Инициализация необходимых переменных и получения необходимых значений из стилей
+     * Initialize view
      */
     init {
         val view = View.inflate(context, R.layout.view_search, this)

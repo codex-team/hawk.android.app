@@ -6,19 +6,18 @@ import androidx.cardview.widget.CardView
 import so.codex.uicomponent.R
 
 /**
- * Является обычной CardView, но имеет некоторые ограниченич, такие как максимальная высота и
- * максимальная ширина.
+ * This is like as CardView but have some limits like as max height and max width
  * @author Shiplayer
  */
 class BoundedCardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
     /**
-     * Максимальная ширина, которую карточка может занять
+     * max width of card view
      */
     private val mMaxWidth: Int
     /**
-     * Максимальная высота, которую карточка может занять
+     * max height of card view
      */
     private val mMaxHeight: Int
 
@@ -32,7 +31,7 @@ class BoundedCardView @JvmOverloads constructor(
     }
 
     /**
-     * Вычисляем необходимые размеры для нашей карточки
+     * Calculate size of card view
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val measuredWidth = MeasureSpec.getSize(widthMeasureSpec)

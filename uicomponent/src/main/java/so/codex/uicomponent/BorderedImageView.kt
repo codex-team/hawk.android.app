@@ -13,14 +13,14 @@ import android.view.View
 import android.widget.ImageView
 
 /**
- * Обычная ImageView, но можно регулировать закругленность краев
+ * Simple image view with rounded corners
  * @author Shiplayer
  */
 class BorderedImageView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.borderedImageViewStyle
 ) : ImageView(context, attrs, defStyleAttr) {
     /**
-     * Радиус закругленных краев ImageView
+     * Radius of rounded corners
      */
     private var mCorners = 0f
     private val xfermode = PorterDuffXfermode(PorterDuff.Mode.XOR)
@@ -42,14 +42,14 @@ class BorderedImageView @JvmOverloads constructor(
     }
 
     /**
-     * Кисть с помощью которой будет рисоваться маска для ImageView
+     * Brush that painted of mask for image view
      */
     private val mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         xfermode = this@BorderedImageView.xfermode
     }
 
     /**
-     * Ленивая инициализация макси
+     * lazy initializing of mask
      */
     private val mask: Bitmap by lazy {
         val mask = Bitmap.createBitmap(
