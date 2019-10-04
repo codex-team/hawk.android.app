@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_garage.*
+import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.workspace.WorkspacePresenter
 import so.codex.codexbl.view.workspace.IWorkspaceView
@@ -14,6 +15,7 @@ import so.codex.hawk.R
 import so.codex.hawk.adapters.ProjectsItemsAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
+import so.codex.hawk.router.IMainRouter
 
 class GarageFragment : BaseFragment(), IWorkspaceView {
     companion object {
@@ -54,6 +56,10 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
+    override fun openProject(project: Project) {
+        getRouter<IMainRouter>().openProjectFragment(project)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
         return inflater.inflate(R.layout.fragment_garage, container, false)
@@ -68,7 +74,7 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         }
 
         rv_project_list.apply {
-            adapter = ProjectsItemsAdapter()
+            adapter = ProjectsItemsAdapter(::openProject)
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }

@@ -9,7 +9,8 @@ import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.ProjectItemView
 import kotlin.properties.Delegates
 
-class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectItemViewHolder>() {
+class ProjectsItemsAdapter(val itemClick: (Project) -> Unit) :
+    RecyclerView.Adapter<ProjectsItemsAdapter.ProjectItemViewHolder>() {
 
     var data: List<Project> by Delegates.observable(listOf()) { _, old, new ->
         notify(old, new) { left, right ->
@@ -33,6 +34,9 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
 
     override fun onBindViewHolder(holder: ProjectItemViewHolder, position: Int) {
         holder.bind(data[position])
+        holder.itemView.setOnClickListener {
+            itemClick(data[position])
+        }
     }
 
     class ProjectItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
