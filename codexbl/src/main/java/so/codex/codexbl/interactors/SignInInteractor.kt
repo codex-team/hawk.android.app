@@ -18,6 +18,9 @@ class SignInInteractor : ISignInInteractor, KoinComponent {
      */
     private val userInteractor by inject<IUserInteractor>()
 
+    /**
+     * Send request to login and save session
+     */
     override fun signIn(userAuth: UserAuth): Single<Boolean> {
         return CoreApi.instance.getAuthApi().login(AuthEntity(userAuth.email, userAuth.password)).doOnSuccess {
 

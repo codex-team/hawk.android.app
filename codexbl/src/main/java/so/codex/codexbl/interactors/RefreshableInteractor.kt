@@ -48,10 +48,17 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
         )
     }
 
+    /**
+     * Get token from [atomicToken]
+     */
     //TODO костыль, сделать нормально
     final override val token: String
         get() = atomicToken.get()
 
+    /**
+     * Retry observable if throwable is occurred, and this throwable is [AccessTokenExpiredException],
+     * update token and save it in storage
+     */
     override fun <T> Observable<T>.refreshToken(): Observable<T> {
         var first = false
         return retryWhen {
@@ -83,6 +90,10 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
         }
     }
 
+    /**
+     * Retry single if throwable is occurred, and this throwable is [AccessTokenExpiredException],
+     * update token and save it in storage
+     */
     // Необходимо будет проверить, правильно ли работает данная реализация
     override fun <T> Single<T>.refreshTokenSingle(): Single<T> {
         return retryWhen {

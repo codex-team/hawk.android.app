@@ -10,14 +10,14 @@ class CompositeDisposable {
     private val list = mutableListOf<Disposable>()
 
     /**
-     * Добавить Disposable к списку
+     * Add dispose to list
      */
     final fun of(disposable: Disposable){
         list.add(disposable)
     }
 
     /**
-     * Завершить все потоки
+     * Dispose all elements
      */
     final fun dispose(){
         list.forEach {

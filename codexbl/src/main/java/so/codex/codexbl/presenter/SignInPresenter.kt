@@ -13,6 +13,9 @@ import so.codex.codexbl.view.ISignInView
  * @author Shiplayer
  */
 class SignInPresenter : BasePresenter<ISignInView>(), KoinComponent {
+    /**
+     * Interactor for sign in of user
+     */
     private val signInInteractor: ISignInInteractor by inject()
 
     /**
@@ -23,12 +26,12 @@ class SignInPresenter : BasePresenter<ISignInView>(), KoinComponent {
                 signInInteractor.signIn(UserAuth(email, password))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                                       if (it) {
-                                           view?.successfulLogin()
-                                       }
-                                   }, {
-                                       view?.showErrorMessage(it?.message ?: "Something went wrong")
-                                   })
+                            if (it) {
+                                view?.successfulLogin()
+                            }
+                        }, {
+                            view?.showErrorMessage(it?.message ?: "Something went wrong")
+                        })
         )
     }
 }

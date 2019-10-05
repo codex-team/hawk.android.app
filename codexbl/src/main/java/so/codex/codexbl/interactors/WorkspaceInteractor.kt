@@ -17,8 +17,14 @@ import so.codex.sourceinterfaces.IWorkspaceApi
  * @author Shiplayer
  */
 class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinComponent {
+    /**
+     * Workspace
+     */
     private val api: IWorkspaceApi by inject()
 
+    /**
+     * Send request to get workspace
+     */
     override fun getWorkspaces(): Single<List<Workspace>> {
         return api.getFullWorkspace(token)
                 .refreshToken()
@@ -55,6 +61,9 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
                 }.toList()
     }
 
+    /**
+     * Todo
+     */
     override fun getWorkspacesObservable(): Observable<List<Workspace>> {
         TODO()
     }

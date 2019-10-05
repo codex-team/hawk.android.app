@@ -11,6 +11,9 @@ import so.codex.codexbl.view.workspace.IWorkspaceView
  * @author Shiplayer
  */
 class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
+    /**
+     * Interactor for work with Workspaces
+     */
     private val workspaceInteractor: IWorkspaceInteractor by inject()
 
     override fun onAttach() {
@@ -30,17 +33,20 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
                         .getWorkspaces()
                         .attachLoader()
                         .subscribe({
-                                       if (!it.isNullOrEmpty())
-                                           view?.showProjects(it)
-                                       else
-                                           view?.showEmptyProjects()
-                                   }, {
-                                       it.printStackTrace()
-                                       view?.showErrorMessage(it.message ?: " error")
-                                   })
+                            if (!it.isNullOrEmpty())
+                                view?.showProjects(it)
+                            else
+                                view?.showEmptyProjects()
+                        }, {
+                            it.printStackTrace()
+                            view?.showErrorMessage(it.message ?: " error")
+                        })
         )
     }
 
+    /**
+     * Dispose of all RxJava Streams/Calls
+     */
     fun unsubscribe() {
         compositeDisposable.dispose()
     }

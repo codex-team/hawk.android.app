@@ -25,17 +25,17 @@ class SignUpPresenter : BasePresenter<ISignUpView>() {
     fun submit(email: String) {
         if (email.contains("@")) {
             compositeDisposable.of(signInInteractor.signUp(email)
-                                           .observeOn(AndroidSchedulers.mainThread())
-                                           .subscribe({
-                                                          if (it) {
-                                                              view?.successfulSignUp()
-                                                          }
-                                                      }, {
-                                                          view?.showErrorMessage(
-                                                                  it?.message
-                                                                          ?: "Something went wrong"
-                                                          )
-                                                      })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        if (it) {
+                            view?.successfulSignUp()
+                        }
+                    }, {
+                        view?.showErrorMessage(
+                                it?.message
+                                        ?: "Something went wrong"
+                        )
+                    })
             )
         }
     }

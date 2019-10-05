@@ -12,6 +12,9 @@ import so.codex.codexbl.view.IAuthorizedView
  * @author Shiplayer
  */
 class AuthorizedPresenter : BasePresenter<IAuthorizedView>(), KoinComponent {
+    /**
+     * Interactor for checking user authorization state and logout
+     */
     private val userInteractor: IUserInteractor by inject()
 
     override fun onAttach() {
