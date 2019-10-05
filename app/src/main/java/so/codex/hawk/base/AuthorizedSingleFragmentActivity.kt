@@ -40,6 +40,9 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
         mAuthPresenter.attached(mAuthorizedView)
     }
 
+    /**
+     * Connect authorization view to authorization presenter if view is null
+     */
     override fun onStart() {
         super.onStart()
         if (mAuthPresenter.view == null) {
@@ -47,6 +50,9 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
         }
     }
 
+    /**
+     * Detach view from presenter
+     */
     override fun onStop() {
         super.onStop()
         mAuthPresenter.detached()

@@ -68,6 +68,9 @@ abstract class BaseSingleFragmentActivity : FragmentActivity(), IBaseRouter {
         }
     }
 
+    /**
+     * Save last showed fragment in [containerId] by use shared preference
+     */
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         val showedFragment = supportFragmentManager.findFragmentById(containerId)
@@ -75,6 +78,9 @@ abstract class BaseSingleFragmentActivity : FragmentActivity(), IBaseRouter {
         outState?.putString(SAVED_FRAGMENT_NAME_KEY, tag)
     }
 
+    /**
+     * Restore last showed fragment in [containerId] by use shared preference
+     */
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState?.let {

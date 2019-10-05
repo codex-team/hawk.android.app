@@ -80,11 +80,17 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
+    /**
+     * Create and inflate view from layout and set retain instance for restoring state
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
         return inflater.inflate(R.layout.fragment_garage, container, false)
     }
 
+    /**
+     * Attack view to presenter and init on click callbacks
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.attached(this)
@@ -107,11 +113,17 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         presenter.loadAllWorkspaces()
     }
 
+    /**
+     * Detach from view after destroying view
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.detached()
     }
 
+    /**
+     * Unsubscribe of all RxJava streams
+     */
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()

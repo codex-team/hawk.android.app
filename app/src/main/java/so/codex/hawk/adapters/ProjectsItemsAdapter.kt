@@ -24,6 +24,9 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
         }
     }
 
+    /**
+     * Create view from module "uicomponent" for project item view
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectItemViewHolder {
         val view = ProjectItemView(parent.context)
         view.layoutParams = ViewGroup.LayoutParams(
@@ -33,10 +36,16 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
         return ProjectItemViewHolder(view)
     }
 
+    /**
+     * Get size of projects elements in data
+     */
     override fun getItemCount(): Int {
         return data.size
     }
 
+    /**
+     * Bind data with holder by position
+     */
     override fun onBindViewHolder(holder: ProjectItemViewHolder, position: Int) {
         holder.bind(data[position])
     }

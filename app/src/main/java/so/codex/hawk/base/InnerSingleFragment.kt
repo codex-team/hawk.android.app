@@ -71,6 +71,9 @@ abstract class InnerSingleFragment : BaseFragment(), IBaseRouter {
         }
     }
 
+    /**
+     * Save last showed fragment in [containerId] by use shared preference
+     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val showedFragment = childFragmentManager.findFragmentById(containerId)
@@ -78,6 +81,9 @@ abstract class InnerSingleFragment : BaseFragment(), IBaseRouter {
         outState.putString(SAVED_INNER_FRAGMENT_NAME_KEY, tag)
     }
 
+    /**
+     * Restore last showed fragment in [containerId] by use shared preference
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.let {
