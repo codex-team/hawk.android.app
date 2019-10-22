@@ -24,7 +24,14 @@ class ProjectItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.projectItemViewStyle
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    /**
+     * Inflate view and attach
+     */
     val view: View = View.inflate(context, R.layout.view_project_item, this)
+
+    /**
+     * Logo image
+     */
     val logoImage: ImageView = view.logo
 
     init {
@@ -42,8 +49,17 @@ class ProjectItemView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Title name of item
+     */
     var title by textViewDelegate(view.tv_title)
+    /**
+     * Message of item
+     */
     var message by textViewDelegate(view.tv_message)
+    /**
+     * Count of errors
+     */
     var count by textViewDelegate(view.tv_count) { v, text ->
         if (text.isEmpty() || text == "0") {
             v.visibility = View.GONE
@@ -51,10 +67,19 @@ class ProjectItemView @JvmOverloads constructor(
             v.visibility = View.VISIBLE
         }
     }
+    /**
+     * Uuid of project
+     */
     var uuid: String = ""
 
+    /**
+     * Default bitmap if logo not set up
+     */
     private var defaultImage: Bitmap? = null
 
+    /**
+     * Set logo image like as resource id
+     */
     fun setLogoImageResource(resourceId: Int) {
         logoImage.setImageResource(resourceId)
     }
@@ -91,11 +116,19 @@ class ProjectItemView @JvmOverloads constructor(
     }
 
 
+    /**
+     * Save field state of current view
+     */
     override fun onSaveInstanceState(): Parcelable? {
         return super.onSaveInstanceState()
     }
 
+    /**
+     * Restore field state of current view from [Parcelable]
+     */
     override fun onRestoreInstanceState(state: Parcelable?) {
         super.onRestoreInstanceState(state)
     }
+
+    // TODO Create class for saving field state
 }

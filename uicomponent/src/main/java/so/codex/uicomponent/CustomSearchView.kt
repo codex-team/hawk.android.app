@@ -110,7 +110,9 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
-
+    /**
+     * Request focus on edit text view for typing text
+     */
     private fun requestFocusEditText() {
         if (!searchText.isFocused) {
             searchText.requestFocus()
@@ -127,16 +129,28 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Initialize all listeners that need for that view
+     */
     private fun initListeners() {
         searchText.addTextChangedListener(object : TextWatcher {
+            /**
+             * Not used
+             */
             override fun afterTextChanged(s: Editable?) {
 
             }
 
+            /**
+             * Not used
+             */
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
+            /**
+             * Showing button for clear all text and send that text to [listener]
+             */
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (s.isNullOrEmpty()) {
                     ic_clear.visibility = View.GONE
@@ -182,6 +196,9 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Calculating measure of view
+     */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         Log.v("Chart onMeasure w", MeasureSpec.toString(widthMeasureSpec))
         Log.v("Chart onMeasure h", MeasureSpec.toString(heightMeasureSpec))
@@ -212,21 +229,36 @@ class CustomSearchView @JvmOverloads constructor(
         invalidate()
     }
 
+    /**
+     * Set color filter for image
+     */
     fun setImageColorFilter(@ColorInt color: Int) {
         ic_search.setColorFilter(color, android.graphics.PorterDuff.Mode.SRC_IN)
     }
 
+    /**
+     * Set search listener [SearchListener]
+     */
     fun setSearchListener(listener: SearchListener) {
         this.listener = listener
     }
 
+    /**
+     * Cancel animation if it running
+     */
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         animation?.cancel()
     }
 
+    /**
+     * Convert from dp to px
+     */
     private fun dpToPx(dp: Float): Float = dp * resources.displayMetrics.density
 
+    /**
+     * Update [rectF] if size of view was changed.
+     */
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         rectF.apply {
@@ -235,16 +267,29 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Draw rounded rectangle
+     */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         Log.i("onDraw", "width = $width; height = $height")
         canvas?.drawRoundRect(rectF, corners, corners, paint)
     }
 
+    /**
+     * Interface that invoke method searching if user typed something in field
+     */
     interface SearchListener {
+        /**
+         * Method invoke after getting text from view and send to search information
+         * @param text Text for searching something
+         */
         fun search(text: String)
     }
 
+    /**
+     * Save state fields of view in Parcelable.
+     */
     override fun onSaveInstanceState(): Parcelable? {
         return SavedState(super.onSaveInstanceState()).apply {
             text = searchText.text.toString()
@@ -255,6 +300,9 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Restore state fields of view and fill it from Parcelable
+     */
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is SavedState) {
             if (id == state.id) {
@@ -272,12 +320,30 @@ class CustomSearchView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Class that contain information about fields of current view
+     */
     class SavedState : BaseSavedState {
+        /**
+         * Searched text
+         */
         var text: String = ""
+        /**
+         * Id of current view
+         */
         var id: Int = -1
+        /**
+         * View was focused
+         */
         var requestFocus = false
+        /**
+         * Current position of cursor
+         */
         var position = text.length
 
+        /**
+         * Constructor with reading data from parcel and fill fields
+         */
         constructor(source: Parcel?) : super(source) {
             text = source?.readString() ?: ""
             id = source?.readInt() ?: -1
@@ -285,8 +351,14 @@ class CustomSearchView @JvmOverloads constructor(
             position = source?.readInt() ?: text.length
         }
 
+        /**
+         * That same that constructor above
+         */
         constructor(parcelable: Parcelable?) : super(parcelable)
 
+        /**
+         * Save fields in parcel for saving state
+         */
         override fun writeToParcel(out: Parcel?, flags: Int) {
             super.writeToParcel(out, flags)
             out?.writeString(text)
@@ -295,15 +367,28 @@ class CustomSearchView @JvmOverloads constructor(
             out?.writeInt(position)
         }
 
+        /**
+         * describe contents
+         */
         override fun describeContents(): Int {
             return 0
         }
 
+        /**
+         * Creator used for loading and saving fields
+         */
         companion object CREATOR : Parcelable.Creator<SavedState> {
+            /**
+             * Create a new instance of the Parcelable class, instantiating it
+             * from the given Parcel whose data had previously been written
+             */
             override fun createFromParcel(parcel: Parcel): SavedState {
                 return SavedState(parcel)
             }
 
+            /**
+             * Create a new array of the Parcelable class.
+             */
             override fun newArray(size: Int): Array<SavedState?> {
                 return arrayOfNulls(size)
             }

@@ -9,8 +9,11 @@ import java.util.concurrent.atomic.AtomicReference
  * Interceptor for changing old access token on new and valid token
  * @author Shiplayer
  */
-class TokenInterceptor : Interceptor {
+class TokenInterceptor private constructor(): Interceptor {
     companion object {
+        /**
+         * Representation as singleton and used for getting token
+         */
         val instance = TokenInterceptor()
     }
 

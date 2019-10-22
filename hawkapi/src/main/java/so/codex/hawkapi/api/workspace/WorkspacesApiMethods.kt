@@ -10,9 +10,9 @@ import so.codex.sourceinterfaces.response.WorkspaceResponse
  */
 interface WorkspacesApiMethods {
     /**
-     * Получить все Workspace, которые есть у пользователя
-     * @param token токен пользователя
-     * @return Возвращает Observable с [WorkspaceResponse]
+     * Get all Workspaces that user have
+     * @param token Token
+     * @return Observable with [WorkspaceResponse]
      */
     fun getWorkspaces(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>>
 

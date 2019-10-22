@@ -4,9 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'com.apollographql.android'
 
+apply plugin: 'org.jetbrains.dokka'
+
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.2"
 
 
     defaultConfig {
@@ -37,11 +39,11 @@ apollo {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(":SourceInterfaces:")
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.core:core-ktx:1.0.2"
+    implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Retrofit2

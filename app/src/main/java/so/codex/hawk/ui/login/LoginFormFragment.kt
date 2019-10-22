@@ -13,11 +13,17 @@ import so.codex.hawk.router.ILoginRouter
  * Fragment that control of sign in or sign up fragment
  */
 class LoginFormFragment : InnerSingleFragment(), ILoginRouter {
-
+    /**
+     * Container id it is resource that can contain fragment
+     */
     override val containerId: Int
         get() = R.id.cardForm
 
     companion object {
+        /**
+         * Get instance of [LoginFormFragment] and set up arguments as Bundle [bundle]
+         * @param bundle arguments that sending to fragment as that created
+         */
         fun instance(bundle: Bundle?) = LoginFormFragment().apply {
             arguments = bundle
         }
@@ -60,11 +66,17 @@ class LoginFormFragment : InnerSingleFragment(), ILoginRouter {
         replaceAndAdd(SignUpFormFragment.instance(email))
     }
 
+    /**
+     * Inflate view from resource and return it. Enable retain instance state
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    /**
+     * Handle arguments that sending from parent
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -82,7 +94,9 @@ class LoginFormFragment : InnerSingleFragment(), ILoginRouter {
         } ?: replaceFragment(SignInFormFragment.instance())
     }
 
-
+    /**
+     * Show error message on screen or field
+     */
     override fun showErrorMessage(message: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

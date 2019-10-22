@@ -11,5 +11,8 @@ data class SessionData(
         val email: String,
         val accessToken: String,
         val refreshToken: String) {
+    /**
+     * Convert from [SessionData] to [UserToken]
+     */
     fun toUserToken() = UserToken(accessToken, refreshToken)
 }

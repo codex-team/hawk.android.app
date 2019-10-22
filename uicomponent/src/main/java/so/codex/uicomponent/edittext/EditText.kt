@@ -95,6 +95,9 @@ class EditText @JvmOverloads constructor(
         }.toTypedArray()
     }
 
+    /**
+     * Text that changing in view and can set from something. Used delegate for that.
+     */
     public var text: String by textViewDelegate(editView)
 
 
@@ -111,6 +114,9 @@ class EditText @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Restore state fields of view and fill it from Parcelable
+     */
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is SavedState) {
             if (id == state.id) {
@@ -128,12 +134,30 @@ class EditText @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Class that contain information about fields of current view
+     */
     class SavedState : BaseSavedState {
+        /**
+         * Searched text
+         */
         var text: String = ""
+        /**
+         * Id of current view
+         */
         var id: Int = -1
+        /**
+         * View was focused
+         */
         var requestFocus = false
+        /**
+         * Current position of cursor
+         */
         var position = text.length
 
+        /**
+         * Constructor with reading data from parcel and fill fields
+         */
         constructor(source: Parcel?) : super(source) {
             text = source?.readString() ?: ""
             id = source?.readInt() ?: -1
@@ -141,8 +165,14 @@ class EditText @JvmOverloads constructor(
             position = source?.readInt() ?: text.length
         }
 
+        /**
+         * That same that constructor above
+         */
         constructor(parcelable: Parcelable?) : super(parcelable)
 
+        /**
+         * Save fields in parcel for saving state
+         */
         override fun writeToParcel(out: Parcel?, flags: Int) {
             super.writeToParcel(out, flags)
             out?.writeString(text)
@@ -151,15 +181,28 @@ class EditText @JvmOverloads constructor(
             out?.writeInt(position)
         }
 
+        /**
+         * describe contents
+         */
         override fun describeContents(): Int {
             return 0
         }
 
+        /**
+         * Creator used for loading and saving fields
+         */
         companion object CREATOR : Parcelable.Creator<SavedState> {
+            /**
+             * Create a new instance of the Parcelable class, instantiating it
+             * from the given Parcel whose data had previously been written
+             */
             override fun createFromParcel(parcel: Parcel): SavedState {
                 return SavedState(parcel)
             }
 
+            /**
+             * Create a new array of the Parcelable class.
+             */
             override fun newArray(size: Int): Array<SavedState?> {
                 return arrayOfNulls(size)
             }

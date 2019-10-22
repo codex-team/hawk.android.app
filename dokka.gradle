@@ -1,0 +1,19 @@
+apply plugin: 'org.jetbrains.dokka-android'
+
+/**
+ * See https://github.com/Kotlin/dokka
+ */
+dokka {
+    moduleName = "$rootProject.name"
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+
+    // Do not output deprecated members
+    skipDeprecated = true
+
+    // Emit warnings about not documented members.
+    reportUndocumented = true
+
+    // Do not create index pages for empty packages
+    skipEmptyPackages = true
+}

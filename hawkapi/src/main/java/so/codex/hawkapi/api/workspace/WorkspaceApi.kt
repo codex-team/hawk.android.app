@@ -19,22 +19,31 @@ import so.codex.sourceinterfaces.response.WorkspaceResponse
  */
 class WorkspaceApi private constructor(private val service: WorkspacesApiMethods) : IWorkspaceApi {
     companion object {
+        /**
+         * Singleton of WorkspaceApi
+         */
         val instance by lazy {
             WorkspaceApi(WorkspaceApiMethodImpl(CoreApi.apollo))
         }
     }
 
-    // TODO documentation for getting only information about workspace
+    /**
+     * Documentation for getting only information about workspace
+     */
     override fun getOnlyWorkspace(token: String): Observable<WorkspaceResponse<WorkspaceEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    // TODO documentation for getting information about workspace with users
+    /**
+     * Documentation for getting information about workspace with users
+     */
     override fun getWorkspaceWithUsers(token: String): Observable<WorkspaceResponse<WorkspaceWithUsersEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    // TODO documentation for getting information about workspace with projects
+    /**
+     * Documentation for getting information about workspace with projects
+     */
     override fun getWorkspaceWithProjects(token: String): Observable<WorkspaceResponse<WorkspaceWithProjectsEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

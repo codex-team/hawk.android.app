@@ -14,6 +14,10 @@ import so.codex.codexbl.koin.providersModule
  */
 class CodexKoinComponent {
     companion object {
+        /**
+         * For starting calculating koin graph dependencies
+         * @param applicationContext Used for set up koin context
+         */
         fun start(applicationContext: Context) {
             startKoin {
                 androidLogger()

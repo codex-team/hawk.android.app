@@ -9,7 +9,15 @@ import so.codex.codexbl.view.base.IBaseView
  * @author Shiplayer
  */
 abstract class BasePresenter<V> where V : IBaseView {
+    /**
+     * Composition disposable that can to contain all instance of disposable and dispose them if
+     * it need
+     */
     protected val compositeDisposable = CompositeDisposable()
+
+    /**
+     * Interface that representation communication with ui
+     */
     var view: V? = null
         private set(value) {
             field = value

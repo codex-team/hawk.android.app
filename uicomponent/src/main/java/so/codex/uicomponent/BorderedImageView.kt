@@ -85,6 +85,9 @@ class BorderedImageView @JvmOverloads constructor(
         invalidate()
     }
 
+    /**
+     * Draw image on canvas
+     */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawBitmap(mask, 0f, 0f, mPaint)
