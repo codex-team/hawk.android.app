@@ -4,7 +4,7 @@ import androidx.multidex.MultiDexApplication
 import so.codex.codexbl.main.CodexKoinComponent
 
 /**
- * Main class of application for building multi dex
+ * Main class of application for building multi dex with over 64K methods. Used for building more that single dex file.
  */
 class HawkApplication : MultiDexApplication() {
 
