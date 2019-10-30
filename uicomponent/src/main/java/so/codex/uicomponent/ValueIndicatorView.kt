@@ -82,7 +82,7 @@ class ValueIndicatorView @JvmOverloads constructor(
                 0
         ).apply {
 
-            colorStateList = getColorStateList(R.styleable.ValueIndicatorView_drawableTint)
+            colorStateList = getColorStateList(R.styleable.ValueIndicatorView_viewDrawableTint)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (colorStateList != null)

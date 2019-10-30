@@ -5,25 +5,14 @@ import so.codex.codexbl.view.base.IBaseView
 import so.codex.hawk.router.IBaseRouter
 
 /**
- * Родительский фрагмент, который описывает общую логику для всех фрагментов
+ * Base fragment that contain common ui logic for all fragments
  */
 abstract class BaseFragment : Fragment(), IBaseView {
-    /*abstract val presenters: List<BasePresenter<IBaseView>>
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenters.forEach {
-            it.attached(this)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        presenters.forEach {
-            it.detached()
-        }
-    }*/
-
+    /**
+     * Get router with type [R]. Check if parent fragment or activity implement [R] then return that fragment as [R] else
+     * throw exception of [ClassCastException]
+     * @return Router with type of [R]
+     */
     inline fun <reified R : IBaseRouter> getRouter(): R {
         return when {
             parentFragment is R -> parentFragment as R

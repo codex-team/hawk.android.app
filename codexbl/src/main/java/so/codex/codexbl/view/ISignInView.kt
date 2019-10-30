@@ -3,11 +3,11 @@ package so.codex.codexbl.view
 import so.codex.codexbl.view.base.IBaseView
 
 /**
- * Представление взаимодействия с UI пользователя на экране входа
+ * Interface for communication with UI in while authorization and sign in
  */
 interface ISignInView : IBaseView {
     /**
-     * Метод, который вызывается, когда пользователь успешно вошел в систему
+     * Method invoked if user successfully sign in in application
      */
     fun successfulLogin()
 }

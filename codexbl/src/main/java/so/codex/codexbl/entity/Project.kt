@@ -3,6 +3,16 @@ package so.codex.codexbl.entity
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Project representation
+ * @property id Project ID
+ * @property token Project token
+ * @property name Project name
+ * @property description Project description
+ * @property url Project URI
+ * @property image Project image
+ * @property events Project events
+ */
 data class Project(
     override val id: String,
     override val token: String,

@@ -9,33 +9,45 @@ import so.codex.hawk.R
 import so.codex.hawk.base.InnerSingleFragment
 import so.codex.hawk.router.ILoginRouter
 
-class SignInFragment : InnerSingleFragment(), ILoginRouter {
-
+/**
+ * Fragment that control of sign in or sign up fragment
+ */
+class LoginFormFragment : InnerSingleFragment(), ILoginRouter {
+    /**
+     * Container id it is resource that can contain fragment
+     */
     override val containerId: Int
         get() = R.id.cardForm
 
     companion object {
-        fun instance(bundle: Bundle?) = SignInFragment().apply {
+        /**
+         * Get instance of [LoginFormFragment] and set up arguments as Bundle [bundle]
+         * @param bundle arguments that sending to fragment as that created
+         */
+        fun instance(bundle: Bundle?) = LoginFormFragment().apply {
             arguments = bundle
         }
 
         /**
-         * Ключ, по которому устанавливается значение для открытия необходимого фрагмента.
-         * Для открытия экрана входа, достаточно ничего не указывать или указать этот ключ
-         * со значением [START_SIGN_IN]
-         * Для открытия экрана для регистрации, необходимо указать ключ со значением [START_SIGN_UP]
+         * Key that set up value for opening necessary fragment.
+         * For opening sign in fragment need set up value [START_SIGN_IN]
+         * For opening sign up fragment need set up value [START_SIGN_UP]
+         * By default open fragment with value [START_SIGN_IN]
          */
         public const val LOGIN_ACTIVITY_ACTION_KEY = "login_activity_action_key"
         /**
-         * Значние, для открытия экрана для входа
+         * Value for opening form for sign in
          */
         public const val START_SIGN_IN = 100
         /**
-         * Значение, для открытия экрана для регистрации нового пользователя
+         * Value for opening form for sign up
          */
         public const val START_SIGN_UP = 101
     }
 
+    /**
+     * Show sign in fragment
+     */
     override fun showSignIn() {
         val signUpFragment = childFragmentManager.findFragmentByTag(SignUpFormFragment::class.java.simpleName)
         if (signUpFragment != null) {
@@ -47,15 +59,24 @@ class SignInFragment : InnerSingleFragment(), ILoginRouter {
         replaceFragment(SignInFormFragment.instance())
     }
 
+    /**
+     * Show sign up fragment
+     */
     override fun showSignUp(email: String) {
         replaceAndAdd(SignUpFormFragment.instance(email))
     }
 
+    /**
+     * Inflate view from resource and return it. Enable retain instance state
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    /**
+     * Handle arguments that sending from parent
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -73,7 +94,9 @@ class SignInFragment : InnerSingleFragment(), ILoginRouter {
         } ?: replaceFragment(SignInFormFragment.instance())
     }
 
-
+    /**
+     * Show error message on screen or field
+     */
     override fun showErrorMessage(message: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

@@ -94,6 +94,6 @@
         <attr name="is_less" format="boolean" />
         <attr name="count" />
         <attr name="baseCount" />
-        <attr name="drawableTint" format="reference" />
+        <attr name="viewDrawableTint" format="reference" />
     </declare-styleable>
 </resources>

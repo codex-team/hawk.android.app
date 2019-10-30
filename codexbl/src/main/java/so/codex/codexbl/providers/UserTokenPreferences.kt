@@ -5,15 +5,36 @@ import android.util.Log
 import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.entity.UserToken
 
+/**
+ * For storage data used [android.content.SharedPreferences] for getting and saving user information.
+ * Implementation interface [UserTokenDAO].
+ * @see android.content.SharedPreferences
+ * @author Shiplayer
+ */
 class UserTokenPreferences(context: Context) : UserTokenDAO {
+    /**
+     * Private [android.content.SharedPreferences] with access to storage data
+     */
     private val preferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
 
     companion object {
+        /**
+         * Key for saving token
+         */
         const val TOKEN_PREFERENCES_KEY = "token_preferences_key"
+        /**
+         * Key for saving refresh token
+         */
         const val REFRESH_TOKEN_PREFERENCES_KEY = "refresh_token_preferences_key"
+        /**
+         * Key for saving last email via sign in in application
+         */
         const val LAST_SIGNIN_EMAIL_PREFERENCE_KEY = "last_signin_email_preference_key"
     }
 
+    /**
+     * Get user token or null of token or refresh token not found
+     */
     @Synchronized
     override fun getUserToken(): UserToken? {
         val token = preferences.getString(TOKEN_PREFERENCES_KEY, null)
@@ -23,6 +44,9 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         }
     }
 
+    /**
+     * Save [UserToken] in shared preferences
+     */
     @Synchronized
     override fun saveUserToken(userToken: UserToken): Boolean {
         Log.i("UserTokenPreference", "save $userToken")
@@ -33,6 +57,9 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         return true
     }
 
+    /**
+     * Save [SessionData] in shared preferences
+     */
     @Synchronized
     override fun saveSession(sessionData: SessionData): Boolean {
         saveUserToken(sessionData.toUserToken())
@@ -42,6 +69,9 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         return true
     }
 
+    /**
+     * Get last session from shared preference
+     */
     @Synchronized
     override fun getLastSession(): SessionData? {
         return getUserToken().let {
@@ -53,6 +83,9 @@ class UserTokenPreferences(context: Context) : UserTokenDAO {
         }
     }
 
+    /**
+     * Remove all data from shared preferences
+     */
     @Synchronized
     override fun clean() {
         preferences.edit()

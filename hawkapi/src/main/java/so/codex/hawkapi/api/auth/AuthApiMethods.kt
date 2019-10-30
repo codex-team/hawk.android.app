@@ -11,15 +11,31 @@ import so.codex.sourceinterfaces.response.SignUpResponse
 import so.codex.sourceinterfaces.response.TokenResponse
 
 /**
- * Интерфейс, в котором определяются все методы для взаимодействия с API
+ * Declared methods for sending request only for authorization
+ * @author Shiplayer
  */
 interface AuthApiMethods {
+    /**
+     * Send Post request for logging
+     * @param authEntity Entity for authentication on server, representation as GraphQL request
+     * @return response on login
+     */
     @POST("/graphql")
     fun login(@Body authEntity: AuthEntity): Single<LoginResponse>
 
+    /**
+     * Send Post request for sign up
+     * @param signUpEntity Entity for registration on server, representation as GraphQL request
+     * @return response
+     */
     @POST("/graphql")
     fun signUp(@Body signUpEntity: SignUpEntity): Single<SignUpResponse>
 
+    /**
+     * Send Post request for updating refresh token.
+     * @param token Entity for updating token, representation as GraphQL request
+     * @return response
+     */
     @POST("/graphql")
     fun refreshToken(@Body token: TokenEntity): Single<TokenResponse>
 }

@@ -8,9 +8,18 @@ import so.codex.hawk.router.IMainRouter
 import so.codex.hawk.ui.garage.GarageFragment
 import so.codex.hawk.ui.project.ProjectFragment
 
+/**
+ * Main activity that showed after authorization
+ */
 class MainActivity : AuthorizedSingleFragmentActivity(), IMainRouter {
+    /**
+     * Container for fragment
+     */
     override val containerId: Int = R.id.container
 
+    /**
+     * Create activity and replace on Garage fragment
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

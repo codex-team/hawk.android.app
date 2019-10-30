@@ -33,7 +33,7 @@ class ProjectUI<T> : AnkoComponent<T> {
                         background = null
                         borderedImageView {
                             //mIcon = this
-                            image = ContextCompat.getDrawable(ui.ctx, R.drawable.ic_test_layer)
+                            image = ContextCompat.getDrawable(ui.ctx, R.drawable.ic_launcher_foreground)
                             visibility = View.VISIBLE
                             background = null
                             adjustViewBounds = true

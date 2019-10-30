@@ -12,6 +12,12 @@ import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.ProjectEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
+/**
+ * Class that used [ApolloClient] for sending GraphQL request and converted response to RxJava2.
+ * Implementation interface [WorkspacesApiMethods] for handling and converting requests and responses to RxJava2.
+ * @see WorkspacesApiMethods
+ * @author Shiplayer
+ */
 class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods {
     override fun getWorkspaces(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         TokenInterceptor.instance.updateToken(token)
@@ -28,6 +34,11 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
                 }.flattenAsObservable { it }
     }
 
+    //TODO вынести расширения для данных объектов в отдельный файл и настроить уровень доступа только для данного модуля
+    /**
+     * Convert from [GetWorkspacesQuery.Workspace] to [FullWorkspaceEntity] that wrapped to response instance
+     * @return [WorkspaceResponse] with type of [FullWorkspaceEntity]
+     */
     private fun GetWorkspacesQuery.Workspace.toFullWorkspaceResponse(): WorkspaceResponse<FullWorkspaceEntity> {
         return WorkspaceResponse(
                 FullWorkspaceEntity(
@@ -43,6 +54,9 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         )
     }
 
+    /**
+     * Convert from [GetWorkspacesQuery.Project.Fragments] to [ProjectEntity]
+     */
     private fun GetWorkspacesQuery.Project.Fragments.toProjectEntity(): ProjectEntity {
         return ProjectEntity(
                 this.projectsList.id(),
@@ -58,6 +72,9 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         )
     }
 
+    /**
+     * Convert from [ProjectsList.Event.Fragments] to [ProjectEntity]
+     */
     private fun ProjectsList.Event.Fragments.toEventEntity(): EventEntity {
         return EventEntity(
                 this.eventsList().id(),
@@ -66,6 +83,9 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         )
     }
 
+    /**
+     * Convert from [EventsList.Payload] to [EventPayloadEntity]
+     */
     private fun EventsList.Payload.toEventPayloadEntity(): EventPayloadEntity {
         return EventPayloadEntity(
                 this.title(),

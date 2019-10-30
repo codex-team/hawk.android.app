@@ -5,6 +5,9 @@ import android.widget.TextView
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * Delegates for communication with [TextView], getting text and set text as String
+ */
 fun textViewDelegate(textView: TextView): ReadWriteProperty<Any, String> {
     return object : ReadWriteProperty<Any, String> {
         override fun getValue(thisRef: Any, property: KProperty<*>): String {
@@ -18,6 +21,10 @@ fun textViewDelegate(textView: TextView): ReadWriteProperty<Any, String> {
     }
 }
 
+/**
+ * Delegates for communication with [TextView], getting text and set text as String and use condition.
+ * @param condition Condition that invoked every time then text is set
+ */
 fun textViewDelegate(textView: TextView, condition: (View, String) -> Unit): ReadWriteProperty<Any, String> {
     return object : ReadWriteProperty<Any, String> {
         override fun getValue(thisRef: Any, property: KProperty<*>): String {

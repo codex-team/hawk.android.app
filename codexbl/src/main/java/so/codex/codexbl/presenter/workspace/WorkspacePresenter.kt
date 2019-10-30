@@ -6,7 +6,14 @@ import so.codex.codexbl.base.LoaderPresenter
 import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.view.workspace.IWorkspaceView
 
+/**
+ * Presentor that responsible on event from Workspace.
+ * @author Shiplayer
+ */
 class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
+    /**
+     * Interactor for work with Workspaces
+     */
     private val workspaceInteractor: IWorkspaceInteractor by inject()
 
     override fun onAttach() {
@@ -17,23 +24,29 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
         super.onDetach()
     }
 
+    /**
+     * Getting all workspaces
+     */
     fun loadAllWorkspaces() {
         compositeDisposable.of(
-            workspaceInteractor
-                .getWorkspaces()
-                .attachLoader()
-                .subscribe({
-                    if (!it.isNullOrEmpty())
-                        view?.showWorkspaces(it)
-                    else
-                        view?.showEmptyWorkspace()
-                }, {
-                    it.printStackTrace()
-                    view?.showErrorMessage(it.message ?: " error")
-                })
+                workspaceInteractor
+                        .getWorkspaces()
+                        .attachLoader()
+                        .subscribe({
+                            if (!it.isNullOrEmpty())
+                                view?.showProjects(it)
+                            else
+                                view?.showEmptyProjects()
+                        }, {
+                            it.printStackTrace()
+                            view?.showErrorMessage(it.message ?: " error")
+                        })
         )
     }
 
+    /**
+     * Dispose of all RxJava Streams/Calls
+     */
     fun unsubscribe() {
         compositeDisposable.dispose()
     }
