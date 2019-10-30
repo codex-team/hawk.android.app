@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="boundedCardViewTheme" format="reference" />
+    <attr name="corners" format="dimension" />
+    <attr name="codex_hintColor" format="color" />
 
     <declare-styleable name="BoundedCardView">
         <attr name="maxWidth" format="dimension" />
@@ -21,7 +23,30 @@
             <enum name="text" value="0" />
             <enum name="textPassword" value="1" />
         </attr>
+        <attr name="codex_hasSpacing" format="boolean" />
         <attr name="codex_textViewStyle" format="reference" />
         <attr name="codex_editTextStyle" format="reference" />
+    </declare-styleable>
+
+    <attr name="projectItemViewStyle" format="reference" />
+
+    <declare-styleable name="ProjectItemView">
+        <attr name="src" format="reference" />
+    </declare-styleable>
+
+    <attr name="borderedImageViewStyle" format="reference" />
+
+    <declare-styleable name="BorderedImageView">
+        <attr name="corners" />
+    </declare-styleable>
+
+    <attr name="customSearchViewStyle" format="reference" />
+
+    <declare-styleable name="CustomSearchView">
+        <attr name="corners" />
+        <attr name="cardBackgroundColor" format="color" />
+        <attr name="imageTint" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="hint" format="string" />
     </declare-styleable>
 </resources>

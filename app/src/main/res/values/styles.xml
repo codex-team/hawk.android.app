@@ -9,6 +9,7 @@
         <item name="android:windowBackground">@color/hawk_background</item>
         <item name="android:buttonStyle">@style/CodexTheme.Button</item>
         <item name="codexEditTextTheme">@style/CodexTheme.EditText</item>
+        <item name="customSearchViewStyle">@style/CodexTheme.SearchView</item>
     </style>
 
     <style name="CodexTheme.Button" parent="Widget.MaterialComponents.Button">
@@ -77,6 +78,14 @@
     <style name="CodexTheme.EditText" parent="Codex.Widgets.EditTextTheme">
         <item name="codex_titleColor">@color/very_light_blue_60</item>
         <item name="codex_textColor">@color/very_light_blue</item>
+    </style>
+
+    <style name="CodexTheme.SearchView" parent="Codex.Widgets.CustomSearchViewTheme">
+        <item name="codex_textColor">@color/very_light_blue</item>
+        <item name="codex_hintColor">@color/very_light_blue_60</item>
+        <item name="cardBackgroundColor">@color/search_background</item>
+        <item name="imageTint">@color/very_light_blue_60</item>
+        <item name="corners">7dp</item>
     </style>
 
 </resources>

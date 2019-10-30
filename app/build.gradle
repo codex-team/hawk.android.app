@@ -4,14 +4,18 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.jetbrains.dokka'
+
 android {
     compileSdkVersion 28
+
     defaultConfig {
+        multiDexEnabled true
         applicationId "so.codex.hawk"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "v0.1 (" + versionCode + ")"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,13 +24,55 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    /*flavorDimensions 'hawk'
+    productFlavors {
+        hawkTest {
+            dimension = 'hawk'
+            def versionPropsFile = file("../version.properties")
+            def code = 1
+
+            if (versionPropsFile.canRead()) {
+                def Properties versionProps = new Properties()
+
+                versionProps.load(new FileInputStream(versionPropsFile))
+
+                code = versionProps['VERSION_CODE_DEBUG'].toInteger() + 1
+
+                versionProps['VERSION_CODE_DEBUG'] = code.toString()
+                versionProps.store(versionPropsFile.newWriter(), null)
+            }
+
+            versionCode = code
+            versionName = "v0.1 (" + code + ")"
+        }
+
+        hawk {
+            dimension = 'hawk'
+            def versionPropsFile = file("../version.properties")
+            def code = 1
+
+            if (versionPropsFile.canRead()) {
+                def Properties versionProps = new Properties()
+
+                versionProps.load(new FileInputStream(versionPropsFile))
+
+                code = versionProps['VERSION_CODE'].toInteger() + 1
+
+                versionProps['VERSION_CODE'] = code.toString()
+                versionProps.store(versionPropsFile.newWriter(), null)
+            }
+
+            versionCode = code
+            versionName = "v0.1 (" + code + ")"
+        }
+    }*/
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(":codexbl")
     implementation project(":uicomponent")
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -36,4 +82,33 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
+
+/*
+Set<Project> findDokkaProjects() {
+    subprojects.findAll {
+        !it.tasks.findAll { "dokka" == it.getName() }.isEmpty()
+    }
+}
+
+task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
+    outputDirectory = docDir
+    outputFormat = "gfm"
+
+    dependsOn {
+        findDokkaProjects().collect {
+            it.tasks.getByName("dokka")
+        }
+    }
+
+    doFirst {
+        def dokkaProjects = findDokkaProjects()
+
+        classpath = dokkaProjects.collect { project -> project.jar.outputs.files.getFiles() }.flatten()
+        classpath += files(dokkaProjects.collect { project -> project.sourceSets.main.compileClasspath })
+
+        sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
+    }
+}*/

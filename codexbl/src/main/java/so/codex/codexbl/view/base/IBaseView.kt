@@ -1,12 +1,12 @@
 package so.codex.codexbl.view.base
 
 /**
- * Основной интерфейс, который определяет основной функционал для всех представлений
+ * Base interface with common method for all view
  */
 interface IBaseView{
     /**
-     * Показать ошибку на экране
-     * @param message сообещние, которое необходимо показать пользователю
+     * Show error on screen
+     * @param message message with text of error
      */
     fun showErrorMessage(message: String)
 }

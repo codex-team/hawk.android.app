@@ -3,17 +3,17 @@ package so.codex.codexbl.view
 import so.codex.codexbl.view.base.IBaseView
 
 /**
- * Представление для взаимодействия с UI во время регистрации
+ * Interface for communication UI in while registration
  */
 interface ISignUpView : IBaseView {
 
     /**
-     * Метод, который вызывается в случае успешной регистрации
+     * Method invoked if user successfully registered in application
      */
     fun successfulSignUp()
 
     /**
-     * Метод, вызывается во время проверки почты на правильность
+     * Method invoked if email valid or not
      */
     fun validateEmail(isValid: Boolean)
 }

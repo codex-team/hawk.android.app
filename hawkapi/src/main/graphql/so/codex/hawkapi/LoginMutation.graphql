@@ -4,3 +4,10 @@ mutation login($email: String!, $password: String!) {
         refreshToken
     }
 }
+
+mutation refreshTokens($refreshToken: String!) {
+    refreshTokens(refreshToken: $refreshToken) {
+        accessToken
+        refreshToken
+    }
+}

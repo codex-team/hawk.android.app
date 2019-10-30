@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_sign_in.*
+import kotlinx.android.synthetic.main.fragment_sign_in_form.*
 import so.codex.codexbl.presenter.SignInPresenter
 import so.codex.codexbl.view.ISignInView
 import so.codex.hawk.R
@@ -15,32 +15,44 @@ import so.codex.hawk.router.ILoginRouter
 import so.codex.hawk.ui.MainActivity
 
 /**
- * Фрагмент, которые отвечает за вход в приложение
+ * Fragment form for sign in
  */
-class SignInFragment : BaseFragment(), ISignInView {
+class SignInFormFragment : BaseFragment(), ISignInView {
 
+    /**
+     * Show error message on screen or field
+     */
     override fun showErrorMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     companion object {
         /**
-         * Лямьда выражение, которая создает экземпляр фрагмента и возвращает его
+         * Create instance of [SignInFormFragment]
          */
         val instance = {
-            SignInFragment()
+            SignInFormFragment()
         }
     }
 
+    /**
+     * Presenter that handling information from ui and update it
+     */
     val signInPresenter by lazy {
         SignInPresenter()
     }
 
+    /**
+     * Inflate view from resource and return it. Enable retain instance state
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         retainInstance = true
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+        return inflater.inflate(R.layout.fragment_sign_in_form, container, false)
     }
 
+    /**
+     * Handle arguments that sending from parent
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btn_login.setOnClickListener {
@@ -51,19 +63,23 @@ class SignInFragment : BaseFragment(), ISignInView {
         }
 
         btn_sign_up.setOnClickListener {
-            if (activity is ILoginRouter) {
-                (activity as ILoginRouter).showSignUp(et_login.text)
-            }
+            getRouter<ILoginRouter>().showSignUp(et_login.text)
         }
 
         signInPresenter.attached(this)
     }
 
+    /**
+     * Detach view from presenter
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         signInPresenter.detached()
     }
 
+    /**
+     * Start [MainActivity] after successful Login in service and finish current activity
+     */
     override fun successfulLogin() {
         startActivity(Intent(context, MainActivity::class.java))
         activity?.finish()

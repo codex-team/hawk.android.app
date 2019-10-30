@@ -10,10 +10,13 @@
     <string name="iv_description_background_of_sign_in">background_of_sign_in</string>
     <string name="sign_in_title">Вход</string>
     <string name="sign_up_button">Регистрация</string>
+    <string name="register_button">Зарегистрироваться</string>
     <string name="sign_in_recover_password">Восстановить</string>
     <string name="sign_in_password">Пароль</string>
     <string name="sign_in_email_address">Почта</string>
     <string name="app_name_hawk">Hawk</string>
     <string name="time_of_quality">Time for quality</string>
     <string name="made_by_codex">Made by CodeX</string>
+    <string name="sign_up_title">Регистрация</string>
+    <string name="back">Назад</string>
 </resources>
