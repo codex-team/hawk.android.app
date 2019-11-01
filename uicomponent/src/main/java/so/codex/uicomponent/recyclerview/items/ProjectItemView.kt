@@ -90,7 +90,11 @@ class ProjectItemView @JvmOverloads constructor(
     fun setDefaultImage() {
         logoImage.post {
             if (defaultImage == null) {
-                val firstChar = title.split(" ").fold("") { acc, s -> acc + s.first() }.toString()
+                val firstChar = title.split(" ")
+                    .filter {
+                        it.first().isLetterOrDigit()
+                    }.fold("") { acc, s -> acc + s.first() }
+                    .toString()
                     .toUpperCase()
                 defaultImage = Bitmap.createBitmap(
                     logoImage.width,
