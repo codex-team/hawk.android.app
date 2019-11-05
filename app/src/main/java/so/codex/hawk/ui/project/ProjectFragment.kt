@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import org.jetbrains.anko.AnkoContext
 import so.codex.codexbl.entity.ProjectCommon
+import so.codex.codexbl.main.ImageProvider
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.ui.anko.ProjectUI
 
@@ -45,6 +46,7 @@ class ProjectFragment : BaseFragment() {
         } else if (arguments != null) {
             arguments?.getParcelable<ProjectCommon>(PROJECT_KEY_ARGUMENT)?.also {
                 ui.toolbarTitle = it.name
+                //ui.toolbarIcon = ImageProvider.instance.getImageByUuid( )
             }
         }
     }
