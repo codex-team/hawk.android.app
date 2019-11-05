@@ -13,7 +13,7 @@ import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.verticalLayout
 
 class ProjectContent<T> : AnkoComponent<T> {
-    private lateinit var rv: RecyclerView
+    public lateinit var rv: RecyclerView
 
     override fun createView(ui: AnkoContext<T>): View = with(ui) {
         verticalLayout {
