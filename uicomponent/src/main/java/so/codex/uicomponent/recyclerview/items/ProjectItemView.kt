@@ -2,10 +2,6 @@ package so.codex.uicomponent.recyclerview.items
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.Typeface
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
@@ -14,7 +10,6 @@ import android.widget.ImageView
 import kotlinx.android.synthetic.main.view_project_item.view.*
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
-import so.codex.utils.getColorById
 
 /**
  * Composition of view for showing elements of Project in list
@@ -87,9 +82,13 @@ class ProjectItemView @JvmOverloads constructor(
     /**
      * Generate default image for logo by name of project
      */
-    fun setDefaultImage() {
+    fun setDefaultImage(bitmap: Bitmap) {
         logoImage.post {
             if (defaultImage == null) {
+                defaultImage = bitmap
+            }
+            logoImage.setImageBitmap(bitmap)
+            /*if (defaultImage == null) {
                 val firstChar = title.split(" ")
                     .filter {
                         it.first().isLetterOrDigit()
@@ -115,7 +114,7 @@ class ProjectItemView @JvmOverloads constructor(
                 val centerY = logoImage.height.toFloat() / 2f - bounds.exactCenterY()
                 canvas.drawText(firstChar, centerX, centerY, fontPaint)
             }
-            logoImage.setImageBitmap(defaultImage)
+            logoImage.setImageBitmap(defaultImage)*/
         }
     }
 

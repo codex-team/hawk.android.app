@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
+import android.util.Log
 import java.lang.ref.WeakReference
 
 class ImageProvider {
@@ -25,7 +26,7 @@ class ImageProvider {
         createDefaultImage: () -> Bitmap,
         isRepeat: Boolean
     ): Bitmap {
-        return if (!cache.isEnqueued || cache.get() == null) {
+        return if (cache.isEnqueued || cache.get() == null) {
             cache = WeakReference(CachedImages())
             if (!isRepeat)
                 getImageByUuid(uuid, createDefaultImage, true)
@@ -35,6 +36,11 @@ class ImageProvider {
         } else {
             cache.get()!!.let {
                 val image = it.getImage(uuid)
+                if (image == null) {
+                    Log.i(this::class.java.simpleName, "create and save in cache")
+                } else {
+                    Log.i(this::class.java.simpleName, "get image from cache")
+                }
                 return image
                     ?: createDefaultImage().also { defaultImage ->
                         it.cacheImage(uuid, defaultImage)
@@ -48,15 +54,15 @@ class ImageProvider {
         width: Int,
         height: Int,
         textSize: Float = 0f,
-        textColor: Int,
+        textColor: Int = Color.WHITE,
         backgroundColor: Int,
         text: String = ""
     ): Bitmap {
         return getImageByUuid(uuid) {
             val defaultImage = Bitmap.createBitmap(
-                    width,
-                    height,
-                    Bitmap.Config.ARGB_8888
+                width,
+                height,
+                Bitmap.Config.ARGB_8888
             )
             val canvas = Canvas(defaultImage!!)
             val fontPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -75,20 +81,25 @@ class ImageProvider {
         }
     }
 
-    /*fun getImageByUuid(
+    fun getImageByUuid(
         context: Context,
         uuid: String,
         text: String,
         backgroundColor: Int
-    ): Bitmap {
-        getImageByUuid(
-                uuid,
-                20.toDp(context),
-                20.toDp(context),
-                14.toDp(context),
-                context.getColor()
-        )
-    }*/
+    ): Bitmap = getImageByUuid(
+        uuid,
+        20.toDp(context).toInt(),
+        20.toDp(context).toInt(),
+        12.toDp(context),
+        Color.WHITE,
+        backgroundColor,
+        text.split(" ")
+            .filter {
+                it.first().isLetterOrDigit()
+            }.fold("") { acc, s -> acc + s.first() }
+            .toString()
+            .toUpperCase()
+    )
 
     private fun Int.toDp(context: Context) = context.resources.displayMetrics.density * this
 }

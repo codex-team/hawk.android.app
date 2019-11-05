@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import so.codex.codexbl.entity.Project
+import so.codex.codexbl.main.ImageProvider
 import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.ProjectItemView
+import so.codex.utils.getColorById
 import kotlin.properties.Delegates
 
 /**
@@ -31,8 +33,8 @@ class ProjectsItemsAdapter(val itemClick: (Project) -> Unit) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectItemViewHolder {
         val view = ProjectItemView(parent.context)
         view.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return ProjectItemViewHolder(view)
     }
@@ -71,7 +73,14 @@ class ProjectsItemsAdapter(val itemClick: (Project) -> Unit) :
                         .error(R.drawable.ic_error_outline_black_24dp)
                         .into(itemView.logoImage)
                 else
-                    itemView.setDefaultImage()
+                    itemView.setDefaultImage(
+                        ImageProvider.instance.getImageByUuid(
+                            itemView.context,
+                            project.id,
+                            project.name,
+                            getColorById(project.id)
+                        )
+                    )
                 itemView.title = project.name
                 if (project.events.isNotEmpty()) {
                     itemView.message = project.events.first().payload.title
