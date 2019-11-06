@@ -21,6 +21,7 @@ class ProjectFragment : BaseFragment(), IProjectView {
 
     lateinit var toolbar: ProjectToolbar<ProjectFragment>
     lateinit var content: ProjectContent<ProjectFragment>
+    lateinit var projectUI: ProjectUI<ProjectFragment>
 
     private var adapter = ErrorItemAdapter()
 
@@ -44,10 +45,11 @@ class ProjectFragment : BaseFragment(), IProjectView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = ProjectUI<ProjectFragment>().also {
-        toolbar = it.toolbar
-        content = it.content
+        projectUI = it
     }.createView(AnkoContext.create(context!!, this)).also {
         retainInstance = true
+        toolbar = projectUI.toolbar
+        content = projectUI.content
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

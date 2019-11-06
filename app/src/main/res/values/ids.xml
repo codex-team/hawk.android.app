@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Id for ErrorItemView-->
+    <item name="errorTitle" type="id"/>
+    <item name="errorCount" type="id"/>
+    <item name="errorUserImage" type="id"/>
+
     <item name="coordinatorView" type="id" />
     <item name="toolbar" type="id" />
 </resources>
