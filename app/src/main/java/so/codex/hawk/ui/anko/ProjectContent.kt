@@ -18,7 +18,7 @@ class ProjectContent<T> : AnkoComponent<T> {
     override fun createView(ui: AnkoContext<T>): View = with(ui) {
         verticalLayout {
             frameLayout {
-                backgroundColor = Color.parseColor("#242732")
+                backgroundColor = Color.parseColor("#242f32")
             }.lparams(matchParent, dip(131))
             recyclerView {
                 rv = this
@@ -26,7 +26,6 @@ class ProjectContent<T> : AnkoComponent<T> {
                 topMargin = dip(20)
                 bottomMargin = dip(5)
             }
-
             lparams(matchParent)
         }
     }

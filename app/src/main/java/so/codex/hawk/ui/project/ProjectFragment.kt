@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko._LinearLayout
 import so.codex.codexbl.entity.Event
+import so.codex.codexbl.entity.Payload
 import so.codex.codexbl.entity.ProjectCommon
 import so.codex.codexbl.main.ImageProvider
 import so.codex.codexbl.view.project.IProjectView
@@ -16,11 +18,12 @@ import so.codex.hawk.ui.anko.ProjectContent
 import so.codex.hawk.ui.anko.ProjectToolbar
 import so.codex.hawk.ui.anko.ProjectUI
 import so.codex.utils.getColorById
+import java.util.*
 
 class ProjectFragment : BaseFragment(), IProjectView {
 
-    lateinit var toolbar: ProjectToolbar<ProjectFragment>
-    lateinit var content: ProjectContent<ProjectFragment>
+    lateinit var toolbar: ProjectToolbar<_LinearLayout>
+    lateinit var content: ProjectContent<_LinearLayout>
     lateinit var projectUI: ProjectUI<ProjectFragment>
 
     private var adapter = ErrorItemAdapter()
@@ -67,9 +70,18 @@ class ProjectFragment : BaseFragment(), IProjectView {
                 ).toDrawable(resources)
                 content.rv.layoutManager = LinearLayoutManager(context)
                 content.rv.adapter = adapter
+                adapter.dataEvents = getFakeEvents()
             }
         }
     }
+
+    fun getFakeEvents() = listOf(
+            Event("1","2", Payload("Error1", Date())),
+            Event("2","25", Payload("Error2", Date())),
+            Event("3","26", Payload("Error3", Date())),
+            Event("4","27", Payload("Error4", Date()))
+    )
+
 
     override fun showPlotData() {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

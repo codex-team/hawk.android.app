@@ -1,5 +1,6 @@
 package so.codex.hawk.ui.anko
 
+import android.graphics.Typeface
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -26,6 +27,7 @@ class ErrorItemView<T> : AnkoComponent<T> {
             textView {
                 id = messageId
                 maxLines = 2
+                typeface = Typeface.create("roboto", Typeface.NORMAL)
             }.lparams(matchParent, wrapContent) {
                 weight = 1f
             }
@@ -39,6 +41,7 @@ class ErrorItemView<T> : AnkoComponent<T> {
             }.lparams(dip(20), dip(20)) {
                 gravity = Gravity.CENTER_VERTICAL
             }
+            lparams(matchParent, wrapContent)
         }
     }
 
