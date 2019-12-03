@@ -24,6 +24,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    androidExtensions {
+        experimental = true
+    }
     /*flavorDimensions 'hawk'
     productFlavors {
         hawkTest {
@@ -82,6 +85,18 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+
+    /*implementation "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-design:$anko_version"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-constraint-layout:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-cardview-v7:$anko_version"
+    implementation "org.jetbrains.anko:anko-sdk27:$anko_version"*/
+
+    implementation "com.louiscad.splitties:splitties-fun-pack-android-base:$splitties_version"
+    implementation "com.louiscad.splitties:splitties-views-dsl:$splitties_version"
+    implementation "com.louiscad.splitties:splitties-views-dsl-constraintlayout:$splitties_version"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 }
