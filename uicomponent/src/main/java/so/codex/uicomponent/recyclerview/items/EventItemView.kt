@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import kotlinx.android.synthetic.main.view_event_item.view.*
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
@@ -29,12 +31,12 @@ class EventItemView @JvmOverloads constructor(
     /**
      * title of event
      */
-    var title by textViewDelegate(view.event_title)
+    var title by textViewDelegate(view.tv_event_title)
 
     /**
      * time of event's error
      */
-    var time by textViewDelegate(view.time_of_error)
+    var time by textViewDelegate(view.tv_time_of_error)
 
     /**
      * count of the same errors

@@ -40,13 +40,11 @@ class EventItemsAdapter : RecyclerView.Adapter<EventItemsAdapter.EventItemViewHo
 
 
     class EventItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val userImageView = itemView.findViewById<ImageView>(R.id.user_image)
-        private val eventTitle = itemView.findViewById<TextView>(R.id.event_title)
-        private val timeOfError = itemView.findViewById<TextView>(R.id.time_of_error)
+
         //ToDo think about incrementing count of the same errors
-        private val countOfErrors = itemView.findViewById<TextView>(R.id.tv_count_event)
 
         fun bind(event: Event){
+            val eventTitle = itemView.findViewById<TextView>(R.id.tv_event_title)
             eventTitle.text = event.payload.title
         }
     }
