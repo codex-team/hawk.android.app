@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">UiComponent</string>
+    <string name="count_in_event">5 631</string> <!--for debug-->
+    <string name="error_message_event">Error fetching remote / [status 0] Could not resolve host: detik.com</string> <!--for debug-->
+    <string name="time_of_error">now</string> <!--for debug-->
 </resources>

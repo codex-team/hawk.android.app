@@ -17,7 +17,7 @@ import kotlin.properties.Delegates
  */
 class EventItemsAdapter : RecyclerView.Adapter<EventItemsAdapter.EventItemViewHolder>() {
 
-    var data: List<Event> by Delegates.observable(listOf()){ _, old, new ->
+    private var data: List<Event> by Delegates.observable(listOf()){ _, old, new ->
         notify(old, new){ left, right ->
             left == right
         }
@@ -35,17 +35,20 @@ class EventItemsAdapter : RecyclerView.Adapter<EventItemsAdapter.EventItemViewHo
     }
 
     override fun onBindViewHolder(holder: EventItemViewHolder, position: Int) {
-        val event = data[position]
-        holder.eventTitle.text = event.payload.title
+        holder.bind(data[position])
     }
 
 
     class EventItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val userImageView = itemView.findViewById<ImageView>(R.id.user_image)
-        val eventTitle = itemView.findViewById<TextView>(R.id.event_title)
-        val timeOfError = itemView.findViewById<TextView>(R.id.time_of_error)
+        private val userImageView = itemView.findViewById<ImageView>(R.id.user_image)
+        private val eventTitle = itemView.findViewById<TextView>(R.id.event_title)
+        private val timeOfError = itemView.findViewById<TextView>(R.id.time_of_error)
         //ToDo think about incrementing count of the same errors
-        val countOfErrors = itemView.findViewById<TextView>(R.id.tv_count_event)
+        private val countOfErrors = itemView.findViewById<TextView>(R.id.tv_count_event)
+
+        fun bind(event: Event){
+            eventTitle.text = event.payload.title
+        }
     }
 
 
