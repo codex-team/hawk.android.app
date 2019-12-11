@@ -4987,12 +4987,33 @@
           "args": []
         },
         {
-          "name": "notEmpty",
+          "name": "validate",
           "description": "Directive for checking a field for empty space",
           "locations": [
-            "FIELD_DEFINITION"
+            "ARGUMENT_DEFINITION"
           ],
-          "args": []
+          "args": [
+            {
+              "name": "notEmpty",
+              "description": "",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "isEmail",
+              "description": "",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ]
         },
         {
           "name": "cacheControl",
