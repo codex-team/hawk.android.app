@@ -63,4 +63,8 @@
     <style name="Codex.Widgets.ProjectItemViewStyle">
 
     </style>
+
+    <style name="Codex.Widgets.CounterView">
+
+    </style>
 </resources>

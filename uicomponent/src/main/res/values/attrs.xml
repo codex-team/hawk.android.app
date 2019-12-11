@@ -49,4 +49,13 @@
         <attr name="textColor" format="color" />
         <attr name="hint" format="string" />
     </declare-styleable>
+
+    <attr name="counterViewStyle" format="reference" />
+
+    <declare-styleable name="CounterView">
+        <attr name="unread_color" format="color" />
+        <attr name="read_color" format="color" />
+        <attr name="text_color" format="color" />
+        <attr name="state_read" format="boolean" />
+    </declare-styleable>
 </resources>
