@@ -5,8 +5,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import kotlinx.android.synthetic.main.view_event_item.view.*
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
@@ -17,7 +15,7 @@ import so.codex.uicomponent.textViewDelegate
  */
 class EventItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-    ) : FrameLayout(context, attrs, defStyleAttr){
+) : FrameLayout(context, attrs, defStyleAttr) {
     /**
      * Inflate view and attach
      */
@@ -41,12 +39,18 @@ class EventItemView @JvmOverloads constructor(
     /**
      * count of the same errors
      */
-    var count by textViewDelegate(view.tv_count_event){v, text ->
-        if(text.isEmpty() || text == "0") v.visibility = View.GONE
-        else v.visibility = View.VISIBLE
+    var count by textViewDelegate(view.tv_count_event) {v, text ->
+        v.visibility = if (text.isEmpty() || text == "0") {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
 
-    fun setUserImageResource(resource: Int){
+    /**
+     * set user's image if the user clicked on the button
+     */
+    fun setUserImageResource(resource: Int) {
         userImage.setImageResource(resource)
     }
 
