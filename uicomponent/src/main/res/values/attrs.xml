@@ -57,5 +57,6 @@
         <attr name="read_color" format="color" />
         <attr name="text_color" format="color" />
         <attr name="state_read" format="boolean" />
+        <attr name="count" format="integer" />
     </declare-styleable>
 </resources>
