@@ -92,4 +92,7 @@ freeline.py
 freeline/
 freeline_project_description.json
 
+#Temporary
+.idea/codeStyles
+
 !hawk-debug.apk
