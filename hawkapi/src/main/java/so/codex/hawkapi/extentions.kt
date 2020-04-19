@@ -18,6 +18,21 @@ import so.codex.hawkapi.exceptions.SomethingWentWrongException
  */
 
 /**
+ * Convert error of GraphQL [Error] to [BaseHttpException]
+ */
+
+fun Error.convert(): BaseHttpException =
+    customAttributes().let {
+        return if (it.containsKey("extensions")) {
+            when ((it["extensions"] as LinkedHashMap<String, *>)["code"] as String) {
+                "ACCESS_TOKEN_EXPIRED_ERROR" -> AccessTokenExpiredException()
+                else -> BaseHttpException(this.message())
+            }
+        } else
+            BaseHttpException(this.message())
+    }
+
+/**
  * Extension [Observable] for handing errors, that make occurred in while request or on the server.
  * @return [Single] with unwrapped instance in [Response] to type that it contains
  */
@@ -27,9 +42,38 @@ fun <T : Response<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O
             it.hasErrors() -> {
                 val errors = it.errors()
                 if (errors.size > 1)
-                    Single.error<O>(MultiHttpErrorsException("Multi errors", errors.map { it.message() ?: "" }))
+                    Single.error<O>(
+                        MultiHttpErrorsException(
+                            "Multi errors",
+                            errors.map { it.message() ?: "" })
+                    )
                 else
-                    Single.error<O>(errors[0]!!.convert())
+                    Single.error<O>(errors[0].convert())
+            }
+            it.data() != null -> Single.just(it.data()!!)
+            it.data() == null -> Single.error<O>(Throwable("Data is null"))
+            else -> Single.error<O>(SomethingWentWrongException())
+        }
+    }
+}
+
+/**
+ * Extension [Single] for handing errors, that make occurred in while request or on the server.
+ * @return [Single] with unwrapped instance in [Response] to type that it contains
+ */
+fun <T : Response<O>, O : Any?> Single<T>.handleHttpErrors(): Single<O> {
+    return flatMap {
+        when {
+            it.hasErrors() -> {
+                val errors = it.errors()
+                if (errors.size > 1)
+                    Single.error<O>(
+                        MultiHttpErrorsException(
+                            "Multi errors",
+                            errors.map { it.message() ?: "" })
+                    )
+                else
+                    Single.error<O>(errors[0].convert())
             }
             it.data() != null -> Single.just(it.data()!!)
             it.data() == null -> Single.error<O>(Throwable("Data is null"))
@@ -50,9 +94,13 @@ fun <T : Response<O>, O : Any?> Observable<T?>.handleHttpErrors(): Observable<O>
             it.hasErrors() -> {
                 val errors = it.errors()
                 if (errors.size > 1)
-                    Observable.error<O>(MultiHttpErrorsException("Multi errors", errors.map { it.message() ?: "" }))
+                    Observable.error<O>(
+                        MultiHttpErrorsException(
+                            "Multi errors",
+                            errors.map { it.message() ?: "" })
+                    )
                 else
-                    Observable.error<O>(errors[0]!!.convert())
+                    Observable.error<O>(errors[0].convert())
             }
             else -> Observable.error<O>(SomethingWentWrongException())
         }
@@ -100,20 +148,6 @@ fun <T> ApolloCall<T>.toRxJava(before: () -> Unit): Observable<Response<T>> {
         })
     }
 }
-
-/**
- * Convert error of GraphQL [Error] to [BaseHttpException]
- */
-private fun Error.convert(): BaseHttpException =
-        customAttributes().let {
-            return if (it.containsKey("extensions")) {
-                when ((it["extensions"] as LinkedHashMap<String, *>)["code"] as String) {
-                    "ACCESS_TOKEN_EXPIRED_ERROR" -> AccessTokenExpiredException()
-                    else -> BaseHttpException(this.message())
-                }
-            } else
-                BaseHttpException(this.message())
-        }
 
 /**
  * Work in other thread for IO communication

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'com.apollographql.android'
+apply plugin: 'com.apollographql.apollo'
 
 apply plugin: 'org.jetbrains.dokka'
 
@@ -31,9 +31,7 @@ android {
 }
 
 apollo {
-    customTypeMapping = [
-            "DateTime": "java.util.Date"
-    ]
+    generateKotlinModels = true
 }
 
 dependencies {
