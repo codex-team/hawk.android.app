@@ -1,4 +1,4 @@
-query getWorkspacesQuery($ids: [ID], $limit: Int = 30, $skip: Int = 0){
+query getWorkspacesQuery($ids: [ID], $limit: Int! = 30, $skip: Int! = 0){
     workspaces(ids: $ids) {
         id
         name

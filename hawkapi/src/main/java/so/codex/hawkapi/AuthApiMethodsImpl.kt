@@ -1,7 +1,7 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.rx2.Rx2Apollo
+import com.apollographql.apollo.rx2.rxMutate
 import io.reactivex.Single
 import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.sourceinterfaces.entity.AuthEntity
@@ -23,14 +23,12 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
      * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Login.
      */
     override fun login(authEntity: AuthEntity): Single<LoginResponse> {
-        return Rx2Apollo.from(
-            apolloClient.mutate(
-                LoginMutation.builder()
-                    .email(authEntity.email)
-                    .password(authEntity.password)
-                    .build()
+        return apolloClient.rxMutate(
+            LoginMutation(
+                email = authEntity.email,
+                password = authEntity.password
             )
-        ).handleHttpErrorsSingle().map {
+        ).handleHttpErrors().map {
             LoginResponse(TokenResponse(it.login.accessToken, it.login.refreshToken))
         }
     }
@@ -39,13 +37,9 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
      * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of SignUp.
      */
     override fun signUp(signUpEntity: SignUpEntity): Single<SignUpResponse> {
-        return Rx2Apollo.from(
-            apolloClient.mutate(
-                SignUpMutation.builder()
-                    .email(signUpEntity.email)
-                    .build()
-            )
-        ).handleHttpErrorsSingle().map {
+        return apolloClient.rxMutate(
+            SignUpMutation(email = signUpEntity.email)
+        ).handleHttpErrors().map {
             SignUpResponse(it.signUp)
         }
     }
@@ -54,13 +48,10 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
      * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Token.
      */
     override fun refreshToken(token: TokenEntity): Single<TokenResponse> {
-        return Rx2Apollo.from(
-            apolloClient.mutate(
-                RefreshTokensMutation(token.refreshToken)
-            )
-        ).handleHttpErrorsSingle().map {
+        return apolloClient.rxMutate(
+            RefreshTokensMutation(token.refreshToken)
+        ).handleHttpErrors().map {
             TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)
         }
     }
-
 }
