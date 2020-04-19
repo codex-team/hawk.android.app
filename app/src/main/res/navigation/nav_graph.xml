@@ -13,7 +13,7 @@
         android:id="@+id/mainActivity"
         android:name="so.codex.hawk.ui.GarageActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/activity_garage" />
     <fragment
             android:id="@+id/signInFragment"
             android:name="so.codex.hawk.ui.login.SignInFormFragment"
