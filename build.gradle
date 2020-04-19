@@ -3,8 +3,8 @@
 buildscript {
 
     ext {
-        kotlin_version = '1.3.50'
-        apollo_version = '1.0.2'
+        kotlin_version = '1.3.72'
+        apollo_version = '1.4.5'
         koin_version = '2.0.1'
         retrofit2_version = '2.6.0'
         rxandroid_version = '2.1.1'
@@ -16,7 +16,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.apollographql.apollo:apollo-gradle-plugin:$apollo_version"
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
@@ -43,7 +43,7 @@ Set<Project> findDokkaProjects() {
     }
 }
 
-task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
+/*task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
     outputDirectory = "docDir/"
     outputFormat = "html"
 
@@ -61,4 +61,4 @@ task dokka (type: org.jetbrains.dokka.gradle.DokkaTask, overwrite: true) {
 
         sourceDirs = files(dokkaProjects.collect { project -> "${project.projectDir}/src/main/kotlin" })
     }
-}
+}*/

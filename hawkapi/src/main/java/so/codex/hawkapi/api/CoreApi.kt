@@ -1,14 +1,13 @@
 package so.codex.hawkapi.api
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.response.CustomTypeAdapter
-import com.apollographql.apollo.response.CustomTypeValue
+import com.apollographql.apollo.api.CustomTypeAdapter
+import com.apollographql.apollo.api.CustomTypeValue
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import so.codex.hawkapi.SourceApi
 import so.codex.hawkapi.api.auth.AuthApi
 import so.codex.hawkapi.api.workspace.WorkspaceApi
-import so.codex.hawkapi.type.CustomType
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.IWorkspaceApi
 import java.text.DateFormat
@@ -29,10 +28,9 @@ class CoreApi private constructor() : SourceApi {
          */
         val apollo: ApolloClient by lazy {
             ApolloClient.builder()
-                    .serverUrl(baseUrl)
-                    .okHttpClient(client)
-                    .addCustomTypeAdapter(CustomType.DATETIME, customDateTimeAdapter)
-                    .build()
+                .serverUrl(baseUrl)
+                .okHttpClient(client)
+                .build()
         }
 
         /**
@@ -67,9 +65,9 @@ class CoreApi private constructor() : SourceApi {
             }
 
             OkHttpClient.Builder()
-                    .addInterceptor(TokenInterceptor.instance)
-                    .addInterceptor(interceptor)
-                    .build()
+                .addInterceptor(TokenInterceptor.instance)
+                .addInterceptor(interceptor)
+                .build()
         }
 
         /**
