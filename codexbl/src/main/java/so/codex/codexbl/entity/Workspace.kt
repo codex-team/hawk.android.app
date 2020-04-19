@@ -1,5 +1,8 @@
 package so.codex.codexbl.entity
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Represent Workspace info
  * @property id Workspace id
@@ -9,10 +12,11 @@ package so.codex.codexbl.entity
  * @property projects Workspace projects list
  * @author Shiplayer
  */
+@Parcelize
 data class Workspace(
         val id: String,
         val name: String,
         val description: String,
         val image: String,
         val projects: List<Project>
-)
+) : Parcelable

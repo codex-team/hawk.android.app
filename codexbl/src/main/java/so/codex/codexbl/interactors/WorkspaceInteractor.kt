@@ -27,38 +27,38 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
      */
     override fun getWorkspaces(): Single<List<Workspace>> {
         return api.getFullWorkspace(token)
-                .refreshToken()
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    Workspace(
-                            it.workspaceEntity.id,
-                            it.workspaceEntity.name,
-                            it.workspaceEntity.description ?: "",
-                            it.workspaceEntity.image,
-                            it.workspaceEntity.projects.map {
-                                Project(
-                                        it.id,
-                                        it.token,
-                                        it.name,
-                                        it.description,
-                                        it.url,
-                                        it.image,
-                                        it.events.map {
-                                            Event(
-                                                    it.id,
-                                                    it.catcherType,
-                                                    it.payload.let {
-                                                        Payload(
-                                                                it.title,
-                                                                it.timestamp
-                                                        )
-                                                    }
-                                            )
-                                        }
+            .refreshToken()
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                Workspace(
+                    it.workspaceEntity.id,
+                    it.workspaceEntity.name,
+                    it.workspaceEntity.description ?: "",
+                    it.workspaceEntity.image,
+                    it.workspaceEntity.projects.map {
+                        Project(
+                            it.id,
+                            it.token,
+                            it.name,
+                            it.description,
+                            it.url,
+                            it.image,
+                            it.events.map {
+                                Event(
+                                    it.id,
+                                    it.catcherType,
+                                    it.payload.let {
+                                        Payload(
+                                            it.title,
+                                            it.timestamp
+                                        )
+                                    }
                                 )
                             }
-                    )
-                }.toList()
+                        )
+                    }
+                )
+            }.toList()
     }
 
     /**
