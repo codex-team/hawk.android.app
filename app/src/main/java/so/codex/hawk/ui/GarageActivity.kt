@@ -21,11 +21,8 @@ class GarageActivity : AuthorizedSingleFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val instance = ProjectFragment.instance()
         val bundle = Bundle()
-        bundle.putParcelable("workspaces", null)
-        instance.arguments = bundle
-        replaceFragment(instance)
-        instance.select()
+        bundle.putParcelable("workspace", null)
+        replaceFragment(ProjectFragment.instance(bundle))
     }
 }

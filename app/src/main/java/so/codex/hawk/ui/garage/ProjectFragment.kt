@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_project.*
+import org.koin.experimental.builder.getArguments
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.workspace.WorkspacePresenter
 import so.codex.codexbl.view.workspace.IWorkspaceView
@@ -20,12 +21,17 @@ import so.codex.hawk.base.BaseFragment
  * Fragment for showing all information about Garage, showing list of project
  * Implementation interface [IWorkspaceView], where declared method for communication with workspace
  */
-class ProjectFragment : BaseFragment(), IWorkspaceView, SelectedWorkspaceListener {
+class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener {
     companion object {
         /**
          * Create and getting fragment
          */
-        fun instance() = ProjectFragment()
+        fun instance(bundle: Bundle): ProjectFragment {
+            val fragment = ProjectFragment()
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 
     /**
@@ -117,7 +123,12 @@ class ProjectFragment : BaseFragment(), IWorkspaceView, SelectedWorkspaceListene
                 (activity as AuthorizedSingleFragmentActivity).pressLogout()
             }
         }
-        presenter.loadAllWorkspaces()
+
+        if (arguments!!.getParcelable<Workspace>("workspace") == null) {
+            presenter.loadAllWorkspaces()
+        } else {
+            TODO("Load project for one workspace")
+        }
     }
 
     /**
@@ -136,15 +147,7 @@ class ProjectFragment : BaseFragment(), IWorkspaceView, SelectedWorkspaceListene
         presenter.unsubscribe()
     }
 
-    private var isClicked = false
-
-    override fun select() {
-        if (isClicked && arguments!!.getParcelable<Workspace>("workspaces") != null) {
-            TODO("Select workspace's projects")
-            isClicked = false
-        } else {
-            presenter.loadAllWorkspaces()
-            isClicked = true
-        }
+    override fun select(workspace: Workspace) {
+        TODO("Not yet implemented")
     }
 }
