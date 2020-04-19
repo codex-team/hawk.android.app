@@ -1,6 +1,7 @@
 package so.codex.hawk.ui
 
 import android.os.Bundle
+import so.codex.codexbl.entity.Workspace
 import so.codex.hawk.R
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.ui.project.ProjectFragment

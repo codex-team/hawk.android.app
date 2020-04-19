@@ -27,7 +27,9 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
          */
         fun instance(workspace: Workspace?): ProjectFragment {
             val fragment = ProjectFragment()
-            fragment.arguments?.putParcelable("workspace", workspace)
+            val bundle = Bundle()
+            bundle.putParcelable("workspace", workspace)
+            fragment.arguments = bundle
 
             return fragment
         }
