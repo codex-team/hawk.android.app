@@ -1,7 +1,6 @@
 package so.codex.hawk.ui
 
 import android.os.Bundle
-import so.codex.codexbl.entity.Workspace
 import so.codex.hawk.R
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.ui.garage.ProjectFragment
@@ -20,9 +19,12 @@ class GarageActivity : AuthorizedSingleFragmentActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_garage)
+        val instance = ProjectFragment.instance()
         val bundle = Bundle()
-        bundle.putParcelable("workspace", null)
-        replaceFragment(ProjectFragment.instance(bundle))
+        bundle.putParcelable("workspaces", null)
+        instance.arguments = bundle
+        replaceFragment(instance)
+        instance.select()
     }
 }
