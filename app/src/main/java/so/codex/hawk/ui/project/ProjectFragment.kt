@@ -22,8 +22,11 @@ import so.codex.hawk.base.BaseFragment
  */
 class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener {
     companion object {
+        private const val WORKSPACE_KEY = "workspace"
+
         /**
          * Create and getting fragment
+         * @param workspace given workspace
          */
         fun instance(workspace: Workspace?): ProjectFragment {
             val fragment = ProjectFragment()
@@ -125,7 +128,7 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
             }
         }
 
-        if (arguments?.getParcelable<Workspace>("workspace") == null) {
+        if (arguments?.getParcelable<Workspace>(WORKSPACE_KEY) == null) {
             presenter.loadAllWorkspaces()
         } else {
             TODO("Load project for one workspace")
