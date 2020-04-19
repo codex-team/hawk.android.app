@@ -3,7 +3,7 @@ package so.codex.hawk.ui
 import android.os.Bundle
 import so.codex.hawk.R
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
-import so.codex.hawk.ui.garage.ProjectFragment
+import so.codex.hawk.ui.project.ProjectFragment
 
 /**
  * Main activity that showed after authorization

@@ -1,4 +1,4 @@
-package so.codex.hawk.ui.garage
+package so.codex.hawk.ui.project
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_project.*
-import org.koin.experimental.builder.getArguments
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.workspace.WorkspacePresenter
 import so.codex.codexbl.view.workspace.IWorkspaceView
