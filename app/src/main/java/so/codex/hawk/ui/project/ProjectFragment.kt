@@ -25,9 +25,9 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
         /**
          * Create and getting fragment
          */
-        fun instance(bundle: Bundle): ProjectFragment {
+        fun instance(workspace: Workspace?): ProjectFragment {
             val fragment = ProjectFragment()
-            fragment.arguments = bundle
+            fragment.arguments?.putParcelable("workspace", workspace)
 
             return fragment
         }
@@ -123,7 +123,7 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
             }
         }
 
-        if (arguments!!.getParcelable<Workspace>("workspace") == null) {
+        if (arguments?.getParcelable<Workspace>("workspace") == null) {
             presenter.loadAllWorkspaces()
         } else {
             TODO("Load project for one workspace")
