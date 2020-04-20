@@ -1,11 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme. -->
-    <style name="CodexTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="CodexBase" parent="Theme.AppCompat.DayNight.DarkActionBar"/>
+
+    <style name="CodexBase.V7">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="CodexBase.Theme" parent="CodexBase.V7"/>
+
+    <!-- Base application theme. -->
+    <style name="CodexTheme" parent="CodexBase.Theme">
+        <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/hawk_background</item>
         <item name="android:buttonStyle">@style/CodexTheme.Button</item>
         <item name="codexEditTextTheme">@style/CodexTheme.EditText</item>

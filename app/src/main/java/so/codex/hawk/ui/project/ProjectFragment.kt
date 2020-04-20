@@ -1,4 +1,4 @@
-package so.codex.hawk.ui.garage
+package so.codex.hawk.ui.project
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_garage.*
+import kotlinx.android.synthetic.main.fragment_project.*
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.workspace.WorkspacePresenter
 import so.codex.codexbl.view.workspace.IWorkspaceView
 import so.codex.hawk.R
+import so.codex.hawk.SelectedWorkspaceListener
 import so.codex.hawk.adapters.ProjectsItemsAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
@@ -19,12 +20,22 @@ import so.codex.hawk.base.BaseFragment
  * Fragment for showing all information about Garage, showing list of project
  * Implementation interface [IWorkspaceView], where declared method for communication with workspace
  */
-class GarageFragment : BaseFragment(), IWorkspaceView {
+class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener {
     companion object {
+        private const val WORKSPACE_KEY = "workspace"
+
         /**
          * Create and getting fragment
+         * @param workspace given workspace
          */
-        fun instance() = GarageFragment()
+        fun instance(workspace: Workspace?): ProjectFragment {
+            val fragment = ProjectFragment()
+            val bundle = Bundle()
+            bundle.putParcelable(WORKSPACE_KEY, workspace)
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 
     /**
@@ -43,11 +54,13 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
             rv_project_list.visibility = View.VISIBLE
             tv_empty_workspace.visibility = View.GONE
         }
-        if (rv_project_list.adapter is ProjectsItemsAdapter) {
-            (rv_project_list.adapter as ProjectsItemsAdapter).data = workspaces.fold(mutableListOf()) { list, w ->
-                list.addAll(w.projects)
-                list
-            }
+        val adapter = rv_project_list.adapter
+        if (adapter is ProjectsItemsAdapter) {
+            adapter.data =
+                workspaces.fold(mutableListOf()) { list, w ->
+                    list.addAll(w.projects)
+                    list
+                }
         }
     }
 
@@ -83,9 +96,13 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
     /**
      * Create and inflate view from layout and set retain instance for restoring state
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         retainInstance = true
-        return inflater.inflate(R.layout.fragment_garage, container, false)
+        return inflater.inflate(R.layout.fragment_project, container, false)
     }
 
     /**
@@ -110,7 +127,12 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
                 (activity as AuthorizedSingleFragmentActivity).pressLogout()
             }
         }
-        presenter.loadAllWorkspaces()
+
+        if (arguments?.getParcelable<Workspace>(WORKSPACE_KEY) == null) {
+            presenter.loadAllWorkspaces()
+        } else {
+            TODO("Load project for one workspace")
+        }
     }
 
     /**
@@ -127,5 +149,9 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+    }
+
+    override fun select(workspace: Workspace) {
+        TODO("Not yet implemented")
     }
 }

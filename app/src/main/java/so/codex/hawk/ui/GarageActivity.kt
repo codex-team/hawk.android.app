@@ -1,14 +1,15 @@
 package so.codex.hawk.ui
 
 import android.os.Bundle
+import so.codex.codexbl.entity.Workspace
 import so.codex.hawk.R
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
-import so.codex.hawk.ui.garage.GarageFragment
+import so.codex.hawk.ui.project.ProjectFragment
 
 /**
  * Main activity that showed after authorization
  */
-class MainActivity : AuthorizedSingleFragmentActivity() {
+class GarageActivity : AuthorizedSingleFragmentActivity() {
     /**
      * Container for fragment
      */
@@ -19,7 +20,7 @@ class MainActivity : AuthorizedSingleFragmentActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        replaceFragment(GarageFragment.instance())
+        setContentView(R.layout.activity_garage)
+        replaceFragment(ProjectFragment.instance(null))
     }
 }
