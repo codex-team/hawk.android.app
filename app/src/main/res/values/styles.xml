@@ -12,6 +12,8 @@
         <item name="customSearchViewStyle">@style/CodexTheme.SearchView</item>
     </style>
 
+    <style name="CodexThemeV21" parent="CodexTheme"/>
+
     <style name="CodexTheme.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/button_background_accent</item>
         <item name="android:textColor">@color/very_light_blue</item>
