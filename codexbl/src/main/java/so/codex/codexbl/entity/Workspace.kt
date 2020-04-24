@@ -10,9 +10,9 @@ package so.codex.codexbl.entity
  * @author Shiplayer
  */
 data class Workspace(
-        val id: String,
-        val name: String,
-        val description: String,
-        val image: String,
-        val projects: List<Project>
+        val id: String = "",
+        val name: String = "",
+        val description: String = "",
+        val image: String = "NO_IMG",
+        val projects: List<Project>? = null
 )
