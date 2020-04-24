@@ -1,7 +1,6 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.rx2.rxQuery
 import io.reactivex.Observable
 import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
@@ -12,7 +11,7 @@ import so.codex.sourceinterfaces.entity.EventPayloadEntity
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.ProjectEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
-import java.util.Date
+import java.util.*
 
 /**
  * Class that used [ApolloClient] for sending GraphQL request and converted response to RxJava2.
@@ -27,7 +26,7 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         skip: Int
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         TokenInterceptor.instance.updateToken(token)
-        return apolloClient.rxQuery(
+        return apolloClient.retryQuery(
             GetWorkspacesQuery(limit = limit, skip = skip)
         ).handleHttpErrorsSingle().map {
             mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
