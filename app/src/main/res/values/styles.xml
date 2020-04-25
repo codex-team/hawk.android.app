@@ -17,6 +17,7 @@
         <item name="android:buttonStyle">@style/CodexTheme.Button</item>
         <item name="codexEditTextTheme">@style/CodexTheme.EditText</item>
         <item name="customSearchViewStyle">@style/CodexTheme.SearchView</item>
+        <item name="borderedImageViewStyle">@style/CodexTheme.BorderedImageView</item>
     </style>
 
     <style name="CodexTheme.Button" parent="Widget.MaterialComponents.Button">
@@ -93,6 +94,10 @@
         <item name="cardBackgroundColor">@color/search_background</item>
         <item name="imageTint">@color/very_light_blue_60</item>
         <item name="corners">7dp</item>
+    </style>
+    
+    <style name="CodexTheme.BorderedImageView" parent="Codex.Widgets.BorderedImageViewStyle">
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
 </resources>
