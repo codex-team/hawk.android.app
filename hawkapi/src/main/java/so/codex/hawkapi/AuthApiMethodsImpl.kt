@@ -1,7 +1,6 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.rx2.rxMutate
 import io.reactivex.Single
 import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.sourceinterfaces.entity.AuthEntity
@@ -23,7 +22,7 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
      * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Login.
      */
     override fun login(authEntity: AuthEntity): Single<LoginResponse> {
-        return apolloClient.rxMutate(
+        return apolloClient.retryMutate(
             LoginMutation(
                 email = authEntity.email,
                 password = authEntity.password
@@ -37,7 +36,7 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
      * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of SignUp.
      */
     override fun signUp(signUpEntity: SignUpEntity): Single<SignUpResponse> {
-        return apolloClient.rxMutate(
+        return apolloClient.retryMutate(
             SignUpMutation(email = signUpEntity.email)
         ).handleHttpErrors().map {
             SignUpResponse(it.signUp)
@@ -48,7 +47,7 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
      * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Token.
      */
     override fun refreshToken(token: TokenEntity): Single<TokenResponse> {
-        return apolloClient.rxMutate(
+        return apolloClient.retryMutate(
             RefreshTokensMutation(token.refreshToken)
         ).handleHttpErrors().map {
             TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)

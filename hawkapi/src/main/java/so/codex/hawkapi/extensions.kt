@@ -1,11 +1,20 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloCall
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.ApolloMutationCall
+import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Error
+import com.apollographql.apollo.api.Mutation
+import com.apollographql.apollo.api.Operation
+import com.apollographql.apollo.api.Query
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
+import com.apollographql.apollo.rx2.rxMutate
+import com.apollographql.apollo.rx2.rxQuery
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.schedulers.Schedulers
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.hawkapi.exceptions.BaseHttpException
@@ -31,6 +40,29 @@ fun Error.convert(): BaseHttpException =
         } else
             BaseHttpException(this.message())
     }
+
+/**
+ * Creates a new [ApolloQueryCall] call and then converts it to an [Observable]. If [ApolloQueryCall]
+ * was canceled then we can call retry in rx chains.
+ *
+ * The number of emissions this Observable will have is based on the
+ * [com.apollographql.apollo.fetcher.ResponseFetcher] used with the call.
+ */
+@JvmSynthetic
+@CheckReturnValue
+fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
+    query: Query<D, T, V>
+): Observable<Response<T>> = Observable.just(query).flatMap { rxQuery(it) { this.clone() } }
+
+/**
+ * Creates a new [ApolloMutationCall] call and then converts it to a [Single]. If [ApolloQueryCall]
+ * was canceled then we can call retry in rx chains.
+ */
+@JvmSynthetic
+@CheckReturnValue
+fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
+    mutation: Mutation<D, T, V>
+): Single<Response<T>> = Single.just(mutation).flatMap { rxMutate(it) { this.clone() } }
 
 /**
  * Extension [Observable] for handing errors, that make occurred in while request or on the server.
