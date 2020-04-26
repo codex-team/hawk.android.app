@@ -15,12 +15,15 @@ import so.codex.hawk.SelectedWorkspaceListener
 import so.codex.hawk.adapters.ProjectsItemsAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
+import so.codex.hawk.base.text.TextListener
+import so.codex.hawk.base.toolbar.CanChangeToolbar
+import so.codex.hawk.base.toolbar.ToolbarComponentViewModel
 
 /**
  * Fragment for showing all information about Garage, showing list of project
  * Implementation interface [IWorkspaceView], where declared method for communication with workspace
  */
-class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener {
+class ProjectFragment : BaseFragment(), IWorkspaceView, SelectedWorkspaceListener, TextListener {
     companion object {
         private const val WORKSPACE_KEY = "workspace"
 
@@ -37,6 +40,11 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
             return fragment
         }
     }
+
+    private val toolbarViewModel = ToolbarComponentViewModel(
+        title = "All projects",
+        textListener = this
+    )
 
     /**
      * Initialize presenter of workspace
@@ -135,6 +143,19 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (activity is CanChangeToolbar) {
+            (activity as CanChangeToolbar).updateToolbar(
+                ToolbarComponentViewModel(
+                    menuIcon = R.drawable.ic_hamburger,
+                    title = "All projects",
+                    showSearchIcon = true
+                )
+            )
+        }
+    }
+
     /**
      * Detach from view after destroying view
      */
@@ -153,5 +174,9 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
 
     override fun select(workspace: Workspace) {
         TODO("Not yet implemented")
+    }
+
+    override fun searchText(text: String) {
+        presenter.loadAllWorkspaces()
     }
 }
