@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container_workspace"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,6 +12,7 @@
         android:id="@+id/workspace_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        app:corners="10dp"
         android:src="@android:color/background_light" />
 
     <TextView
