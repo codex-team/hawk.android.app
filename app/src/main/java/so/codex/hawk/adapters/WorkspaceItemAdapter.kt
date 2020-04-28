@@ -16,7 +16,7 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
     inner class WorkspaceItemHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(workspace: Workspace) {
             if (view is WorkspaceItemView) {
-                if (workspace.image == "NO_IMG") {
+                if (workspace.name == "Add workspace") {
                     view.title = workspace.name
                     Picasso.get()
                         .load(R.drawable.add_workspace)
