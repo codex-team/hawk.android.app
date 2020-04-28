@@ -3,4 +3,5 @@
     <color name="search_background">#191c25</color>
     <color name="header_background">#1A1D26</color>
     <color name="header_text_color">#DBE6FF</color>
+    <color name="disabled">#242732</color>
 </resources>

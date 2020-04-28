@@ -4,10 +4,10 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.interactors.IUserInteractor
-import so.codex.codexbl.view.IAuthorizedView
+import so.codex.codexbl.view.auth.IAuthorizedView
 
 /**
- * Presentor for validation of user, check if user is authorized or not, then clear all data,
+ * Presenter for validation of user, check if user is authorized or not, then clear all data,
  * session and logout
  * @author Shiplayer
  */

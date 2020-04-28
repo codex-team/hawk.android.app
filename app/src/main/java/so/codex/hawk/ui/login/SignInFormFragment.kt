@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_sign_in_form.*
 import so.codex.codexbl.presenter.SignInPresenter
-import so.codex.codexbl.view.ISignInView
+import so.codex.codexbl.view.auth.ISignInView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
@@ -17,7 +17,8 @@ import so.codex.hawk.ui.MainActivity
 /**
  * Fragment form for sign in
  */
-class SignInFormFragment : BaseFragment(), ISignInView {
+class SignInFormFragment : BaseFragment(),
+    ISignInView {
 
     /**
      * Show error message on screen or field

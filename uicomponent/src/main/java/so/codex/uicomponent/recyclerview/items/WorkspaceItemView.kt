@@ -7,22 +7,48 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.workspace_item.view.*
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 import so.codex.utils.getColorById
 
+/**
+ * Composition of view for showing elements of Workspace in list
+ * @author YorkIsMine
+ */
 class WorkspaceItemView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.projectItemViewStyle
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    /**
+     * Inflate view and attach
+     */
     private val view = View.inflate(context, R.layout.workspace_item, this)
+
+    /**
+     * Logo image
+     */
     val logoImage: ImageView = view.workspace_icon
+
+    /**
+     * Default bitmap if logo not set up
+     */
     private var defaultImage: Bitmap? = null
+
+    /**
+     * Title name of item
+     */
     var title by textViewDelegate(view.workspace_name)
+
+    /**
+     * Uuid of project
+     */
     var uuid: String = ""
 
     init {
@@ -40,6 +66,23 @@ class WorkspaceItemView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Set clicked state of WorkspaceItemView
+     */
+    fun clicked() {
+        findViewById<RelativeLayout>(R.id.container_workspace).background =
+            ContextCompat.getDrawable(context, R.drawable.clicked_back)
+    }
+
+    // Set default state of WorkspaceItemView
+    fun disabled() {
+        findViewById<RelativeLayout>(R.id.container_workspace).background =
+            ContextCompat.getDrawable(context, R.drawable.disabled)
+    }
+
+    /**
+     * Set default image if response hasn't got image
+     */
     fun setDefaultImage() {
         logoImage.post {
             if (defaultImage == null) {

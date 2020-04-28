@@ -1,0 +1,8 @@
+query GetCommonInformation {
+    me {
+        id
+        email
+        name
+        image
+    }
+}

@@ -1,4 +1,4 @@
-package so.codex.codexbl.view
+package so.codex.codexbl.view.auth
 
 import so.codex.codexbl.view.base.IBaseView
 

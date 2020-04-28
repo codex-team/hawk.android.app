@@ -6,7 +6,7 @@ import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.entity.UserAuth
 import so.codex.codexbl.interactors.ISignInInteractor
-import so.codex.codexbl.view.ISignInView
+import so.codex.codexbl.view.auth.ISignInView
 
 /**
  * Presentor for communication user with sign in

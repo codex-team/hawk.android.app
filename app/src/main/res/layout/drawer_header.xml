@@ -8,8 +8,8 @@
     android:background="@color/header_background"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <so.codex.uicomponent.BorderedImageView
+        android:id="@+id/h_user_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/la"
@@ -18,11 +18,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/h_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/header_text_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/h_user_icon"
         app:layout_constraintTop_toTopOf="parent"
         android:text="vladal56hack@yandex.ru"
         android:layout_marginStart="14dp"/>

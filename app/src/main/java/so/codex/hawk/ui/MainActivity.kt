@@ -3,11 +3,13 @@ package so.codex.hawk.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
-import so.codex.codexbl.entity.Project
+import kotlinx.android.synthetic.main.drawer_header.*
+import so.codex.codexbl.entity.Profile
 import so.codex.codexbl.entity.Workspace
-import so.codex.codexbl.view.IMainView
-import so.codex.codexbl.presenter.MainPresenter
+import so.codex.codexbl.view.IGarageView
+import so.codex.codexbl.presenter.GaragePresenter
 import so.codex.hawk.R
 import so.codex.hawk.adapters.WorkspaceItemAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
@@ -17,14 +19,14 @@ import so.codex.hawk.ui.garage.GarageFragment
  * Main activity that showed after authorization
  */
 class MainActivity : AuthorizedSingleFragmentActivity(),
-    IMainView {
+    IGarageView {
     /**
      * Container for fragment
      */
     override val containerId: Int = R.id.container
 
     private val presenter by lazy {
-        MainPresenter()
+        GaragePresenter()
     }
 
     private val adapter by lazy {
@@ -38,7 +40,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
         super.onCreate(savedInstanceState)
         presenter.attached(this)
         setContentView(R.layout.activity_main)
-        presenter.loadAllWorkspaces()
+        presenter.load()
         drawer_recycler.adapter = adapter
         drawer_recycler.layoutManager = LinearLayoutManager(this)
         replaceFragment(GarageFragment.instance())
@@ -48,9 +50,17 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
         adapter.setData(workspaces)
     }
 
-    override fun showStartWorkspace() {
+    override fun showAddWorkspace() {
         val workspace = Workspace(name = "Add workspace")
         adapter.setLastElem(workspace)
+    }
+
+    override fun showHeader(profile: Profile) {
+        h_email.text = profile.email
+        Picasso.get()
+            .load(profile.picture)
+            .error(R.drawable.ic_error_outline_black_24dp)
+            .into(h_user_icon)
     }
 
     override fun showErrorMessage(message: String) {

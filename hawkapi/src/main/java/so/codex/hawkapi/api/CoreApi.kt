@@ -6,9 +6,11 @@ import com.apollographql.apollo.api.CustomTypeValue
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import so.codex.hawkapi.SourceApi
+import so.codex.hawkapi.api.profile.ProfileApi
 import so.codex.hawkapi.api.auth.AuthApi
 import so.codex.hawkapi.api.workspace.WorkspaceApi
 import so.codex.sourceinterfaces.IAuthApi
+import so.codex.sourceinterfaces.IProfileApi
 import so.codex.sourceinterfaces.IWorkspaceApi
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -18,10 +20,11 @@ import java.util.*
  * Main class of API that can provide interfaces api for communication with server, sending and getting information.
  * [SourceApi] - interface that declared method for providing api for communication with server.
  * @author Shiplayer
+ * @author YorkIsMine
  */
 class CoreApi private constructor() : SourceApi {
     companion object {
-        private val baseUrl = "https://api.stage.hawk.so/graphql"
+        private const val baseUrl = "https://api.stage.hawk.so/graphql"
 
         /**
          * Lazy initializing apollo.
@@ -87,4 +90,11 @@ class CoreApi private constructor() : SourceApi {
      * @see IWorkspaceApi
      */
     override fun getWorkspaceApi(): IWorkspaceApi = WorkspaceApi.instance
+
+    /**
+     * Provide interface for working with Profile.
+     * @return Interface [IProfileApi], that implemented methods for sending request.
+     * @see IProfileApi
+     */
+    override fun getProfileApi(): IProfileApi = ProfileApi.instance
 }

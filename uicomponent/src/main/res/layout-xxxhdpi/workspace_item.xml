@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_workspace"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp"
-    android:background="#242732">
+    android:background="@color/disabled"
+    android:padding="16dp">
 
-    <ImageView
+    <so.codex.uicomponent.BorderedImageView
         android:id="@+id/workspace_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -14,12 +15,12 @@
 
     <TextView
         android:id="@+id/workspace_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginStart="47dp"
-        android:textColor="#DBE6FF"
         android:text="Add workspace"
-        android:layout_centerVertical="true"/>
+        android:textColor="#DBE6FF" />
 
 
 </RelativeLayout>
