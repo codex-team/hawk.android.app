@@ -15,7 +15,7 @@ import so.codex.sourceinterfaces.response.ProfileResponse
  */
 class ProfileApiMethodsImpl(private val apollo: ApolloClient) :
     ProfileApiMethods {
-    override fun me(): Single<ProfileResponse> {
+    override fun getProfile(): Single<ProfileResponse> {
         return apollo.rxQuery(GetCommonInformationQuery())
             .handleHttpErrorsSingle().map {
                 if (it.me != null) {

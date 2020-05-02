@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -89,6 +90,8 @@ class ProjectItemView @JvmOverloads constructor(
      */
     fun setDefaultImage() {
         logoImage.post {
+            Log.d("item", "defaultImage is null for $title? ${defaultImage == null}")
+
             if (defaultImage == null) {
                 val firstChar = title.split(" ").fold("") { acc, s -> acc + s.first() }.toString()
                     .toUpperCase()

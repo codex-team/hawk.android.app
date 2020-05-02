@@ -12,5 +12,5 @@ interface ProfileApiMethods {
      * Get Profile
      * @return Single with [ProfileResponse]
      */
-    fun me(): Single<ProfileResponse>
+    fun getProfile(): Single<ProfileResponse>
 }

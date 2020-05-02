@@ -18,7 +18,7 @@ class ProfileInteractor : IProfileInteractor {
      * @return [Single] with current Profile
      */
     override fun getProfile(): Single<Profile> {
-        return CoreApi.instance.getProfileApi().me().map {
+        return CoreApi.instance.getProfileApi().getProfileResponse().map {
             Profile(
                 it.entity.id,
                 it.entity.email,

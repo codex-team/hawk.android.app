@@ -17,8 +17,7 @@ import so.codex.hawk.ui.MainActivity
 /**
  * Fragment form for sign in
  */
-class SignInFormFragment : BaseFragment(),
-    ISignInView {
+class SignInFormFragment : BaseFragment(), ISignInView {
 
     /**
      * Show error message on screen or field

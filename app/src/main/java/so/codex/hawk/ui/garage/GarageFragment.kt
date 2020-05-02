@@ -45,7 +45,7 @@ class GarageFragment : BaseFragment(), IWorkspaceView {
         }
         if (rv_project_list.adapter is ProjectsItemsAdapter) {
             (rv_project_list.adapter as ProjectsItemsAdapter).data = workspaces.fold(mutableListOf()) { list, w ->
-                list.addAll(w.projects!!)
+                list.addAll(w.projects)
                 list
             }
         }

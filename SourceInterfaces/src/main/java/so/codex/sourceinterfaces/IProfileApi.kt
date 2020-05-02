@@ -13,5 +13,5 @@ interface IProfileApi {
      * Send request for getting Profile with common information
      * @return [Single] with response of request
      */
-    fun me(): Single<ProfileResponse>
+    fun getProfileResponse(): Single<ProfileResponse>
 }

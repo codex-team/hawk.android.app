@@ -27,5 +27,5 @@ class ProfileApi(private val service: ProfileApiMethods) : IProfileApi {
      * Method for getting Response of Profile
      * @return [Single] of current response
      */
-    override fun me(): Single<ProfileResponse> = service.me()
+    override fun getProfileResponse(): Single<ProfileResponse> = service.getProfile()
 }

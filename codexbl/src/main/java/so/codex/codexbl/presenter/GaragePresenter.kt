@@ -7,6 +7,7 @@ import so.codex.codexbl.interactors.IProfileInteractor
 import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.interactors.ProfileInteractor
 import so.codex.codexbl.view.IGarageView
+import java.lang.Exception
 
 /**
  * Presenter for communication with Garage UI
@@ -59,6 +60,7 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
                     view?.showHeader(it)
                 }, {
                     it.printStackTrace()
+                     throw Exception("Error with getting Profile")
                 })
         )
     }

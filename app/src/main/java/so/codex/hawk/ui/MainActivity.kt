@@ -1,5 +1,6 @@
 package so.codex.hawk.ui
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,8 +39,9 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.attached(this)
         setContentView(R.layout.activity_main)
+        presenter.attached(this)
+
         presenter.load()
         drawer_recycler.adapter = adapter
         drawer_recycler.layoutManager = LinearLayoutManager(this)
@@ -51,16 +53,15 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     }
 
     override fun showAddWorkspace() {
-        val workspace = Workspace(name = "Add workspace")
-        adapter.setLastElem(workspace)
+        adapter.setLastElem(Workspace())
     }
 
     override fun showHeader(profile: Profile) {
-        h_email.text = profile.email
+        header_email.text = profile.email ?: "NULLLLLLL" // is null
         Picasso.get()
             .load(profile.picture)
             .error(R.drawable.ic_error_outline_black_24dp)
-            .into(h_user_icon)
+            .into(header_user_icon)
     }
 
     override fun showErrorMessage(message: String) {

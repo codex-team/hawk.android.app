@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.workspace_item.view.*
 import so.codex.uicomponent.R
@@ -70,13 +69,13 @@ class WorkspaceItemView @JvmOverloads constructor(
      * Set clicked state of WorkspaceItemView
      */
     fun clicked() {
-        findViewById<RelativeLayout>(R.id.container_workspace).background =
+        view.container_workspace.background =
             ContextCompat.getDrawable(context, R.drawable.clicked_back)
     }
 
     // Set default state of WorkspaceItemView
     fun disabled() {
-        findViewById<RelativeLayout>(R.id.container_workspace).background =
+        view.container_workspace.background =
             ContextCompat.getDrawable(context, R.drawable.disabled)
     }
 
@@ -85,6 +84,7 @@ class WorkspaceItemView @JvmOverloads constructor(
      */
     fun setDefaultImage() {
         logoImage.post {
+            Log.d("WorkspaceItemView", "defaultImage is null for $title? ${defaultImage == null}")
             if (defaultImage == null) {
                 val firstChar = title.split(" ").fold("") { acc, s -> acc + s.first() }.toString()
                     .toUpperCase()
