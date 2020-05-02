@@ -26,10 +26,6 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
                     view.setOnClickListener(null)
                     view.title = "Add workspace"
 
-                    // ToDo add listener for click
-                    view.logoImage.setOnClickListener {
-                       Toast.makeText(view.context, "Clicked!", Toast.LENGTH_SHORT).show()
-                    }
 
                 } else {
                     view.setOnClickListener {
@@ -40,8 +36,6 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
                     }
 
 
-                    // imageProvider.load(view.logoImage)
-
                     view.uuid = workspace.id
                     view.title = workspace.name
                     if (workspace.image.isNotEmpty()) {
@@ -49,9 +43,7 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
                             .load(workspace.image)
                             .error(R.drawable.ic_error_outline_black_24dp)
                             .into(view.logoImage)
-                    } else view.logoImage.setImageBitmap(ImageProvider.load(view.logoImage.width,
-                    view.logoImage.height, view.resources.displayMetrics.density,
-                    1, workspace))
+                    } else view.logoImage.setImageBitmap(ImageProvider.load(view.resources.displayMetrics.density, workspace))
 
                 }
 

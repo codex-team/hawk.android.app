@@ -8,20 +8,13 @@ import so.codex.utils.getColorById
 object ImageProvider {
     private val images: MutableMap<String, Bitmap> = mutableMapOf()
 
-    fun load(width: Int, height: Int, density: Float, viewColor: Int, workspace: Workspace): Bitmap {
-        Log.d("MEW", "width: $width \n height: $height \n density: $density viewColor: $viewColor \n workspace: $workspace" +
-                "\n name: ${workspace.name}")
+    fun load(density: Float, workspace: Workspace): Bitmap {
 
         if (images[workspace.id] == null) {
 
             var firstChar = ""
 
-//            val firstChar = removeUselessChars(workspace.name).split(" ")
-//                .fold("") { acc, s -> acc + s.first() } ->>>>>>>>>>>>>>>>>>>> this will be error
-//                .toString()
-//                .toUpperCase()
-
-            removeUselessChars(workspace.name).split(" ") // this code is better than yours
+            removeUselessChars(workspace.name).split(" ")
                 .forEach {
                     firstChar += "$it "
                 }
@@ -29,26 +22,39 @@ object ImageProvider {
             Log.d("WHATSS", firstChar)
 
             val defaultImage: Bitmap = Bitmap.createBitmap(
-                width, height, // width and height is 0 and will be error
+                32, 32,
                 Bitmap.Config.ARGB_8888
             )
             val canvas = Canvas(defaultImage)
             val fontPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 textSize = 14f * density + 0.5f
                 typeface = Typeface.create("roboto", Typeface.BOLD)
-                color = viewColor
+                color = 1
             }
             val bounds = Rect()
             fontPaint.getTextBounds(firstChar, 0, firstChar.length, bounds)
             fontPaint.textAlign = Paint.Align.LEFT
             canvas.drawColor(getColorById(workspace.id))
-            val centerX = width / 2f - bounds.exactCenterX()
-            val centerY = height.toFloat() / 2f - bounds.exactCenterY()
+            val centerX = 32 / 2f - bounds.exactCenterX()
+            val centerY = 32.toFloat() / 2f - bounds.exactCenterY()
             canvas.drawText(firstChar, centerX, centerY, fontPaint)
 
             images[workspace.id] = defaultImage
         }
 
         return images[workspace.id] ?: error("Error with image")
+    }
+
+    private fun removeUselessChars(str: String): String {
+        var result = ""
+        val words = str.split(" ")
+        words.forEach {
+            result += it.asSequence()
+                .filter {c ->
+                    c.isLetter()
+                }.joinToString("", "", "") + " "
+        }
+
+        return result
     }
 }

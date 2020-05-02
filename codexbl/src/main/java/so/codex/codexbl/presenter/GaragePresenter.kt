@@ -59,8 +59,7 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
                 .subscribe({
                     view?.showHeader(it)
                 }, {
-                    it.printStackTrace()
-                     throw Exception("Error with getting Profile")
+                    view?.showErrorMessage(it.message ?: "Error with getting Profile")
                 })
         )
     }

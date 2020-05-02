@@ -57,7 +57,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     }
 
     override fun showHeader(profile: Profile) {
-        header_email.text = profile.email ?: "NULLLLLLL" // is null
+        header_email.text = profile.email
         Picasso.get()
             .load(profile.picture)
             .error(R.drawable.ic_error_outline_black_24dp)
