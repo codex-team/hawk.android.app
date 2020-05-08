@@ -1,7 +1,7 @@
-package so.codex.codexbl.providers
+package so.codex.core
 
-import so.codex.codexbl.entity.SessionData
-import so.codex.codexbl.entity.UserToken
+import so.codex.core.entity.SessionData
+import so.codex.core.entity.UserToken
 
 /**
  * Interface that declared common methods for communication with storage, that contain common

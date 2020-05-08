@@ -64,7 +64,7 @@ class CoreApi private constructor() : SourceApi {
             }
 
             OkHttpClient.Builder()
-                .addInterceptor(TokenInterceptor.instance)
+                //.addInterceptor(TokenInterceptor.instance)
                 .addInterceptor(interceptor)
                 .build()
         }

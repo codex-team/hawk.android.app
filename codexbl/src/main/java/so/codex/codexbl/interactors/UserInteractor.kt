@@ -3,9 +3,8 @@ package so.codex.codexbl.interactors
 import android.util.Log
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import org.koin.core.qualifier.named
-import so.codex.codexbl.entity.SessionData
-import so.codex.codexbl.providers.UserTokenDAO
+import so.codex.core.entity.SessionData
+import so.codex.core.entity.UserToken
 
 /**
  * Interacor for saving and getting information of user
@@ -15,7 +14,7 @@ class UserInteractor : IUserInteractor, KoinComponent {
     /**
      * Instance that provide access and way to save and get data
      */
-    private val userTokenDAO: UserTokenDAO by inject(named("preferences"))
+    private val userTokenDAO: so.codex.core.UserTokenDAO by inject()
 
     /**
      * Method for saving session
@@ -35,6 +34,10 @@ class UserInteractor : IUserInteractor, KoinComponent {
         return userTokenDAO.getLastSession().also {
             Log.i("UserInteractor", "data = $it")
         }
+    }
+
+    override fun updateToken(userToken: UserToken) {
+        userTokenDAO.saveUserToken(userToken)
     }
 
     /**

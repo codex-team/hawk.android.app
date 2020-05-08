@@ -1,9 +1,9 @@
-package so.codex.codexbl.providers
+package so.codex.core
 
 import android.content.Context
 import android.util.Log
-import so.codex.codexbl.entity.SessionData
-import so.codex.codexbl.entity.UserToken
+import so.codex.core.entity.SessionData
+import so.codex.core.entity.UserToken
 
 /**
  * For storage data used [android.content.SharedPreferences] for getting and saving user information.
@@ -11,7 +11,7 @@ import so.codex.codexbl.entity.UserToken
  * @see android.content.SharedPreferences
  * @author Shiplayer
  */
-class UserTokenPreferences(context: Context) : UserTokenDAO {
+internal class UserTokenPreferences(context: Context) : UserTokenDAO {
     /**
      * Private [android.content.SharedPreferences] with access to storage data
      */

@@ -2,6 +2,9 @@ package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
 import io.reactivex.Observable
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import so.codex.core.UserTokenDAO
 import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.hawkapi.fragment.EventsList
@@ -19,7 +22,11 @@ import java.util.*
  * @see WorkspacesApiMethods
  * @author Shiplayer
  */
-class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods {
+class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods,
+    KoinComponent {
+
+    private val userTokenDAO by inject<UserTokenDAO>()
+
     override fun getWorkspaces(
         token: String,
         limit: Int,
@@ -27,7 +34,8 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         TokenInterceptor.instance.updateToken(token)
         return apolloClient.retryQuery(
-            GetWorkspacesQuery(limit = limit, skip = skip)
+            GetWorkspacesQuery(limit = limit, skip = skip),
+            userTokenDAO
         ).handleHttpErrorsSingle().map {
             mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
                 it.workspaces?.map { it!! }?.forEach {

@@ -4,18 +4,17 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloMutationCall
 import com.apollographql.apollo.ApolloQueryCall
-import com.apollographql.apollo.api.Error
-import com.apollographql.apollo.api.Mutation
-import com.apollographql.apollo.api.Operation
-import com.apollographql.apollo.api.Query
-import com.apollographql.apollo.api.Response
+import com.apollographql.apollo.api.*
 import com.apollographql.apollo.exception.ApolloException
+import com.apollographql.apollo.request.RequestHeaders
 import com.apollographql.apollo.rx2.rxMutate
 import com.apollographql.apollo.rx2.rxQuery
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.schedulers.Schedulers
+import so.codex.core.UserTokenDAO
+import so.codex.hawkapi.apollo.ResponseAdaptor
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.hawkapi.exceptions.BaseHttpException
 import so.codex.hawkapi.exceptions.MultiHttpErrorsException
@@ -41,6 +40,19 @@ fun Error.convert(): BaseHttpException =
             BaseHttpException(this.message())
     }
 
+fun List<Error>.hasTokenExpiredError(): Boolean {
+    return find { error ->
+        error.customAttributes().let { attributes ->
+            val extensions = attributes["extensions"]
+            if (extensions is LinkedHashMap<*, *> && extensions.containsKey("code")) {
+                extensions["code"]!! == "ACCESS_TOKEN_EXPIRED_ERROR"
+            } else {
+                false
+            }
+        }
+    } != null
+}
+
 /**
  * Creates a new [ApolloQueryCall] call and then converts it to an [Observable]. If [ApolloQueryCall]
  * was canceled then we can call retry in rx chains.
@@ -51,8 +63,22 @@ fun Error.convert(): BaseHttpException =
 @JvmSynthetic
 @CheckReturnValue
 fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
-    query: Query<D, T, V>
-): Observable<Response<T>> = Observable.just(query).flatMap { rxQuery(it) { this.clone() } }
+    query: Query<D, T, V>,
+    userToken: UserTokenDAO? = null
+): Observable<ResponseAdaptor<T>> = Observable.just(query).flatMap {
+    val token = userToken?.getUserToken()
+    rxQuery(it) {
+        if (token != null && token.accessToken.isNotEmpty())
+            this.requestHeaders(
+                RequestHeaders.builder().addHeader("Authorization", "Bearer ${token.accessToken}")
+                    .build()
+            ).clone()
+        else
+            this.clone()
+    }.map {
+        ResponseAdaptor(it, token)
+    }
+}
 
 /**
  * Creates a new [ApolloMutationCall] call and then converts it to a [Single]. If [ApolloQueryCall]
@@ -61,30 +87,49 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
 @JvmSynthetic
 @CheckReturnValue
 fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
-    mutation: Mutation<D, T, V>
-): Single<Response<T>> = Single.just(mutation).flatMap { rxMutate(it) { this.clone() } }
+    mutation: Mutation<D, T, V>,
+    userToken: UserTokenDAO? = null
+): Single<ResponseAdaptor<T>> = Single.just(mutation).flatMap {
+    val token = userToken?.getUserToken()
+    rxMutate(it) {
+        if (token != null && token.accessToken.isNotEmpty())
+            this.requestHeaders(
+                RequestHeaders.builder().addHeader("Authorization", "Bearer ${token.accessToken}")
+                    .build()
+            ).clone()
+        else
+            this.clone()
+    }.map {
+        ResponseAdaptor(it, token)
+    }
+}
 
 /**
  * Extension [Observable] for handing errors, that make occurred in while request or on the server.
  * @return [Single] with unwrapped instance in [Response] to type that it contains
  */
-fun <T : Response<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O> {
-    return firstOrError().flatMap {
+fun <T : ResponseAdaptor<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O> {
+    return firstOrError().flatMap { responseAdaptor ->
+        val response = responseAdaptor.response
         when {
-            it.hasErrors() -> {
-                val errors = it.errors()
-                if (errors.size > 1)
-                    Single.error<O>(
+            response.hasErrors() -> {
+                val errors = response.errors()
+                when {
+                    errors.hasTokenExpiredError() -> {
+                        val token = responseAdaptor.requestToken
+                        Single.error(AccessTokenExpiredException(token))
+                    }
+                    errors.size > 1 -> Single.error(
                         MultiHttpErrorsException(
                             "Multi errors",
                             errors.map { it.message() ?: "" })
                     )
-                else
-                    Single.error<O>(errors[0].convert())
+                    else -> Single.error(errors[0].convert())
+                }
             }
-            it.data() != null -> Single.just(it.data()!!)
-            it.data() == null -> Single.error<O>(Throwable("Data is null"))
-            else -> Single.error<O>(SomethingWentWrongException())
+            response.data() != null -> Single.just(response.data()!!)
+            response.data() == null -> Single.error(Throwable("Data is null"))
+            else -> Single.error(SomethingWentWrongException())
         }
     }
 }
@@ -93,22 +138,27 @@ fun <T : Response<O>, O : Any?> Observable<T>.handleHttpErrorsSingle(): Single<O
  * Extension [Single] for handing errors, that make occurred in while request or on the server.
  * @return [Single] with unwrapped instance in [Response] to type that it contains
  */
-fun <T : Response<O>, O : Any?> Single<T>.handleHttpErrors(): Single<O> {
-    return flatMap {
+fun <T : ResponseAdaptor<O>, O : Any?> Single<T>.handleHttpErrors(): Single<O> {
+    return flatMap { responseAdaptor ->
+        val response = responseAdaptor.response
         when {
-            it.hasErrors() -> {
-                val errors = it.errors()
-                if (errors.size > 1)
-                    Single.error<O>(
+            response.hasErrors() -> {
+                val errors = response.errors()
+                when {
+                    errors.hasTokenExpiredError() -> {
+                        val token = responseAdaptor.requestToken
+                        Single.error(AccessTokenExpiredException(token))
+                    }
+                    errors.size > 1 -> Single.error(
                         MultiHttpErrorsException(
                             "Multi errors",
                             errors.map { it.message() ?: "" })
                     )
-                else
-                    Single.error<O>(errors[0].convert())
+                    else -> Single.error(errors[0].convert())
+                }
             }
-            it.data() != null -> Single.just(it.data()!!)
-            it.data() == null -> Single.error<O>(Throwable("Data is null"))
+            response.data() != null -> Single.just(response.data()!!)
+            response.data() == null -> Single.error<O>(Throwable("Data is null"))
             else -> Single.error<O>(SomethingWentWrongException())
         }
     }

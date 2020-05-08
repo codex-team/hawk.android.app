@@ -7,6 +7,7 @@ import org.koin.core.context.startKoin
 import so.codex.codexbl.koin.apiModule
 import so.codex.codexbl.koin.interactorsModule
 import so.codex.codexbl.koin.providersModule
+import so.codex.core.koin.coreModule
 
 /**
  * Class for initialized tree of dependencies.
@@ -23,11 +24,12 @@ class CodexKoinComponent {
                 androidLogger()
                 androidContext(applicationContext)
                 modules(
-                        listOf(
-                                apiModule,
-                                interactorsModule,
-                                providersModule
-                        )
+                    listOf(
+                        apiModule,
+                        interactorsModule,
+                        providersModule,
+                        coreModule
+                    )
                 )
             }
         }
