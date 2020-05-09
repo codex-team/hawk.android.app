@@ -13,6 +13,9 @@ data class Workspace(
         val id: String = "",
         val name: String = "",
         val description: String = "",
-        val image: String = "NO_IMG",
+        val image: String = "",
         val projects: List<Project> = listOf()
-)
+) {
+        fun hasId(): Boolean = id.isNotEmpty()
+        fun hasImage(): Boolean = image.isNotEmpty()
+}

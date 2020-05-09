@@ -27,6 +27,11 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:authorities="hawk.android.app.app.so.codex.hawk"
+            android:name=".ContextProvider"
+            android:exported="false" />
     </application>
 
 </manifest>
