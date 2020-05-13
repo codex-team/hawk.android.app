@@ -1,6 +1,5 @@
 package so.codex.hawk.ui
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
