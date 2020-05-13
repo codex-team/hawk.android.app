@@ -2,15 +2,16 @@ package so.codex.hawk.ui
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
 import so.codex.codexbl.entity.Profile
-import so.codex.codexbl.entity.Workspace
-import so.codex.codexbl.view.IGarageView
 import so.codex.codexbl.presenter.GaragePresenter
+import so.codex.codexbl.view.IGarageView
 import so.codex.hawk.R
+import so.codex.hawk.WorkspaceViewModelDiffUtil
 import so.codex.hawk.adapters.WorkspaceItemAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.ui.garage.GarageFragment
@@ -30,8 +31,15 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     }
 
     private val adapter by lazy {
-        WorkspaceItemAdapter()
+        WorkspaceItemAdapter(object : GaragePresenter.WorkspaceSelectedCallback {
+            override fun select(workspace: IGarageView.WorkspaceViewModel) {
+                presenter.selectWorkspace(workspace)
+            }
+
+        })
     }
+
+    private val diffUtil = WorkspaceViewModelDiffUtil()
 
     /**
      * Create activity and replace on Garage fragment
@@ -44,15 +52,18 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
         presenter.load()
         drawer_recycler.adapter = adapter
         drawer_recycler.layoutManager = LinearLayoutManager(this)
+        drawer_recycler.itemAnimator = null
         replaceFragment(GarageFragment.instance())
     }
 
-    override fun showWorkspaces(workspaces: List<Workspace>) {
-        adapter.setData(workspaces)
+    override fun showWorkspaces(workspaces: List<IGarageView.WorkspaceViewModel>) {
+        diffUtil.update(adapter.workspaces, workspaces)
+        adapter.workspaces = workspaces
+        DiffUtil.calculateDiff(diffUtil).dispatchUpdatesTo(adapter)
     }
 
     override fun showAddWorkspace() {
-        adapter.setLastElem(Workspace())
+//        adapter.setLastElem(Workspace())
     }
 
     override fun showHeader(profile: Profile) {

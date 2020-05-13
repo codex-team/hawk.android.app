@@ -4,17 +4,20 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import so.codex.codexbl.entity.Workspace
+import so.codex.codexbl.presenter.GaragePresenter.WorkspaceSelectedCallback
+import so.codex.codexbl.view.IGarageView.WorkspaceViewModel
 import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.WorkspaceItemView
 
 //ToDo add docs
-class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.WorkspaceItemHolder>() {
+class WorkspaceItemAdapter(val listener: WorkspaceSelectedCallback) :
+    RecyclerView.Adapter<WorkspaceItemAdapter.WorkspaceItemHolder>() {
     inner class WorkspaceItemHolder(
+        private val listener: WorkspaceSelectedCallback,
         private val view: WorkspaceItemView
     ) : RecyclerView.ViewHolder(view) {
-        fun bind(workspace: Workspace) {
+        fun bind(workspace: WorkspaceViewModel) {
             if (!workspace.hasId()) bindAddWorkspaceBtn()
             else bindWorkspace(workspace)
         }
@@ -30,9 +33,10 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
             view.title = "Add workspace"
         }
 
-        private fun bindWorkspace(workspace: Workspace) {
+        private fun bindWorkspace(workspace: WorkspaceViewModel) {
             view.uuid = workspace.id
             view.title = workspace.name
+            view.isViewSelected = workspace.isSelected
             if (workspace.hasImage()) {
                 Picasso.get()
                     .load(workspace.image)
@@ -47,9 +51,10 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
                 )
             }
             view.setOnClickListener {
-                v?.disabled()
-                view.clicked()
-                v = view
+                view.isViewSelected = !view.isViewSelected
+                if (view.isViewSelected) {
+                    listener.select(workspace)
+                }
             }
         }
 
@@ -58,23 +63,18 @@ class WorkspaceItemAdapter : RecyclerView.Adapter<WorkspaceItemAdapter.Workspace
     private var v: WorkspaceItemView? = null
 
 
-    private val workspaces: MutableList<Workspace> = mutableListOf()
+    var workspaces: List<WorkspaceViewModel> = listOf()
 
-    fun setData(data: List<Workspace>) {
-        workspaces.addAll(data)
-        notifyDataSetChanged()
-    }
-
-    fun setLastElem(lastWorkspace: Workspace) {
+    /*fun setLastElem(lastWorkspace: Workspace) {
         workspaces.add(workspaces.size, lastWorkspace)
         notifyDataSetChanged()
-    }
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkspaceItemHolder {
         val view =
             WorkspaceItemView(parent.context)
 
-        return WorkspaceItemHolder(view)
+        return WorkspaceItemHolder(listener, view)
     }
 
     override fun getItemCount(): Int = workspaces.size

@@ -3,11 +3,12 @@ package so.codex.codexbl.presenter
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
+import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.interactors.IProfileInteractor
 import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.interactors.ProfileInteractor
 import so.codex.codexbl.view.IGarageView
-import java.lang.Exception
+import so.codex.codexbl.view.IGarageView.WorkspaceViewModel
 
 /**
  * Presenter for communication with Garage UI
@@ -24,6 +25,10 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
      */
     private val profileInteractor: IProfileInteractor = ProfileInteractor() //ToDo to put in Koin
 
+    private var selectedWorkspace: WorkspaceViewModel? = null
+
+    private var cachedWorkspaces: List<WorkspaceViewModel> = listOf()
+
     /**
      * Load all needed data
      */
@@ -39,9 +44,14 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
         compositeDisposable.of(
             workspaceInteractor
                 .getWorkspaces()
+                .map {
+                    it.map(this::workspaceMapper)
+                }
                 .subscribe({
-                    if (!it.isNullOrEmpty())
+                    if (!it.isNullOrEmpty()) {
                         view?.showWorkspaces(it)
+                        cachedWorkspaces = it
+                    }
                     view?.showAddWorkspace()
                 }, {
                     it.printStackTrace()
@@ -64,10 +74,36 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
         )
     }
 
+    fun selectWorkspace(workspaceViewModel: WorkspaceViewModel) {
+        selectedWorkspace = workspaceViewModel
+        cachedWorkspaces.map {
+            if (it.id == selectedWorkspace?.id)
+                it.copy(isSelected = true)
+            else
+                it
+        }.apply {
+            view?.showWorkspaces(this)
+        }
+    }
+
+    private fun workspaceMapper(workspace: Workspace): WorkspaceViewModel {
+        return WorkspaceViewModel(
+            workspace.id,
+            workspace.name,
+            workspace.image,
+            workspace.id == selectedWorkspace?.id
+        )
+    }
+
+
     /**
      * Dispose of all RxJava Streams/Calls
      */
     fun unsubscribe() {
         compositeDisposable.dispose()
+    }
+
+    interface WorkspaceSelectedCallback {
+        fun select(workspace: WorkspaceViewModel)
     }
 }

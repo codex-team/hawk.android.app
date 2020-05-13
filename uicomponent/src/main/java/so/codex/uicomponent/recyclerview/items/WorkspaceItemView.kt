@@ -1,11 +1,7 @@
 package so.codex.uicomponent.recyclerview.items
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.Typeface
+import android.graphics.*
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -45,6 +41,17 @@ class WorkspaceItemView @JvmOverloads constructor(
      */
     var title by textViewDelegate(view.workspace_name)
 
+    var isViewSelected: Boolean = false
+        set(value) {
+            field = value
+            if (value)
+                view.container_workspace.background =
+                    ContextCompat.getDrawable(context, R.drawable.clicked_back)
+            else
+                view.container_workspace.background =
+                    ContextCompat.getDrawable(context, R.drawable.disabled)
+        }
+
     /**
      * Uuid of project
      */
@@ -63,20 +70,6 @@ class WorkspaceItemView @JvmOverloads constructor(
             }
             recycle()
         }
-    }
-
-    /**
-     * Set clicked state of WorkspaceItemView
-     */
-    fun clicked() {
-        view.container_workspace.background =
-            ContextCompat.getDrawable(context, R.drawable.clicked_back)
-    }
-
-    // Set default state of WorkspaceItemView
-    fun disabled() {
-        view.container_workspace.background =
-            ContextCompat.getDrawable(context, R.drawable.disabled)
     }
 
     /**
