@@ -1,11 +1,15 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.rx2.rxQuery
+import io.reactivex.Observable
 import io.reactivex.Single
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import so.codex.core.UserTokenDAO
 import so.codex.hawkapi.api.profile.ProfileApiMethods
 import so.codex.sourceinterfaces.entity.UserEntity
 import so.codex.sourceinterfaces.response.ProfileResponse
+import java.util.concurrent.TimeUnit
 
 /**
  * Class that used [ApolloClient] for sending GraphQL request and converted response to RxJava2.
@@ -14,23 +18,29 @@ import so.codex.sourceinterfaces.response.ProfileResponse
  * @author YorkIsMine
  */
 class ProfileApiMethodsImpl(private val apollo: ApolloClient) :
-    ProfileApiMethods {
+    ProfileApiMethods, KoinComponent {
+
+    private val userTokenDAO by inject<UserTokenDAO>()
+
+
     override fun getProfile(): Single<ProfileResponse> {
-        return apollo.rxQuery(GetCommonInformationQuery())
-            .handleHttpErrorsSingle().map {
-                if (it.me != null) {
-                    ProfileResponse(
-                        UserEntity(
-                            it.me.id,
-                            it.me.email ?: "",
-                            it.me.name ?: "",
-                            it.me.image ?: ""
+        return Observable.interval(200, TimeUnit.MILLISECONDS).firstOrError().flatMap {
+            apollo.retryQuery(GetCommonInformationQuery(), userTokenDAO)
+                .handleHttpErrorsSingle().map {
+                    if (it.me != null) {
+                        ProfileResponse(
+                            UserEntity(
+                                it.me.id,
+                                it.me.email ?: "",
+                                it.me.name ?: "",
+                                it.me.image ?: ""
+                            )
                         )
-                    )
-                } else {
-                    ProfileResponse(UserEntity())
+                    } else {
+                        ProfileResponse(UserEntity())
+                    }
                 }
-            }
+        }
     }
 
 }

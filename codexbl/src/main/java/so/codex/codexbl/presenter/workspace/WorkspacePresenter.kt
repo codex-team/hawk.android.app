@@ -1,5 +1,6 @@
 package so.codex.codexbl.presenter.workspace
 
+import android.util.Log
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.LoaderPresenter
@@ -31,6 +32,12 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
         compositeDisposable.of(
                 workspaceInteractor
                         .getWorkspaces()
+                    .doOnSubscribe {
+                        Log.i("WorkspacePresenter", "subscribe getWorkspace")
+                    }
+                    .doOnDispose {
+                        Log.i("WorkspacePresenter", "dispose getWorkspace")
+                    }
                         .attachLoader()
                         .subscribe({
                             if (!it.isNullOrEmpty())

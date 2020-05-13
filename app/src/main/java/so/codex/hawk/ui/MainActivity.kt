@@ -15,6 +15,7 @@ import so.codex.hawk.R
 import so.codex.hawk.WorkspaceViewModelDiffUtil
 import so.codex.hawk.adapters.WorkspaceItemAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
+import so.codex.hawk.info
 import so.codex.hawk.ui.garage.GarageFragment
 
 /**
@@ -28,6 +29,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     override val containerId: Int = R.id.container
 
     private val presenter by lazy {
+        info("create garage presenter")
         GaragePresenter()
     }
 
@@ -48,6 +50,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        info("before presenter")
         presenter.attached(this)
 
         presenter.load()
@@ -69,10 +72,11 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
 
     override fun showHeader(profile: Profile) {
         header_email.text = profile.email
-        Picasso.get()
-            .load(profile.picture)
-            .error(R.drawable.ic_error_outline_black_24dp)
-            .into(header_user_icon)
+        if (profile.picture.isNotEmpty())
+            Picasso.get()
+                .load(profile.picture)
+                .error(R.drawable.ic_error_outline_black_24dp)
+                .into(header_user_icon)
     }
 
     override fun showErrorMessage(message: String) {

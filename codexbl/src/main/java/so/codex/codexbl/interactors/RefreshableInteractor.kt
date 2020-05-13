@@ -13,7 +13,6 @@ import so.codex.core.entity.UserToken
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.TokenEntity
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -33,12 +32,16 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
 
     }
 
+    init {
+        Log.i(this::class.java.simpleName, "create new instance of refreshableInteractor")
+    }
+
     /**
      * Interactor for getting last session
      */
     private val userInteractor: IUserInteractor by inject()
 
-    private val refreshInteractor = RefreshInteractor()
+    private val refreshInteractor: RefreshInteractor by inject()
 
     /**
      * Api for refreshing access token
@@ -66,15 +69,7 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
         var first = false
         return retryWhen {
             it.flatMap {
-                Log.i(
-                    "RefreshToken",
-                    "it is AccessTokenExpiredException ${it is AccessTokenExpiredException}"
-                )
-                if (it is AccessTokenExpiredException)
-                    Log.i(
-                        "RefreshToken",
-                        "it.token != null && !first ${it.token} && ${!first}"
-                    )
+                Log.i("RefreshableInteractor", "error ${it::class.java.simpleName}")
                 if (it is AccessTokenExpiredException && it.token != null && !first) {
                     first = true
                     refreshInteractor.refreshToken(it.token!!)
@@ -89,7 +84,7 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
                                     it.refreshToken
                                 )
                             )
-                        }.delay(100, TimeUnit.MILLISECONDS)
+                        }//.delay(100, TimeUnit.MILLISECONDS)
                 } else {
                     Observable.error(it)
                 }

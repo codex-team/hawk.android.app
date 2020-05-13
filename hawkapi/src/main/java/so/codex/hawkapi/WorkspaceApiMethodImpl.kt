@@ -5,7 +5,6 @@ import io.reactivex.Observable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.core.UserTokenDAO
-import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.hawkapi.fragment.EventsList
 import so.codex.hawkapi.fragment.ProjectsList
@@ -32,7 +31,7 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         limit: Int,
         skip: Int
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
-        TokenInterceptor.instance.updateToken(token)
+        //TokenInterceptor.instance.updateToken(token)
         return apolloClient.retryQuery(
             GetWorkspacesQuery(limit = limit, skip = skip),
             userTokenDAO

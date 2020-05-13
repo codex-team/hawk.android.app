@@ -25,6 +25,11 @@ val interactorsModule = module {
     factory<ISignUpInteractor> { SignUpInteractor() }
     factory<IUserInteractor> { UserInteractor() }
     factory<IWorkspaceInteractor> { WorkspaceInteractor() }
+    single { RefreshInteractor() }
+}
+
+val mainActivityInteractorsModule = module {
+
 }
 
 /**

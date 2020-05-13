@@ -1,5 +1,6 @@
 package so.codex.codexbl.presenter
 
+import android.util.Log
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
@@ -34,7 +35,7 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
      */
     fun load() {
         loadAllWorkspaces()
-        loadProfilePanel()
+//        loadProfilePanel()
     }
 
     /**
@@ -46,6 +47,12 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
                 .getWorkspaces()
                 .map {
                     it.map(this::workspaceMapper)
+                }
+                .doOnSubscribe {
+                    Log.i("GaragePresenter", "subscribe getWorkspace")
+                }
+                .doOnDispose {
+                    Log.i("GaragePresenter", "dispose getWorkspace")
                 }
                 .subscribe({
                     if (!it.isNullOrEmpty()) {

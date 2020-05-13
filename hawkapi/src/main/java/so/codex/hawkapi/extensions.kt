@@ -53,6 +53,8 @@ fun List<Error>.hasTokenExpiredError(): Boolean {
     } != null
 }
 
+private var first = true
+
 /**
  * Creates a new [ApolloQueryCall] call and then converts it to an [Observable]. If [ApolloQueryCall]
  * was canceled then we can call retry in rx chains.
@@ -70,7 +72,14 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
     rxQuery(it) {
         if (token != null && token.accessToken.isNotEmpty())
             this.requestHeaders(
-                RequestHeaders.builder().addHeader("Authorization", "Bearer ${token.accessToken}")
+                RequestHeaders.builder().addHeader(
+                    "Authorization",
+                    if (first) {
+//                        first = false
+                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWFkNGNjOTg5M2RkZDI4OTlkMzM5OTYiLCJpYXQiOjE1ODkxNzk3MzMsImV4cCI6MTU4OTE4MDYzM30.lqEV1pBgVcw3xW7iwDXqwaZHjiZEPAljhRIPXFs3OY8"
+                    } else
+                        "Bearer ${token.accessToken}"
+                )
                     .build()
             ).clone()
         else
@@ -79,6 +88,8 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
         ResponseAdaptor(it, token)
     }
 }
+
+var firstMutable = true
 
 /**
  * Creates a new [ApolloMutationCall] call and then converts it to a [Single]. If [ApolloQueryCall]
@@ -94,7 +105,14 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
     rxMutate(it) {
         if (token != null && token.accessToken.isNotEmpty())
             this.requestHeaders(
-                RequestHeaders.builder().addHeader("Authorization", "Bearer ${token.accessToken}")
+                RequestHeaders.builder().addHeader(
+                    "Authorization",
+                    if (firstMutable) {
+                        //firstMutable = false
+                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWFkNGNjOTg5M2RkZDI4OTlkMzM5OTYiLCJpYXQiOjE1ODkxNzk3MzMsImV4cCI6MTU4OTE4MDYzM30.lqEV1pBgVcw3xW7iwDXqwaZHjiZEPAljhRIPXFs3OY8"
+                    } else
+                        "Bearer ${token.accessToken}"
+                )
                     .build()
             ).clone()
         else
