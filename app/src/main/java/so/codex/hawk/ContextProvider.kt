@@ -6,10 +6,16 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 
-//ToDo add docs
+/**
+ * Class for providing context to DefaultImageLoader
+ * @see DefaultImageLoader
+ */
 class ContextProvider : ContentProvider() {
 
     companion object {
+        /**
+         * Providable context
+         */
         lateinit var mContext: Context
     }
 
@@ -27,6 +33,9 @@ class ContextProvider : ContentProvider() {
         return null
     }
 
+    /**
+     * Init needed context
+     */
     override fun onCreate(): Boolean {
         mContext = context!!
 

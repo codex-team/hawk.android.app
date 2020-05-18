@@ -4,24 +4,43 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.GaragePresenter.WorkspaceSelectedCallback
 import so.codex.codexbl.view.IGarageView.WorkspaceViewModel
 import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.WorkspaceItemView
 
-//ToDo add docs
-class WorkspaceItemAdapter(val listener: WorkspaceSelectedCallback) :
+/**
+ * UI element for showing workspaces in drawer
+ * @param listener needed for selecting workspace
+ */
+class WorkspaceItemAdapter(private val listener: WorkspaceSelectedCallback) :
     RecyclerView.Adapter<WorkspaceItemAdapter.WorkspaceItemHolder>() {
+
+    /**
+     * Class for holding given workspace
+     * @see WorkspaceItemView
+     */
     inner class WorkspaceItemHolder(
         private val listener: WorkspaceSelectedCallback,
         private val view: WorkspaceItemView
     ) : RecyclerView.ViewHolder(view) {
+
+        /**
+         * Bind an instance of workspace
+         * @see [WorkspaceViewModel]
+         * @param workspace given workspace
+         */
         fun bind(workspace: WorkspaceViewModel) {
             if (!workspace.hasId()) bindAddWorkspaceBtn()
             else bindWorkspace(workspace)
         }
 
+        /**
+         * bind if the given workspace is Buttom
+         * for adding new workspaces
+         */
         private fun bindAddWorkspaceBtn() {
             view.logoImage.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -33,6 +52,10 @@ class WorkspaceItemAdapter(val listener: WorkspaceSelectedCallback) :
             view.title = "Add workspace"
         }
 
+        /**
+         * Bind if the given workspace is not Button
+         * @param workspace for binding
+         */
         private fun bindWorkspace(workspace: WorkspaceViewModel) {
             view.uuid = workspace.id
             view.title = workspace.name
@@ -60,16 +83,21 @@ class WorkspaceItemAdapter(val listener: WorkspaceSelectedCallback) :
 
     }
 
-    private var v: WorkspaceItemView? = null
+    /**
+     * Show "Add workspace button"
+     */
+    fun setLastElem(workspace: WorkspaceViewModel) {
+        (workspaces as MutableList).add(workspaces.size, workspace)
+    }
 
-
+    /**
+     * List of workspaces
+     */
     var workspaces: List<WorkspaceViewModel> = listOf()
 
-    /*fun setLastElem(lastWorkspace: Workspace) {
-        workspaces.add(workspaces.size, lastWorkspace)
-        notifyDataSetChanged()
-    }*/
-
+    /**
+     * Create view from module "uicomponent" for workspace item view
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkspaceItemHolder {
         val view =
             WorkspaceItemView(parent.context)
@@ -77,8 +105,14 @@ class WorkspaceItemAdapter(val listener: WorkspaceSelectedCallback) :
         return WorkspaceItemHolder(listener, view)
     }
 
+    /**
+     * Get size of workspace elements in data
+     */
     override fun getItemCount(): Int = workspaces.size
 
+    /**
+     * Bind data with holder by position
+     */
     override fun onBindViewHolder(holder: WorkspaceItemHolder, position: Int) {
         holder.bind(workspaces[position])
     }

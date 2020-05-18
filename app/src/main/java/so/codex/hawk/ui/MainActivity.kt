@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.drawer_header.*
 import so.codex.codexbl.entity.Profile
+import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.GaragePresenter
 import so.codex.codexbl.view.IGarageView
 import so.codex.hawk.R
@@ -63,7 +64,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     }
 
     override fun showAddWorkspace() {
-//        adapter.setLastElem(Workspace())
+        adapter.setLastElem(presenter.workspaceMapper(Workspace()))
     }
 
     override fun showHeader(profile: Profile) {

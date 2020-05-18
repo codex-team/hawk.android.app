@@ -74,6 +74,11 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
         )
     }
 
+    /**
+     * When user click this method will execute to bold item
+     * @param workspaceViewModel given wVM
+     * @see WorkspaceViewModel
+     */
     fun selectWorkspace(workspaceViewModel: WorkspaceViewModel) {
         selectedWorkspace = workspaceViewModel
         cachedWorkspaces.map {
@@ -86,7 +91,11 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
         }
     }
 
-    private fun workspaceMapper(workspace: Workspace): WorkspaceViewModel {
+    /**
+     * Maps workspace to workspaceViewModel
+     * @param workspace mappable workspace
+     */
+    fun workspaceMapper(workspace: Workspace): WorkspaceViewModel { //ToDo seems it is not good solution
         return WorkspaceViewModel(
             workspace.id,
             workspace.name,
@@ -103,7 +112,13 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
         compositeDisposable.dispose()
     }
 
+    /**
+     * Callback for selecting items in drawer
+     */
     interface WorkspaceSelectedCallback {
+        /**
+         * Used when user taps on item in drawer
+         */
         fun select(workspace: WorkspaceViewModel)
     }
 }
