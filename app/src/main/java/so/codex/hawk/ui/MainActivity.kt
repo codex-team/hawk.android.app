@@ -1,6 +1,7 @@
 package so.codex.hawk.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import so.codex.codexbl.entity.Profile
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.GaragePresenter
 import so.codex.codexbl.view.IGarageView
+import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
 import so.codex.hawk.WorkspaceViewModelDiffUtil
 import so.codex.hawk.adapters.WorkspaceItemAdapter
@@ -69,6 +71,9 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
 
     override fun showHeader(profile: Profile) {
         header_email.text = profile.email
+        if (profile.picture.trim().isEmpty()) {
+            header_user_icon.setImageBitmap(DefaultImageLoader.get(profile.id, profile.name).loadImage())
+        } else
         Picasso.get()
             .load(profile.picture)
             .error(R.drawable.ic_error_outline_black_24dp)

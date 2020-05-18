@@ -1,6 +1,7 @@
 package so.codex.hawk
 
 import android.graphics.*
+import android.util.Log
 import androidx.core.content.ContextCompat
 import so.codex.utils.getColorById
 import java.util.*
@@ -24,7 +25,7 @@ class DefaultImageLoader private constructor(private var id: String, private var
         /**
          * Instance of DefaultImageLoader
          */
-        fun get(name: String, id: String): DefaultImageLoader = DefaultImageLoader(name, id)
+        fun get(id: String, name: String): DefaultImageLoader = DefaultImageLoader(id, name)
     }
 
     init {
