@@ -24,13 +24,29 @@ interface IGarageView : IBaseView {
      */
     fun showHeader(profile: Profile)
 
+    /**
+     * Class-container of workspaces
+     * Need for stable using taps in Drawer with them (workspaces)
+     * @param id id of workspace
+     * @param name name of workspace
+     * @param image url image of workspace
+     * @param isSelected checks if an item in list was tapped
+     * and store this information
+     */
     data class WorkspaceViewModel(
         val id: String = "",
         val name: String = "",
         val image: String = "",
         val isSelected: Boolean = false
     ) {
+        /**
+         * Checks if workspace has id
+         */
         fun hasId(): Boolean = id.isNotEmpty()
+
+        /**
+         * Checks if workspace has image
+         */
         fun hasImage(): Boolean = image.isNotEmpty()
     }
 }
