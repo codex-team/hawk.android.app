@@ -23,10 +23,17 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
     /**
      * Interactor for getting information about profile
      */
-    private val profileInteractor: IProfileInteractor = ProfileInteractor() //ToDo to put in Koin
+    private val profileInteractor: IProfileInteractor by inject()
 
+    /**
+     * Stores current tapped workspace in Drawer
+     */
     private var selectedWorkspace: WorkspaceViewModel? = null
 
+    /**
+     * Workspaces which were cached
+     * @see WorkspaceViewModel
+     */
     private var cachedWorkspaces: List<WorkspaceViewModel> = listOf()
 
     /**
