@@ -78,7 +78,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
      */
     override fun showWorkspaces(workspaces: List<IGarageView.WorkspaceViewModel>) {
         diffUtil.update(adapter.workspaces, workspaces)
-        adapter.workspaces = workspaces
+        adapter.workspaces = workspaces as MutableList
         DiffUtil.calculateDiff(diffUtil).dispatchUpdatesTo(adapter)
     }
 

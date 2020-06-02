@@ -86,14 +86,16 @@ class WorkspaceItemAdapter(private val listener: WorkspaceSelectedCallback) :
     /**
      * Show "Add workspace button"
      */
+    //TODO In MVP don't use!
     fun setLastElem(workspace: WorkspaceViewModel) {
-        (workspaces as MutableList).add(workspaces.size, workspace)
+//        workspaces.add(workspaces.size, workspace)
+//        notifyDataSetChanged()
     }
 
     /**
      * List of workspaces
      */
-    var workspaces: List<WorkspaceViewModel> = listOf()
+    var workspaces: MutableList<WorkspaceViewModel> = mutableListOf()
 
     /**
      * Create view from module "uicomponent" for workspace item view
