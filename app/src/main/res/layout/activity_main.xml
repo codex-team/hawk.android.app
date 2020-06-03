@@ -25,7 +25,7 @@
             android:id="@+id/drawer_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="82dp"
             tools:listitem="@layout/workspace_item" />
 
     </com.google.android.material.navigation.NavigationView>

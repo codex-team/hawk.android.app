@@ -2,13 +2,14 @@ package so.codex.hawk.adapters
 
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.GaragePresenter.WorkspaceSelectedCallback
 import so.codex.codexbl.view.IGarageView.WorkspaceViewModel
 import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
+import so.codex.hawk.WorkspaceViewModelDiffUtil
 import so.codex.uicomponent.recyclerview.items.WorkspaceItemView
 
 /**
@@ -84,6 +85,25 @@ class WorkspaceItemAdapter(private val listener: WorkspaceSelectedCallback) :
     }
 
     /**
+     * An instance of [WorkspaceViewModelDiffUtil]
+     * need for adapter of workspaces
+     * @see WorkspaceViewModelDiffUtil
+     * @see WorkspaceItemAdapter
+     */
+    private val diffUtil = WorkspaceViewModelDiffUtil()
+
+    /**
+     * Set current list of workspaces
+     * @param data current list of workspaces
+     * for setting value of adapter
+     */
+    fun setData(data: List<WorkspaceViewModel>) {
+        diffUtil.update(workspaces, data)
+        workspaces = data
+        DiffUtil.calculateDiff(diffUtil).dispatchUpdatesTo(this)
+    }
+
+    /**
      * Show "Add workspace button"
      */
     //TODO In MVP don't use!
@@ -95,7 +115,7 @@ class WorkspaceItemAdapter(private val listener: WorkspaceSelectedCallback) :
     /**
      * List of workspaces
      */
-    var workspaces: MutableList<WorkspaceViewModel> = mutableListOf()
+    private var workspaces: List<WorkspaceViewModel> = listOf()
 
     /**
      * Create view from module "uicomponent" for workspace item view
