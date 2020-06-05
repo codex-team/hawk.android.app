@@ -1,9 +1,7 @@
 package so.codex.hawk.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,7 +12,6 @@ import so.codex.codexbl.presenter.GaragePresenter
 import so.codex.codexbl.view.IGarageView
 import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
-import so.codex.hawk.WorkspaceViewModelDiffUtil
 import so.codex.hawk.adapters.WorkspaceItemAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.ui.garage.GarageFragment
@@ -50,14 +47,6 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     }
 
     /**
-     * An instance of [WorkspaceViewModelDiffUtil]
-     * need for adapter of workspaces
-     * @see WorkspaceViewModelDiffUtil
-     * @see WorkspaceItemAdapter
-     */
-    private val diffUtil = WorkspaceViewModelDiffUtil()
-
-    /**
      * Create activity and replace on Garage fragment
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,9 +66,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
      * @param workspaces for showing them in Drawer
      */
     override fun showWorkspaces(workspaces: List<IGarageView.WorkspaceViewModel>) {
-        diffUtil.update(adapter.workspaces, workspaces)
-        adapter.workspaces = workspaces
-        DiffUtil.calculateDiff(diffUtil).dispatchUpdatesTo(adapter)
+        adapter.setData(workspaces)
     }
 
     /**
