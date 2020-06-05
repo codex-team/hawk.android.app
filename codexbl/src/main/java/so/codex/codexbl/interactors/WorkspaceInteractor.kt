@@ -5,8 +5,6 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import so.codex.codexbl.entity.Event
-import so.codex.codexbl.entity.Payload
 import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
 import so.codex.sourceinterfaces.IWorkspaceApi
@@ -42,23 +40,15 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
                             it.name,
                             it.description,
                             it.url,
-                            it.image,
-                            it.events.map {
-                                Event(
-                                    it.id,
-                                    it.catcherType,
-                                    it.payload.let {
-                                        Payload(
-                                            it.title,
-                                            it.timestamp
-                                        )
-                                    }
-                                )
-                            }
+                            it.image
                         )
                     }
                 )
             }.toList()
+    }
+
+    override fun selectWorkspace(id: String) {
+        TODO("Not yet implemented")
     }
 
     /**

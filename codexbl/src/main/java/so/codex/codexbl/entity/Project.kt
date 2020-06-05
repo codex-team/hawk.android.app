@@ -21,5 +21,5 @@ data class Project(
         val description: String,
         val url: String,
         val image: String,
-        val events: List<Event>
+        val events: List<Event> = listOf()
 ) : Parcelable

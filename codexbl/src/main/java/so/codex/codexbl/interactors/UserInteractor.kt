@@ -5,7 +5,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 import so.codex.codexbl.entity.SessionData
-import so.codex.codexbl.providers.UserTokenDAO
+import so.codex.codexbl.providers.usertoken.UserTokenDAO
 
 /**
  * Interacor for saving and getting information of user

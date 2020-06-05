@@ -1,4 +1,4 @@
-package so.codex.codexbl.providers
+package so.codex.codexbl.providers.usertoken
 
 import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.entity.UserToken

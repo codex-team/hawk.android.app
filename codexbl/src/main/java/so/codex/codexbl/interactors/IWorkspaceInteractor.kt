@@ -18,4 +18,10 @@ interface IWorkspaceInteractor {
      * Get Workspaces
      */
     fun getWorkspaces(): Single<List<Workspace>>
+
+    /**
+     * Select workspace
+     * @param id Id of workspace
+     */
+    fun selectWorkspace(id: String)
 }

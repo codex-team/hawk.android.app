@@ -1,4 +1,4 @@
-package so.codex.codexbl.providers
+package so.codex.codexbl.providers.usertoken
 
 /**
  * TODO

@@ -1,4 +1,4 @@
-package so.codex.codexbl.providers
+package so.codex.codexbl.providers.usertoken
 
 import android.content.Context
 import android.util.Log
@@ -11,7 +11,8 @@ import so.codex.codexbl.entity.UserToken
  * @see android.content.SharedPreferences
  * @author Shiplayer
  */
-class UserTokenPreferences(context: Context) : UserTokenDAO {
+class UserTokenPreferences(context: Context) :
+    UserTokenDAO {
     /**
      * Private [android.content.SharedPreferences] with access to storage data
      */

@@ -18,5 +18,5 @@ data class Workspace(
         val name: String,
         val description: String,
         val image: String,
-        val projects: List<Project>
+        val projects: List<Project> = listOf()
 ) : Parcelable
