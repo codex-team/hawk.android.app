@@ -1,8 +1,16 @@
 ext.versions = [
-
+        picasso : "2.71828",
+        coreKtx: "1.0.2",
+        material: "1.1.0",
+        navigation : "2.2.2",
+        swiperefreshlayout : "1.0.0"
 ]
 
 ext.libs = [
-        picasso : "com.squareup.picasso:picasso:2.71828",
-        coreKtx : "androidx.core:core-ktx:1.0.2"
+        picasso : "com.squareup.picasso:picasso:$versions.picasso",
+        coreKtx : "androidx.core:core-ktx:$versions.coreKtx",
+        material : "com.google.android.material:material:$versions.material",
+        navFragment : "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
+        navUi : "androidx.navigation:navigation-ui-ktx:$versions.navigation",
+        swiperefreshlayout : "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swiperefreshlayout"
 ]
