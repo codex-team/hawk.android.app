@@ -6,6 +6,7 @@ import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.base.Logger
 import so.codex.codexbl.base.info
 import so.codex.codexbl.interactors.IUserInteractor
+import so.codex.codexbl.main.CodexKoinComponent
 import so.codex.codexbl.view.auth.IAuthorizedView
 
 /**
@@ -30,12 +31,14 @@ class AuthorizedPresenter(val logger: Logger) : BasePresenter<IAuthorizedView>()
     fun checkAuthorization() {
         logger.info("check Authorization")
         if (!userInteractor.getLastSession().let {
-
                 it != null && it.accessToken.isNotEmpty() && it.refreshToken.isNotEmpty()
-            })
+            }) {
             view?.logout().also {
                 logger.info("logout")
             }
+        } else {
+            CodexKoinComponent.updateDependencies(CodexKoinComponent.ScopeDependencies.MAIN_SCOPE)
+        }
     }
 
     /**

@@ -643,108 +643,6 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
-            },
-            {
-              "name": "notifications",
-              "description": "User notifications settings",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "UserNotificationsSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "UserNotificationsSettings",
-          "description": "This object stored in user.notifications field",
-          "fields": [
-            {
-              "name": "whatToReceive",
-              "description": "Available notify types with their active statuses",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "UserNotificationsReceiveTypesSet",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "channels",
-              "description": "Available channels with their data",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "NotificationsChannels",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "UserNotificationsReceiveTypesSet",
-          "description": "Available notify types with their active statuses",
-          "fields": [
-            {
-              "name": "IssueAssigning",
-              "description": "When user is assigned to the issue (event)",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "WeeklyDigest",
-              "description": "Regular digest of what happened on the project for the week",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "SystemMessages",
-              "description": "Only important messages from Hawk team",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
             }
           ],
           "inputFields": null,
@@ -756,146 +654,6 @@
           "kind": "SCALAR",
           "name": "Boolean",
           "description": "The `Boolean` scalar type represents `true` or `false`.",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "NotificationsChannels",
-          "description": "All available notification channels",
-          "fields": [
-            {
-              "name": "email",
-              "description": "Email channel",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "NotificationsChannelSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "telegram",
-              "description": "Telegram channel",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "NotificationsChannelSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "slack",
-              "description": "Slack channel",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "NotificationsChannelSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "webPush",
-              "description": "Webpush",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "NotificationsChannelSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "desktopPush",
-              "description": "Push from Hawk Desktop app",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "NotificationsChannelSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "NotificationsChannelSettings",
-          "description": "Settings for notification channels",
-          "fields": [
-            {
-              "name": "isEnabled",
-              "description": "True if channel is enabled",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "endpoint",
-              "description": "Where to deliver messages",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "minPeriod",
-              "description": "How often to send event (one alert in 'minPeriod' secs)",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Int",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "SCALAR",
-          "name": "Int",
-          "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
@@ -942,6 +700,16 @@
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "SCALAR",
+          "name": "Int",
+          "description": "The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -1254,25 +1022,11 @@
             },
             {
               "name": "chartData",
-              "description": "Return events that occurred after a certain timestamp",
+              "description": "Return events that occured after a certain timestamp",
               "args": [
                 {
-                  "name": "days",
-                  "description": "How many days we need to fetch for displaying in a chart",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "Int",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": "0"
-                },
-                {
-                  "name": "timezoneOffset",
-                  "description": "User's local timezone offset in minutes",
+                  "name": "minTimestamp",
+                  "description": "Timestamp with which we will count events",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -1290,7 +1044,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "ChartDataItem",
+                  "name": "DailyEventInfo",
                   "ofType": null
                 }
               },
@@ -1405,18 +1159,6 @@
               "deprecationReason": null
             },
             {
-              "name": "assignee",
-              "description": "assignee id",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
               "name": "payload",
               "description": "Event payload",
               "args": [],
@@ -1518,18 +1260,6 @@
                   "name": "EventMarks",
                   "ofType": null
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "usersAffected",
-              "description": "How many users catch this error",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -1860,7 +1590,7 @@
           "fields": [
             {
               "name": "id",
-              "description": "Internal user's identifier inside an app",
+              "description": "",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -1876,19 +1606,23 @@
             },
             {
               "name": "name",
-              "description": "User public name",
+              "description": "",
               "args": [],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "url",
-              "description": "URL for user's details page",
+              "description": "",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -1900,7 +1634,7 @@
             },
             {
               "name": "photo",
-              "description": "User's public picture",
+              "description": "",
               "args": [],
               "type": {
                 "kind": "SCALAR",
@@ -2309,41 +2043,6 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ChartDataItem",
-          "description": "",
-          "fields": [
-            {
-              "name": "timestamp",
-              "description": "Events timestamp",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "count",
-              "description": "Amount of events",
-              "args": [],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
           "name": "ProjectNotificationsRule",
           "description": "Project notify settings",
           "fields": [
@@ -2482,6 +2181,112 @@
               "deprecationReason": null
             }
           ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "NotificationsChannels",
+          "description": "All available notification channels",
+          "fields": [
+            {
+              "name": "email",
+              "description": "Email channel",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "NotificationsChannelSettings",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "telegram",
+              "description": "Telegram channel",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "NotificationsChannelSettings",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "slack",
+              "description": "Slack channel",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "NotificationsChannelSettings",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "NotificationsChannelSettings",
+          "description": "Settings for notification channels",
+          "fields": [
+            {
+              "name": "isEnabled",
+              "description": "True if channel is enabled",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "endpoint",
+              "description": "Where to deliver messages",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "minPeriod",
+              "description": "How often to send event (one alert in 'minPeriod' secs)",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
           "possibleTypes": null
         },
         {
@@ -2745,65 +2550,6 @@
                     "ofType": {
                       "kind": "ENUM",
                       "name": "EventMark",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "setAssignee",
-              "description": "Set assignee for selected event",
-              "args": [
-                {
-                  "name": "projectId",
-                  "description": "ID of project event is related to",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "ID",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "eventId",
-                  "description": "EvenID of the event to set the mark",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "ID",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                },
-                {
-                  "name": "assignee",
-                  "description": "Assignee id to set",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "String",
                       "ofType": null
                     }
                   },
@@ -3340,68 +3086,6 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "changeUserNotificationsChannel",
-              "description": "Change user notifications channel settings",
-              "args": [
-                {
-                  "name": "input",
-                  "description": "Channel data to update",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "NotificationsChannelsInput",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "changeUserNotificationsChannelResponse",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "changeUserNotificationsReceiveType",
-              "description": "Toggle user notifications receive type active status",
-              "args": [
-                {
-                  "name": "input",
-                  "description": "Receive type with its new is-enabled value",
-                  "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "ChangeUserNotificationsReceiveTypeInput",
-                      "ofType": null
-                    }
-                  },
-                  "defaultValue": null
-                }
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "OBJECT",
-                  "name": "changeUserNotificationsReceiveTypeResponse",
                   "ofType": null
                 }
               },
@@ -4075,26 +3759,6 @@
                 "ofType": null
               },
               "defaultValue": null
-            },
-            {
-              "name": "webPush",
-              "description": "Web push",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "NotificationsChannelSettingsInput",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "desktopPush",
-              "description": "Desktop push",
-              "type": {
-                "kind": "INPUT_OBJECT",
-                "name": "NotificationsChannelSettingsInput",
-                "ofType": null
-              },
-              "defaultValue": null
             }
           ],
           "interfaces": null,
@@ -4361,83 +4025,6 @@
                   "name": "String",
                   "ofType": null
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "changeUserNotificationsChannelResponse",
-          "description": "This object will be returned to the changeUserNotificationsChannel mutation",
-          "fields": [
-            {
-              "name": "notifications",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "UserNotificationsSettings",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "INPUT_OBJECT",
-          "name": "ChangeUserNotificationsReceiveTypeInput",
-          "description": "The structure represents payload for toggling receive type",
-          "fields": null,
-          "inputFields": [
-            {
-              "name": "IssueAssigning",
-              "description": "",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "WeeklyDigest",
-              "description": "",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ],
-          "interfaces": null,
-          "enumValues": null,
-          "possibleTypes": null
-        },
-        {
-          "kind": "OBJECT",
-          "name": "changeUserNotificationsReceiveTypeResponse",
-          "description": "This object will be returned to the changeUserNotificationsReceiveType mutation",
-          "fields": [
-            {
-              "name": "notifications",
-              "description": "",
-              "args": [],
-              "type": {
-                "kind": "OBJECT",
-                "name": "UserNotificationsSettings",
-                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -5306,35 +4893,6 @@
         },
         {
           "kind": "ENUM",
-          "name": "UserNotificationType",
-          "description": "",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": [
-            {
-              "name": "IssueAssigning",
-              "description": "When user is assigned to the issue (event)",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "WeeklyDigest",
-              "description": "Regular digest of what happened on the project for the week",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "SystemMessages",
-              "description": "Only important messages from Hawk team",
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "possibleTypes": null
-        },
-        {
-          "kind": "ENUM",
           "name": "CacheControlScope",
           "description": "",
           "fields": null,
@@ -5429,33 +4987,12 @@
           "args": []
         },
         {
-          "name": "validate",
+          "name": "notEmpty",
           "description": "Directive for checking a field for empty space",
           "locations": [
-            "ARGUMENT_DEFINITION"
+            "FIELD_DEFINITION"
           ],
-          "args": [
-            {
-              "name": "notEmpty",
-              "description": "",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
-              "name": "isEmail",
-              "description": "",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              },
-              "defaultValue": null
-            }
-          ]
+          "args": []
         },
         {
           "name": "cacheControl",

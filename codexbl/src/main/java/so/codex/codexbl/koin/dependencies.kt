@@ -2,6 +2,8 @@ package so.codex.codexbl.koin
 
 import org.koin.dsl.module
 import so.codex.codexbl.interactors.*
+import so.codex.codexbl.providers.UserTokenProviderImpl
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.api.CoreApi
 
 /**
@@ -9,11 +11,20 @@ import so.codex.hawkapi.api.CoreApi
  * @author Shiplayer
  */
 
+val authApiModule = module {
+    single { CoreApi.instance.getAuthApi() }
+}
+
+val authInteractorsModule = module {
+    factory<ISignInInteractor> { SignInInteractor() }
+    factory<ISignUpInteractor> { SignUpInteractor() }
+    factory<IUserInteractor> { UserInteractor() }
+}
+
 /**
  * Modules for dependencies API classes and getting necessary information
  */
 val apiModule = module {
-    single { CoreApi.instance.getAuthApi() }
     single { CoreApi.instance.getWorkspaceApi() }
 }
 
@@ -21,9 +32,6 @@ val apiModule = module {
  * All interactors for communication
  */
 val interactorsModule = module {
-    factory<ISignInInteractor> { SignInInteractor() }
-    factory<ISignUpInteractor> { SignUpInteractor() }
-    factory<IUserInteractor> { UserInteractor() }
     factory<IWorkspaceInteractor> { WorkspaceInteractor() }
     single { RefreshInteractor() }
 }
@@ -37,4 +45,5 @@ val mainActivityInteractorsModule = module {
  * Предоставляют какое-то хранилище для какой-то информации
  */
 val providersModule = module {
+    single<UserTokenProvider> { UserTokenProviderImpl(get(), get()) }
 }

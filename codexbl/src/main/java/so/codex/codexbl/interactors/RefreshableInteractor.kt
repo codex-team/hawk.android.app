@@ -8,8 +8,8 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.exceptions.NoAuthorizedException
 import so.codex.codexbl.interactors.interfaces.IRefreshableInteractor
+import so.codex.core.UserTokenProvider
 import so.codex.core.entity.SessionData
-import so.codex.core.entity.UserToken
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.TokenEntity
@@ -43,6 +43,8 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
 
     private val refreshInteractor: RefreshInteractor by inject()
 
+    private val userTokenProvider: UserTokenProvider by inject()
+
     /**
      * Api for refreshing access token
      */
@@ -72,19 +74,8 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
                 Log.i("RefreshableInteractor", "error ${it::class.java.simpleName}")
                 if (it is AccessTokenExpiredException && it.token != null && !first) {
                     first = true
-                    refreshInteractor.refreshToken(it.token!!)
-                        .doOnNext {
-                            Log.i(
-                                "RefreshableInteractor",
-                                "update atomicToken ${it.accessToken} and refresh atomicToken ${it.refreshToken}"
-                            )
-                            userInteractor.updateToken(
-                                UserToken(
-                                    it.accessToken,
-                                    it.refreshToken
-                                )
-                            )
-                        }//.delay(100, TimeUnit.MILLISECONDS)
+                    userTokenProvider.getTokenSingle()
+                        .toObservable()//.delay(100, TimeUnit.MILLISECONDS)
                 } else {
                     Observable.error(it)
                 }

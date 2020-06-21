@@ -3,6 +3,7 @@ package so.codex.codexbl.interactors
 import android.util.Log
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import so.codex.core.UserTokenDAO
 import so.codex.core.entity.SessionData
 import so.codex.core.entity.UserToken
 
@@ -14,7 +15,7 @@ class UserInteractor : IUserInteractor, KoinComponent {
     /**
      * Instance that provide access and way to save and get data
      */
-    private val userTokenDAO: so.codex.core.UserTokenDAO by inject()
+    private val userTokenDAO: UserTokenDAO by inject()
 
     /**
      * Method for saving session

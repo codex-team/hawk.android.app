@@ -7,6 +7,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import so.codex.core.UserTokenProvider
 import so.codex.core.entity.UserToken
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.TokenEntity
@@ -19,12 +20,15 @@ class RefreshInteractor : KoinComponent {
         val scheduler = Executors.newFixedThreadPool(1)!!
     }
 
+    private val innerTokenSubject = PublishSubject.create<UserToken>()
 
     private val subject = PublishSubject.create<UserToken>()
 
     private val inProgress = AtomicBoolean(false)
 
     private val authApi: IAuthApi by inject()
+
+    private val tokenProvider: UserTokenProvider by inject()
 
     private val tokenSubject = BehaviorSubject.create<UserToken>()
 
@@ -54,17 +58,23 @@ class RefreshInteractor : KoinComponent {
 
 
     init {
+        innerTokenSubject
+            .distinct {
+                it.accessToken
+            }
+            .subscribe({
+
+            }, {
+
+            })
 //        subject.subscribe()
         //tokenObserver.subscribe()
     }
 
     fun refreshToken(token: UserToken): Observable<TokenResponse> {
-        Thread.currentThread().stackTrace.drop(2).take(5).forEach {
-            info(it.toString())
-        }
-        return tokenObserver.doOnSubscribe {
-            subject.onNext(token)
-        }
+        return tokenProvider.getTokenSingle().map {
+            TokenResponse(it.accessToken, it.refreshToken)
+        }.toObservable()
     }
 
     fun RefreshInteractor.info(message: String) {

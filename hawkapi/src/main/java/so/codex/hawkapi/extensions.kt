@@ -74,10 +74,10 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
             this.requestHeaders(
                 RequestHeaders.builder().addHeader(
                     "Authorization",
-                    if (first) {
+                    /*if (first) {
 //                        first = false
                         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWFkNGNjOTg5M2RkZDI4OTlkMzM5OTYiLCJpYXQiOjE1ODkxNzk3MzMsImV4cCI6MTU4OTE4MDYzM30.lqEV1pBgVcw3xW7iwDXqwaZHjiZEPAljhRIPXFs3OY8"
-                    } else
+                    } else*/
                         "Bearer ${token.accessToken}"
                 )
                     .build()
@@ -107,10 +107,10 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
             this.requestHeaders(
                 RequestHeaders.builder().addHeader(
                     "Authorization",
-                    if (firstMutable) {
+                    /*if (firstMutable) {
                         //firstMutable = false
                         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWFkNGNjOTg5M2RkZDI4OTlkMzM5OTYiLCJpYXQiOjE1ODkxNzk3MzMsImV4cCI6MTU4OTE4MDYzM30.lqEV1pBgVcw3xW7iwDXqwaZHjiZEPAljhRIPXFs3OY8"
-                    } else
+                    } else*/
                         "Bearer ${token.accessToken}"
                 )
                     .build()

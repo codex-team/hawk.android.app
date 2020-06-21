@@ -6,4 +6,9 @@ package so.codex.core.entity
  * @property refreshToken User's refresh token for getting new token pair
  * @author Shiplayer
  */
-data class UserToken(val accessToken: String, val refreshToken: String)
+data class UserToken(val accessToken: String, val refreshToken: String) {
+    companion object {
+        val EMPTY_TOKEN = UserToken("", "")
+    }
+
+}

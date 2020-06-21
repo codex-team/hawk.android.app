@@ -2,10 +2,10 @@ package so.codex.hawkapi.api
 
 import com.apollographql.apollo.interceptor.ApolloInterceptor
 import com.apollographql.apollo.interceptor.ApolloInterceptorChain
-import so.codex.core.UserTokenDAO
+import so.codex.core.UserTokenProvider
 import java.util.concurrent.Executor
 
-class ApolloTokenInterceptor(val userTokenDAO: UserTokenDAO) : ApolloInterceptor {
+class ApolloTokenInterceptor(val userTokenProvider: UserTokenProvider) : ApolloInterceptor {
 
     /*companion object {
         */
@@ -19,7 +19,7 @@ class ApolloTokenInterceptor(val userTokenDAO: UserTokenDAO) : ApolloInterceptor
      * Token that contain in instance.
      */
     private val token: String
-        get() = userTokenDAO.getUserToken()?.accessToken ?: ""
+        get() = userTokenProvider.getToken().accessToken
 
     private var disposable: Boolean = false
 
