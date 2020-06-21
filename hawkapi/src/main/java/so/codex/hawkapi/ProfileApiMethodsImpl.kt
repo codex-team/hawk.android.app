@@ -5,7 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import so.codex.core.UserTokenDAO
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.api.profile.ProfileApiMethods
 import so.codex.sourceinterfaces.entity.UserEntity
 import so.codex.sourceinterfaces.response.ProfileResponse
@@ -20,12 +20,12 @@ import java.util.concurrent.TimeUnit
 class ProfileApiMethodsImpl(private val apollo: ApolloClient) :
     ProfileApiMethods, KoinComponent {
 
-    private val userTokenDAO by inject<UserTokenDAO>()
+    private val userTokenProvider by inject<UserTokenProvider>()
 
 
     override fun getProfile(): Single<ProfileResponse> {
         return Observable.interval(200, TimeUnit.MILLISECONDS).firstOrError().flatMap {
-            apollo.retryQuery(GetCommonInformationQuery(), userTokenDAO)
+            apollo.retryQuery(GetCommonInformationQuery(), userTokenProvider)
                 .handleHttpErrorsSingle().map {
                     if (it.me != null) {
                         ProfileResponse(

@@ -74,8 +74,9 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
                 Log.i("RefreshableInteractor", "error ${it::class.java.simpleName}")
                 if (it is AccessTokenExpiredException && it.token != null && !first) {
                     first = true
+                    userTokenProvider.updateToken(it.token?.refreshToken ?: "")
                     userTokenProvider.getTokenSingle()
-                        .toObservable()//.delay(100, TimeUnit.MILLISECONDS)
+                    //.delay(100, TimeUnit.MILLISECONDS)
                 } else {
                     Observable.error(it)
                 }

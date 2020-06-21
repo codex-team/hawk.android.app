@@ -1,12 +1,12 @@
 package so.codex.core
 
-import io.reactivex.Single
+import io.reactivex.Observable
 import so.codex.core.entity.UserToken
 
 interface UserTokenProvider {
     fun getToken(): UserToken
 
-    fun getTokenSingle(): Single<UserToken>
+    fun getTokenSingle(): Observable<UserToken>
 
     fun updateToken(refreshToken: String)
 

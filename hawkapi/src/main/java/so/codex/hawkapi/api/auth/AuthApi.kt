@@ -1,5 +1,6 @@
 package so.codex.hawkapi.api.auth
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import so.codex.hawkapi.AuthApiMethodsImpl
 import so.codex.hawkapi.api.CoreApi
@@ -50,6 +51,10 @@ class AuthApi private constructor(private val service: AuthApiMethods) : IAuthAp
      */
     override fun refreshToken(token: TokenEntity): Single<TokenResponse> =
         service.refreshToken(token)
+            .subscribeOnIO()
+
+    override fun refreshTokenObservable(token: TokenEntity): Observable<TokenResponse> =
+        service.refreshTokenObservable(token)
             .subscribeOnIO()
 
 }

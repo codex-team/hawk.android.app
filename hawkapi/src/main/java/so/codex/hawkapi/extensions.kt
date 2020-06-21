@@ -17,7 +17,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.schedulers.Schedulers
-import so.codex.core.UserTokenDAO
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.apollo.ResponseAdaptor
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.hawkapi.exceptions.BaseHttpException
@@ -70,9 +70,9 @@ private var first = true
 @CheckReturnValue
 fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
     query: Query<D, T, V>,
-    userToken: UserTokenDAO? = null
+    userToken: UserTokenProvider? = null
 ): Observable<ResponseAdaptor<T>> = Observable.just(query).flatMap {
-    val token = userToken?.getUserToken()
+    val token = userToken?.getToken()
     rxQuery(it) {
         if (token != null && token.accessToken.isNotEmpty())
             this.requestHeaders(
@@ -80,7 +80,7 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
                     "Authorization",
                     /*if (first) {
 //                        first = false
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWFkNGNjOTg5M2RkZDI4OTlkMzM5OTYiLCJpYXQiOjE1ODkxNzk3MzMsImV4cCI6MTU4OTE4MDYzM30.lqEV1pBgVcw3xW7iwDXqwaZHjiZEPAljhRIPXFs3OY8"
+                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWVkMWIwNmU3NDhhMDMxYTY2MzJhZWYiLCJpYXQiOjE1OTI3NjcwOTgsImV4cCI6MTU5Mjc2Nzk5OH0.vQYJRmtug_dC3ARvkv8xWV1XPY_lKosmYrX70zQdOG4"
                     } else*/
                         "Bearer ${token.accessToken}"
                 )
@@ -103,9 +103,9 @@ var firstMutable = true
 @CheckReturnValue
 fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
     mutation: Mutation<D, T, V>,
-    userToken: UserTokenDAO? = null
+    userToken: UserTokenProvider? = null
 ): Single<ResponseAdaptor<T>> = Single.just(mutation).flatMap {
-    val token = userToken?.getUserToken()
+    val token = userToken?.getToken()
     rxMutate(it) {
         if (token != null && token.accessToken.isNotEmpty())
             this.requestHeaders(

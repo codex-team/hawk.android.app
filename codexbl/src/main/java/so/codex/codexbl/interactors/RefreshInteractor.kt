@@ -74,7 +74,7 @@ class RefreshInteractor : KoinComponent {
     fun refreshToken(token: UserToken): Observable<TokenResponse> {
         return tokenProvider.getTokenSingle().map {
             TokenResponse(it.accessToken, it.refreshToken)
-        }.toObservable()
+        }
     }
 
     fun RefreshInteractor.info(message: String) {

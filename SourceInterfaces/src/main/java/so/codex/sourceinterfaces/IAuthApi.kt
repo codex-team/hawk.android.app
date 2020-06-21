@@ -1,5 +1,6 @@
 package so.codex.sourceinterfaces
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity
@@ -31,4 +32,6 @@ interface IAuthApi {
      * @return Return [Single] with [TokenResponse], that contain new information of access and refresh token
      */
     fun refreshToken(token: TokenEntity): Single<TokenResponse>
+
+    fun refreshTokenObservable(token: TokenEntity): Observable<TokenResponse>
 }

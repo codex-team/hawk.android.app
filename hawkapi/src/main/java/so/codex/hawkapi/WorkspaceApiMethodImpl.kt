@@ -4,7 +4,7 @@ import com.apollographql.apollo.ApolloClient
 import io.reactivex.Observable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import so.codex.core.UserTokenDAO
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.hawkapi.fragment.EventsList
 import so.codex.hawkapi.fragment.ProjectsList
@@ -24,7 +24,7 @@ import java.util.Date
 class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods,
     KoinComponent {
 
-    private val userTokenDAO by inject<UserTokenDAO>()
+    private val userTokenProvider by inject<UserTokenProvider>()
 
     override fun getWorkspaces(
         token: String,
@@ -34,7 +34,7 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         //TokenInterceptor.instance.updateToken(token)
         return apolloClient.retryQuery(
             GetWorkspacesQuery(),
-            userTokenDAO
+            userTokenProvider
         ).handleHttpErrorsSingle().map {
             mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
                 it.workspaces?.map { it!! }?.forEach {
