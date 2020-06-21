@@ -1,19 +1,18 @@
 package so.codex.codexbl.koin
 
 import org.koin.dsl.module
+import so.codex.codexbl.interactors.IProfileInteractor
 import so.codex.codexbl.interactors.ISignInInteractor
 import so.codex.codexbl.interactors.ISignUpInteractor
+import so.codex.codexbl.interactors.IUserInteractor
+import so.codex.codexbl.interactors.IWorkspaceInteractor
+import so.codex.codexbl.interactors.ProfileInteractor
+import so.codex.codexbl.interactors.RefreshInteractor
 import so.codex.codexbl.interactors.SignInInteractor
 import so.codex.codexbl.interactors.SignUpInteractor
-import so.codex.codexbl.interactors.IUserInteractor
 import so.codex.codexbl.interactors.UserInteractor
-import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.interactors.WorkspaceInteractor
-import so.codex.codexbl.interactors.IProfileInteractor
-import so.codex.codexbl.interactors.ProfileInteractor
 import so.codex.codexbl.providers.UserTokenProviderImpl
-import so.codex.codexbl.providers.UserTokenDAO
-import so.codex.codexbl.providers.UserTokenPreferences
 import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.api.CoreApi
 

@@ -8,7 +8,7 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import androidx.core.content.ContextCompat
 import so.codex.utils.getColorById
-import java.util.*
+import java.util.Locale
 
 /**
  * Class for providing default images

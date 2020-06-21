@@ -6,7 +6,11 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import so.codex.codexbl.koin.*
+import so.codex.codexbl.koin.apiModule
+import so.codex.codexbl.koin.authApiModule
+import so.codex.codexbl.koin.authInteractorsModule
+import so.codex.codexbl.koin.interactorsModule
+import so.codex.codexbl.koin.providersModule
 import so.codex.core.koin.coreModule
 
 /**

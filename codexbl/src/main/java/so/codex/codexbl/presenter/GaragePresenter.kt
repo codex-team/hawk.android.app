@@ -7,7 +7,6 @@ import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.interactors.IProfileInteractor
 import so.codex.codexbl.interactors.IWorkspaceInteractor
-import so.codex.codexbl.interactors.ProfileInteractor
 import so.codex.codexbl.view.IGarageView
 import so.codex.codexbl.view.IGarageView.WorkspaceViewModel
 

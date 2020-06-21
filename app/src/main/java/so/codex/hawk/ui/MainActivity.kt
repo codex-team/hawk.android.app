@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_header.*
+import kotlinx.android.synthetic.main.activity_main.drawer_recycler
+import kotlinx.android.synthetic.main.drawer_header.header_email
+import kotlinx.android.synthetic.main.drawer_header.header_user_icon
 import so.codex.codexbl.entity.Profile
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.GaragePresenter
