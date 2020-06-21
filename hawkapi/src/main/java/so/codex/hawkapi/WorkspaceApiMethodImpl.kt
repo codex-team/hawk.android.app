@@ -33,7 +33,7 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         //TokenInterceptor.instance.updateToken(token)
         return apolloClient.retryQuery(
-            GetWorkspacesQuery(limit = limit, skip = skip),
+            GetWorkspacesQuery(),
             userTokenDAO
         ).handleHttpErrorsSingle().map {
             mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
