@@ -19,21 +19,26 @@ import so.codex.core.koin.coreModule
  */
 class CodexKoinComponent {
     companion object {
+
+        // Dependencies all time
         val globalModuleSet = setOf(
             coreModule
         )
 
+        // Dependencies only on login scope
         val loginModuleSet = setOf(
             authApiModule,
             authInteractorsModule
         )
 
+        // Dependencies on Authorization scope
         val authUserModulesSet = globalModuleSet + setOf(
             apiModule,
             interactorsModule,
             providersModule
         )
 
+        //
         private var koinApplication: KoinApplication? = KoinApplication.init()
 
         /**
@@ -48,6 +53,9 @@ class CodexKoinComponent {
 
         }
 
+        /**
+         * Update scope for change dependencies
+         */
         fun updateDependencies(scope: ScopeDependencies) {
             when (scope) {
                 ScopeDependencies.LOGIN_SCOPE -> {
@@ -65,9 +73,17 @@ class CodexKoinComponent {
         }
     }
 
+    /**
+     * Constants for defining dependencies
+     */
     enum class ScopeDependencies {
+        // Scope that use common dependencies
         MAIN_SCOPE,
+
+        // Scope where user can logged in or registration
         LOGIN_SCOPE,
+
+        // Scope for dependencies that need in other scopes or need use all time
         GLOBAL_SCOPE
     }
 

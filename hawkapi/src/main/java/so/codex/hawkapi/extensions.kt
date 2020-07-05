@@ -44,6 +44,11 @@ fun Error.convert(): BaseHttpException =
             BaseHttpException(this.message())
     }
 
+
+/**
+ * Find error with code that equals code of ACCESS_TOKEN_EXPIRED_ERROR
+ * @return boolean if error was find
+ */
 fun List<Error>.hasTokenExpiredError(): Boolean {
     return find { error ->
         error.customAttributes().let { attributes ->
@@ -56,8 +61,6 @@ fun List<Error>.hasTokenExpiredError(): Boolean {
         }
     } != null
 }
-
-private var first = true
 
 /**
  * Creates a new [ApolloQueryCall] call and then converts it to an [Observable]. If [ApolloQueryCall]
@@ -78,11 +81,7 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryQuery(
             this.requestHeaders(
                 RequestHeaders.builder().addHeader(
                     "Authorization",
-                    /*if (first) {
-//                        first = false
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWVkMWIwNmU3NDhhMDMxYTY2MzJhZWYiLCJpYXQiOjE1OTI3NjcwOTgsImV4cCI6MTU5Mjc2Nzk5OH0.vQYJRmtug_dC3ARvkv8xWV1XPY_lKosmYrX70zQdOG4"
-                    } else*/
-                        "Bearer ${token.accessToken}"
+                    "Bearer ${token.accessToken}"
                 )
                     .build()
             ).clone()
@@ -111,10 +110,6 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
             this.requestHeaders(
                 RequestHeaders.builder().addHeader(
                     "Authorization",
-                    /*if (firstMutable) {
-                        //firstMutable = false
-                        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZWFkNGNjOTg5M2RkZDI4OTlkMzM5OTYiLCJpYXQiOjE1ODkxNzk3MzMsImV4cCI6MTU4OTE4MDYzM30.lqEV1pBgVcw3xW7iwDXqwaZHjiZEPAljhRIPXFs3OY8"
-                    } else*/
                         "Bearer ${token.accessToken}"
                 )
                     .build()

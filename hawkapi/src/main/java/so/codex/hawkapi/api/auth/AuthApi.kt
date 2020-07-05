@@ -53,6 +53,11 @@ class AuthApi private constructor(private val service: AuthApiMethods) : IAuthAp
         service.refreshToken(token)
             .subscribeOnIO()
 
+    /**
+     * Send request for updating session
+     * @param token Refresh token for updating session
+     * @return Return response on request of updating session with new information of session or error
+     */
     override fun refreshTokenObservable(token: TokenEntity): Observable<TokenResponse> =
         service.refreshTokenObservable(token)
             .subscribeOnIO()

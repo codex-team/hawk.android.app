@@ -7,7 +7,6 @@ import so.codex.codexbl.interactors.ISignUpInteractor
 import so.codex.codexbl.interactors.IUserInteractor
 import so.codex.codexbl.interactors.IWorkspaceInteractor
 import so.codex.codexbl.interactors.ProfileInteractor
-import so.codex.codexbl.interactors.RefreshInteractor
 import so.codex.codexbl.interactors.SignInInteractor
 import so.codex.codexbl.interactors.SignUpInteractor
 import so.codex.codexbl.interactors.UserInteractor
@@ -25,6 +24,9 @@ val authApiModule = module {
     single { CoreApi.instance.getAuthApi() }
 }
 
+/**
+ * Module that need on authorization scope
+ */
 val authInteractorsModule = module {
     factory<ISignInInteractor> { SignInInteractor() }
     factory<ISignUpInteractor> { SignUpInteractor() }
@@ -44,9 +46,11 @@ val apiModule = module {
 val interactorsModule = module {
     factory<IWorkspaceInteractor> { WorkspaceInteractor() }
     factory<IProfileInteractor> { ProfileInteractor() }
-    single { RefreshInteractor() }
 }
 
+/**
+ * Module where attached all dependencies that need on main activity scope
+ */
 val mainActivityInteractorsModule = module {
 
 }

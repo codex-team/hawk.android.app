@@ -41,8 +41,9 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
      */
     private val userInteractor: IUserInteractor by inject()
 
-    private val refreshInteractor: RefreshInteractor by inject()
-
+    /**
+     * Token provider for getting current token and request update old token
+     */
     private val userTokenProvider: UserTokenProvider by inject()
 
     /**
@@ -75,8 +76,7 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
                 if (it is AccessTokenExpiredException && it.token != null && !first) {
                     first = true
                     userTokenProvider.updateToken(it.token?.refreshToken ?: "")
-                    userTokenProvider.getTokenSingle()
-                    //.delay(100, TimeUnit.MILLISECONDS)
+                    userTokenProvider.getTokenObservable()
                 } else {
                     Observable.error(it)
                 }

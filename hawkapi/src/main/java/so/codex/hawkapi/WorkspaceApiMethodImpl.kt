@@ -24,14 +24,23 @@ import java.util.Date
 class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods,
     KoinComponent {
 
+    /**
+     * Use for getting access token
+     */
     private val userTokenProvider by inject<UserTokenProvider>()
 
+    /**
+     * Send request used by [apolloClient] for getting workspace information of user
+     * @param token Token
+     * @param limit Limited number of workspaces that we can get from the api
+     * @param skip Count of workspaces that need to skipped
+     * @return Observable with [WorkspaceResponse]
+     */
     override fun getWorkspaces(
         token: String,
         limit: Int,
         skip: Int
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
-        //TokenInterceptor.instance.updateToken(token)
         return apolloClient.retryQuery(
             GetWorkspacesQuery(),
             userTokenProvider

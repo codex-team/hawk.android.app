@@ -55,6 +55,9 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
         }
     }
 
+    /**
+     * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Token.
+     */
     override fun refreshTokenObservable(token: TokenEntity): Observable<TokenResponse> {
         return apolloClient.retryMutate(
             RefreshTokensMutation(token.refreshToken)

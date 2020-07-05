@@ -5,6 +5,7 @@ import com.apollographql.apollo.interceptor.ApolloInterceptorChain
 import so.codex.core.UserTokenProvider
 import java.util.concurrent.Executor
 
+@Deprecated("Temporary not used for apollo")
 class ApolloTokenInterceptor(val userTokenProvider: UserTokenProvider) : ApolloInterceptor {
 
     /*companion object {

@@ -16,6 +16,10 @@ interface IUserInteractor {
      */
     fun saveSession(session: SessionData): Boolean
 
+    /**
+     * Update user token
+     * @param userToken [UserToken] contain information about access token and refresh token
+     */
     fun updateToken(userToken: UserToken)
 
     /**

@@ -41,7 +41,7 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
      */
     fun load() {
         loadAllWorkspaces()
-//        loadProfilePanel()
+        loadProfilePanel()
     }
 
     /**

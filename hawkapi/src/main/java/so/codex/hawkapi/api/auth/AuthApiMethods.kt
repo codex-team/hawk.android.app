@@ -40,6 +40,11 @@ interface AuthApiMethods {
     @POST("/graphql")
     fun refreshToken(@Body token: TokenEntity): Single<TokenResponse>
 
+    /**
+     * Send Post request for updating refresh token.
+     * @param token Entity for updating token, representation as GraphQL request
+     * @return response
+     */
     @POST("/graphql")
     fun refreshTokenObservable(@Body token: TokenEntity): Observable<TokenResponse>
 }

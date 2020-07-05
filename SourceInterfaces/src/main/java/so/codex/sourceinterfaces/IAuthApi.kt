@@ -33,5 +33,10 @@ interface IAuthApi {
      */
     fun refreshToken(token: TokenEntity): Single<TokenResponse>
 
+    /**
+     * Send request to update of session and get new access and refresh token
+     * @param token Contain refresh token for updating session data
+     * @return Return [Observable] with [TokenResponse], that contain new information of access and refresh token
+     */
     fun refreshTokenObservable(token: TokenEntity): Observable<TokenResponse>
 }
