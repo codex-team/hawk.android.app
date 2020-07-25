@@ -1,7 +1,7 @@
 package so.codex.hawk.ui.login
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.build_name
 import so.codex.hawk.BuildConfig
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseSingleFragmentActivity

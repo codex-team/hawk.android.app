@@ -1,6 +1,7 @@
 package so.codex.codexbl.interactors
 
-import so.codex.codexbl.entity.SessionData
+import so.codex.core.entity.SessionData
+import so.codex.core.entity.UserToken
 
 /**
  * Interface with declared methods for communication of user data
@@ -14,6 +15,12 @@ interface IUserInteractor {
      * @return true if session is successful saved else false
      */
     fun saveSession(session: SessionData): Boolean
+
+    /**
+     * Update user token
+     * @param userToken [UserToken] contain information about access token and refresh token
+     */
+    fun updateToken(userToken: UserToken)
 
     /**
      * Get last saved session

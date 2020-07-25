@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import so.codex.codexbl.entity.Project
+import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
 import so.codex.uicomponent.recyclerview.items.ProjectItemView
 import kotlin.properties.Delegates
@@ -67,7 +68,7 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
                         .error(R.drawable.ic_error_outline_black_24dp)
                         .into(itemView.logoImage)
                 else
-                    itemView.setDefaultImage()
+                    itemView.logoImage.setImageBitmap(DefaultImageLoader.get(project.id, project.name).loadImage())
                 itemView.title = project.name
                 if (project.events.isNotEmpty()) {
                     itemView.message = project.events.first().payload.title

@@ -14,5 +14,7 @@ class HawkApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         CodexKoinComponent.start(this)
+        CodexKoinComponent.updateDependencies(CodexKoinComponent.ScopeDependencies.GLOBAL_SCOPE)
+        CodexKoinComponent.updateDependencies(CodexKoinComponent.ScopeDependencies.LOGIN_SCOPE)
     }
 }

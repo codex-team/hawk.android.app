@@ -4,7 +4,7 @@ import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.interactors.SignUpInteractor
-import so.codex.codexbl.view.ISignUpView
+import so.codex.codexbl.view.auth.ISignUpView
 
 /**
  * Presentor for communication and handing events for registration new users

@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_sign_in_form.*
+import kotlinx.android.synthetic.main.fragment_sign_in_form.btn_login
+import kotlinx.android.synthetic.main.fragment_sign_in_form.btn_sign_up
+import kotlinx.android.synthetic.main.fragment_sign_in_form.et_login
+import kotlinx.android.synthetic.main.fragment_sign_in_form.et_password
 import so.codex.codexbl.presenter.SignInPresenter
-import so.codex.codexbl.view.ISignInView
+import so.codex.codexbl.view.auth.ISignInView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter

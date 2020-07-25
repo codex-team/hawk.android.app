@@ -1,5 +1,6 @@
 package so.codex.hawkapi.api.auth
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -38,4 +39,12 @@ interface AuthApiMethods {
      */
     @POST("/graphql")
     fun refreshToken(@Body token: TokenEntity): Single<TokenResponse>
+
+    /**
+     * Send Post request for updating refresh token.
+     * @param token Entity for updating token, representation as GraphQL request
+     * @return response
+     */
+    @POST("/graphql")
+    fun refreshTokenObservable(@Body token: TokenEntity): Observable<TokenResponse>
 }

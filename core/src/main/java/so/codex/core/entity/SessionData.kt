@@ -1,4 +1,4 @@
-package so.codex.codexbl.entity
+package so.codex.core.entity
 
 /**
  * Session data representation

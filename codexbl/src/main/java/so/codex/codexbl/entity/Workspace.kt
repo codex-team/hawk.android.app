@@ -14,9 +14,9 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 data class Workspace(
-        val id: String,
-        val name: String,
-        val description: String,
-        val image: String,
-        val projects: List<Project>
+        val id: String = "",
+        val name: String = "",
+        val description: String = "",
+        val image: String = "",
+        val projects: List<Project> = listOf()
 ) : Parcelable

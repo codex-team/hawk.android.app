@@ -2,19 +2,17 @@ package so.codex.uicomponent.recyclerview.items
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.Typeface
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.view_project_item.view.*
+import kotlinx.android.synthetic.main.view_project_item.view.logo
+import kotlinx.android.synthetic.main.view_project_item.view.tv_count
+import kotlinx.android.synthetic.main.view_project_item.view.tv_message
+import kotlinx.android.synthetic.main.view_project_item.view.tv_title
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
-import so.codex.utils.getColorById
 
 /**
  * Composition of view for showing elements of Project in list
@@ -83,38 +81,6 @@ class ProjectItemView @JvmOverloads constructor(
     fun setLogoImageResource(resourceId: Int) {
         logoImage.setImageResource(resourceId)
     }
-
-    /**
-     * Generate default image for logo by name of project
-     */
-    fun setDefaultImage() {
-        logoImage.post {
-            if (defaultImage == null) {
-                val firstChar = title.split(" ").fold("") { acc, s -> acc + s.first() }.toString()
-                    .toUpperCase()
-                defaultImage = Bitmap.createBitmap(
-                    logoImage.width,
-                    logoImage.height,
-                    Bitmap.Config.ARGB_8888
-                )
-                val canvas = Canvas(defaultImage!!)
-                val fontPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                    textSize = 14f * resources.displayMetrics.density + 0.5f
-                    typeface = Typeface.create("roboto", Typeface.BOLD)
-                    color = view.tv_title.currentTextColor
-                }
-                val bounds = Rect()
-                fontPaint.getTextBounds(firstChar, 0, firstChar.length, bounds)
-                fontPaint.textAlign = Paint.Align.LEFT
-                canvas.drawColor(getColorById(uuid))
-                val centerX = logoImage.width / 2f - bounds.exactCenterX()
-                val centerY = logoImage.height.toFloat() / 2f - bounds.exactCenterY()
-                canvas.drawText(firstChar, centerX, centerY, fontPaint)
-            }
-            logoImage.setImageBitmap(defaultImage)
-        }
-    }
-
 
     /**
      * Save field state of current view

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.fragment_sign_up_form.*
+import kotlinx.android.synthetic.main.fragment_sign_up_form.btn_back
+import kotlinx.android.synthetic.main.fragment_sign_up_form.btn_sign_up
+import kotlinx.android.synthetic.main.fragment_sign_up_form.et_login
 import so.codex.codexbl.presenter.SignUpPresenter
-import so.codex.codexbl.view.ISignUpView
+import so.codex.codexbl.view.auth.ISignUpView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
@@ -16,7 +18,8 @@ import so.codex.hawk.router.ILoginRouter
 /**
  * Fragment form for sign up of new users
  */
-class SignUpFormFragment : BaseFragment(), ISignUpView {
+class SignUpFormFragment : BaseFragment(),
+    ISignUpView {
     /**
      * Show message on screen or field
      */
