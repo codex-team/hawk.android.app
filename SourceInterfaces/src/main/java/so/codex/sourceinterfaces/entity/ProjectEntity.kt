@@ -9,7 +9,6 @@ package so.codex.sourceinterfaces.entity
  * @property url Link on project
  * @property image URL of image
  * @property uidAdded Owner of project
- * @property events Event that occurred in the project
  * @author Shiplayer
  */
 open class ProjectEntity(
@@ -22,6 +21,17 @@ open class ProjectEntity(
     open val uidAdded: UserEntity? = null
 )
 
+/**
+ * Data class contain information about project and events that occurred
+ * @property id Unique identifier of project
+ * @property token
+ * @property name Name of project
+ * @property description Description of project
+ * @property url Link on project
+ * @property image URL of image
+ * @property uidAdded Owner of project
+ * @property events Event that occurred in the project
+ */
 data class FullProjectEntity(
     override val id: String,
     override val token: String,
@@ -41,6 +51,16 @@ data class FullProjectEntity(
     uidAdded
 )
 
+/**
+ * Data class contain information about project and events that occurred
+ * @property id Unique identifier of project
+ * @property token
+ * @property name Name of project
+ * @property description Description of project
+ * @property url Link on project
+ * @property image URL of image
+ * @property uidAdded Owner of project
+ */
 data class OnlyProjectEntity(
     override val id: String,
     override val token: String,

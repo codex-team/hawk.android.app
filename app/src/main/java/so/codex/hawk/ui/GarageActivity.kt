@@ -4,8 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.activity_garage.*
-import kotlinx.android.synthetic.main.toolbar_garage.view.*
+import kotlinx.android.synthetic.main.activity_garage.toolbar
+import kotlinx.android.synthetic.main.toolbar_garage.view.toolbar_action_button
+import kotlinx.android.synthetic.main.toolbar_garage.view.toolbar_logo
+import kotlinx.android.synthetic.main.toolbar_garage.view.toolbar_search
+import kotlinx.android.synthetic.main.toolbar_garage.view.toolbar_search_icon
+import kotlinx.android.synthetic.main.toolbar_garage.view.toolbar_title
 import so.codex.hawk.R
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.toolbar.CanChangeToolbar
@@ -34,6 +38,9 @@ class GarageActivity : AuthorizedSingleFragmentActivity(), CanChangeToolbar {
         replaceFragment(ProjectFragment.instance(null))
     }
 
+    /**
+     * Update toolbar with showing search view, if it setup, and update state of toolbar
+     */
     override fun updateToolbar(viewModel: ToolbarComponentViewModel) {
         if (viewModel.showSearchView) {
             toolbar.toolbar_action_button.setImageResource(R.drawable.ic_back_arrow)

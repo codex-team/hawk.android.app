@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.fragment_sign_up_form.*
+import kotlinx.android.synthetic.main.fragment_sign_up_form.btn_back
+import kotlinx.android.synthetic.main.fragment_sign_up_form.btn_sign_up
+import kotlinx.android.synthetic.main.fragment_sign_up_form.et_login
 import so.codex.codexbl.presenter.SignUpPresenter
 import so.codex.codexbl.view.ISignUpView
 import so.codex.hawk.R
@@ -97,7 +99,7 @@ class SignUpFormFragment : BaseFragment(), ISignUpView {
      * Show dialog with information of successful registration and show sing in fragment
      */
     override fun successfulSignUp() {
-        AlertDialog.Builder(activity!!)
+        AlertDialog.Builder(requireActivity())
             .setTitle(R.string.sign_up_dialog_title)
             .setMessage(R.string.sign_up_dialog_message)
             .setPositiveButton(R.string.button_name_ok) { dialog, _ ->
