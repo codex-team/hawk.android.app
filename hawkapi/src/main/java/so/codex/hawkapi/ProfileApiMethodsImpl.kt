@@ -1,8 +1,10 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.rx2.rxQuery
 import io.reactivex.Single
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.api.profile.ProfileApiMethods
 import so.codex.sourceinterfaces.entity.UserEntity
 import so.codex.sourceinterfaces.response.ProfileResponse
@@ -14,9 +16,19 @@ import so.codex.sourceinterfaces.response.ProfileResponse
  * @author YorkIsMine
  */
 class ProfileApiMethodsImpl(private val apollo: ApolloClient) :
-    ProfileApiMethods {
+    ProfileApiMethods, KoinComponent {
+
+    /**
+     * Use for getting access token
+     */
+    private val userTokenProvider by inject<UserTokenProvider>()
+
+    /**
+     * Get Profile use apollo with extensions
+     * @return Single with [ProfileResponse]
+     */
     override fun getProfile(): Single<ProfileResponse> {
-        return apollo.rxQuery(GetCommonInformationQuery())
+        return apollo.retryQuery(GetCommonInformationQuery(), userTokenProvider)
             .handleHttpErrorsSingle().map {
                 if (it.me != null) {
                     ProfileResponse(
@@ -31,6 +43,7 @@ class ProfileApiMethodsImpl(private val apollo: ApolloClient) :
                     ProfileResponse(UserEntity())
                 }
             }
+
     }
 
 }

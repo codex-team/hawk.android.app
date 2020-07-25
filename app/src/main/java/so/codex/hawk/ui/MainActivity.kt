@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_header.*
+import kotlinx.android.synthetic.main.activity_main.drawer_recycler
+import kotlinx.android.synthetic.main.drawer_header.header_email
+import kotlinx.android.synthetic.main.drawer_header.header_user_icon
 import so.codex.codexbl.entity.Profile
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.GaragePresenter
@@ -14,6 +15,7 @@ import so.codex.hawk.DefaultImageLoader
 import so.codex.hawk.R
 import so.codex.hawk.adapters.WorkspaceItemAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
+import so.codex.hawk.info
 import so.codex.hawk.ui.garage.GarageFragment
 
 /**
@@ -31,6 +33,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
      * @see GaragePresenter
      */
     private val presenter by lazy {
+        info("create garage presenter")
         GaragePresenter()
     }
 
@@ -52,6 +55,7 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        info("before presenter")
         presenter.attached(this)
 
         presenter.load()
@@ -84,12 +88,14 @@ class MainActivity : AuthorizedSingleFragmentActivity(),
     override fun showHeader(profile: Profile) {
         header_email.text = profile.email
         if (profile.picture.trim().isEmpty()) {
-            header_user_icon.setImageBitmap(DefaultImageLoader.get(profile.id, profile.name).loadImage())
+            header_user_icon.setImageBitmap(
+                DefaultImageLoader.get(profile.id, profile.name).loadImage()
+            )
         } else
-        Picasso.get()
-            .load(profile.picture)
-            .error(R.drawable.ic_error_outline_black_24dp)
-            .into(header_user_icon)
+            Picasso.get()
+                .load(profile.picture)
+                .error(R.drawable.ic_error_outline_black_24dp)
+                .into(header_user_icon)
     }
 
     /**

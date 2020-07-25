@@ -1,12 +1,12 @@
 package so.codex.codexbl.presenter
 
+import android.util.Log
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.interactors.IProfileInteractor
 import so.codex.codexbl.interactors.IWorkspaceInteractor
-import so.codex.codexbl.interactors.ProfileInteractor
 import so.codex.codexbl.view.IGarageView
 import so.codex.codexbl.view.IGarageView.WorkspaceViewModel
 
@@ -53,6 +53,12 @@ class GaragePresenter : BasePresenter<IGarageView>(), KoinComponent {
                 .getWorkspaces()
                 .map {
                     it.map(this::workspaceMapper)
+                }
+                .doOnSubscribe {
+                    Log.i("GaragePresenter", "subscribe getWorkspace")
+                }
+                .doOnDispose {
+                    Log.i("GaragePresenter", "dispose getWorkspace")
                 }
                 .subscribe({
                     if (!it.isNullOrEmpty()) {

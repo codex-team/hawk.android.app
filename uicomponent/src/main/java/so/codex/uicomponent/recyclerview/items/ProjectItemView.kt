@@ -7,7 +7,10 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.view_project_item.view.*
+import kotlinx.android.synthetic.main.view_project_item.view.logo
+import kotlinx.android.synthetic.main.view_project_item.view.tv_count
+import kotlinx.android.synthetic.main.view_project_item.view.tv_message
+import kotlinx.android.synthetic.main.view_project_item.view.tv_title
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 

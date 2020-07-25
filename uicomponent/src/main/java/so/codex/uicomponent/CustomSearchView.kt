@@ -19,7 +19,10 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getSystemService
-import kotlinx.android.synthetic.main.view_search.view.*
+import kotlinx.android.synthetic.main.view_search.view.ic_clear
+import kotlinx.android.synthetic.main.view_search.view.ic_search
+import kotlinx.android.synthetic.main.view_search.view.search_edit_text
+import kotlinx.android.synthetic.main.view_search.view.transit_container
 
 /**
  * Implementation composition of view for searching and using animation

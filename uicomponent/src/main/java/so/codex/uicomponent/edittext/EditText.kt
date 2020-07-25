@@ -10,7 +10,8 @@ import android.util.Log
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.getColorOrThrow
-import kotlinx.android.synthetic.main.view_edit_text.view.*
+import kotlinx.android.synthetic.main.view_edit_text.view.card_background
+import kotlinx.android.synthetic.main.view_edit_text.view.title_edit_text
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 

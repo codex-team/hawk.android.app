@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.workspace_item.view.*
+import kotlinx.android.synthetic.main.workspace_item.view.container_workspace
+import kotlinx.android.synthetic.main.workspace_item.view.workspace_icon
+import kotlinx.android.synthetic.main.workspace_item.view.workspace_name
 import so.codex.uicomponent.R
 import so.codex.uicomponent.textViewDelegate
 
