@@ -2,15 +2,22 @@ package so.codex.hawkapi
 
 import so.codex.hawkapi.fragment.EventsList
 import so.codex.hawkapi.fragment.ProjectsList
-import so.codex.sourceinterfaces.entity.*
+import so.codex.sourceinterfaces.entity.EventEntity
+import so.codex.sourceinterfaces.entity.EventPayloadEntity
+import so.codex.sourceinterfaces.entity.FullProjectEntity
+import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
+import so.codex.sourceinterfaces.entity.OnlyProjectEntity
+import so.codex.sourceinterfaces.entity.OnlyWorkspaceEntity
+import so.codex.sourceinterfaces.entity.ProjectEntity
+import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
-import java.util.*
+import java.util.Date
 
 /**
  * Convert from [GetWorkspacesQuery.Workspace] to [FullWorkspaceEntity] that wrapped to response instance
  * @return [WorkspaceResponse] with type of [FullWorkspaceEntity]
  */
-internal fun GetFullWorkspacesQuery.Workspace.toFullWorkspaceResponse(): WorkspaceResponse<FullWorkspaceEntity> {
+internal fun GetWorkspacesQuery.Workspace.toFullWorkspaceResponse(): WorkspaceResponse<FullWorkspaceEntity> {
     return WorkspaceResponse(
         FullWorkspaceEntity(
             this.id,
@@ -61,7 +68,7 @@ internal fun GetOnlyWorkspaceQuery.Workspace.toOnlyWorkspaceResponse(): Workspac
 /**
  * Convert from [GetWorkspacesQuery.Project.Fragments] to [ProjectEntity]
  */
-private fun GetFullWorkspacesQuery.Project.Fragments.toProjectEntity(): FullProjectEntity {
+private fun GetWorkspacesQuery.Project.Fragments.toProjectEntity(): FullProjectEntity {
     return FullProjectEntity(
         this.projectsList.id,
         "",

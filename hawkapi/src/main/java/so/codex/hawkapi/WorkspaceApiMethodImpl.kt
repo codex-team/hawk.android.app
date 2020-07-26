@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.core.UserTokenProvider
+import so.codex.hawkapi.api.TokenInterceptor
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.OnlyWorkspaceEntity
@@ -38,7 +39,7 @@ class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : Workspace
         skip: Int
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
         return apolloClient.retryQuery(
-            GetFullWorkspacesQuery(),
+            GetWorkspacesQuery(),
             userTokenProvider
         ).handleHttpErrorsSingle().map {
             mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
