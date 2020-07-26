@@ -110,7 +110,7 @@ fun <D : Operation.Data, T, V : Operation.Variables> ApolloClient.retryMutate(
             this.requestHeaders(
                 RequestHeaders.builder().addHeader(
                     "Authorization",
-                        "Bearer ${token.accessToken}"
+                    "Bearer ${token.accessToken}"
                 )
                     .build()
             ).clone()

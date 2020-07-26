@@ -10,7 +10,6 @@ import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.OnlyWorkspaceEntity
 import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
-import java.util.Date
 
 /**
  * Class that used [ApolloClient] for sending GraphQL request and converted response to RxJava2.

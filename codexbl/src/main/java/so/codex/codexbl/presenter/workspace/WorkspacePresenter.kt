@@ -33,12 +33,12 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
             workspaceInteractor
                 .getWorkspaces()
                 .doOnSubscribe {
-                        Log.i("WorkspacePresenter", "subscribe getWorkspace")
-                    }
-                    .doOnDispose {
-                        Log.i("WorkspacePresenter", "dispose getWorkspace")
-                    }
-                        .attachLoader()
+                    Log.i("WorkspacePresenter", "subscribe getWorkspace")
+                }
+                .doOnDispose {
+                    Log.i("WorkspacePresenter", "dispose getWorkspace")
+                }
+                .attachLoader()
                 .subscribe({
                     if (!it.isNullOrEmpty())
                         view?.showProjects(it)

@@ -68,7 +68,12 @@ class ProjectsItemsAdapter : RecyclerView.Adapter<ProjectsItemsAdapter.ProjectIt
                         .error(R.drawable.ic_error_outline_black_24dp)
                         .into(itemView.logoImage)
                 else
-                    itemView.logoImage.setImageBitmap(DefaultImageLoader.get(project.id, project.name).loadImage())
+                    itemView.logoImage.setImageBitmap(
+                        DefaultImageLoader.get(
+                            project.id,
+                            project.name
+                        ).loadImage()
+                    )
                 itemView.title = project.name
                 if (project.events.isNotEmpty()) {
                     itemView.message = project.events.first().payload.title
