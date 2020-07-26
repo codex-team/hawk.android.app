@@ -42,6 +42,9 @@ class BorderedImageView @JvmOverloads constructor(
         setBackgroundColor(Color.WHITE)
     }
 
+    /**
+     * Calculate width and height for view. View should me only square.
+     */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -78,6 +81,9 @@ class BorderedImageView @JvmOverloads constructor(
         setMeasuredDimension(width, height)
     }
 
+    /**
+     * After calculate width and height, we can get outline provider and calculate rect for it.
+     */
     override fun layout(l: Int, t: Int, r: Int, b: Int) {
         super.layout(l, t, r, b)
         if (mCorners != 0f) {

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_sign_in_form.*
+import kotlinx.android.synthetic.main.fragment_sign_in_form.et_login
 import so.codex.hawk.R
 import so.codex.hawk.base.InnerSingleFragment
 import so.codex.hawk.router.ILoginRouter

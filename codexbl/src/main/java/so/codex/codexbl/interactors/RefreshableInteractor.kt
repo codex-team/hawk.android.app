@@ -6,13 +6,13 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import so.codex.codexbl.entity.SessionData
 import so.codex.codexbl.exceptions.NoAuthorizedException
 import so.codex.codexbl.interactors.interfaces.IRefreshableInteractor
+import so.codex.core.UserTokenProvider
+import so.codex.core.entity.SessionData
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.TokenEntity
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -32,10 +32,19 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
 
     }
 
+    init {
+        Log.i(this::class.java.simpleName, "create new instance of refreshableInteractor")
+    }
+
     /**
      * Interactor for getting last session
      */
     private val userInteractor: IUserInteractor by inject()
+
+    /**
+     * Token provider for getting current token and request update old token
+     */
+    private val userTokenProvider: UserTokenProvider by inject()
 
     /**
      * Api for refreshing access token
@@ -44,7 +53,7 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
 
     init {
         atomicToken.set(
-                userInteractor.getLastSession()?.accessToken ?: throw NoAuthorizedException()
+            userInteractor.getLastSession()?.accessToken ?: throw NoAuthorizedException()
         )
     }
 
@@ -63,24 +72,11 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
         var first = false
         return retryWhen {
             it.flatMap {
-                if (it is AccessTokenExpiredException && token.isNotEmpty() && !first) {
+                Log.i("RefreshableInteractor", "error ${it::class.java.simpleName}")
+                if (it is AccessTokenExpiredException && it.token != null && !first) {
                     first = true
-                    val lastSession = userInteractor.getLastSession()!!
-                    authApi.refreshToken(TokenEntity(lastSession.refreshToken))
-                            .doOnSuccess {
-                                Log.i(
-                                        "RefreshableInteractor",
-                                        "update atomicToken ${it.accessToken} and refresh atomicToken ${it.refreshToken}"
-                                )
-                                atomicToken.set(it.accessToken)
-                                userInteractor.saveSession(
-                                        SessionData(
-                                                lastSession.email,
-                                                it.accessToken,
-                                                it.refreshToken
-                                        )
-                                )
-                            }.delay(100, TimeUnit.MILLISECONDS).toObservable()
+                    userTokenProvider.updateToken(it.token?.refreshToken ?: "")
+                    userTokenProvider.getTokenObservable()
                 } else {
                     Observable.error(it)
                 }
@@ -100,16 +96,16 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
             it.flatMap {
                 if (it is AccessTokenExpiredException && userInteractor.getLastSession() != null) {
                     authApi.refreshToken(TokenEntity(userInteractor.getLastSession()!!.refreshToken))
-                            .doOnSuccess {
-                                val lastSession = userInteractor.getLastSession()!!
-                                userInteractor.saveSession(
-                                        SessionData(
-                                                lastSession.email,
-                                                it.accessToken,
-                                                it.refreshToken
-                                        )
+                        .doOnSuccess {
+                            val lastSession = userInteractor.getLastSession()!!
+                            userInteractor.saveSession(
+                                SessionData(
+                                    lastSession.email,
+                                    it.accessToken,
+                                    it.refreshToken
                                 )
-                            }.toFlowable()
+                            )
+                        }.toFlowable()
                 } else {
                     Flowable.error(it)
                 }

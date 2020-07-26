@@ -1,6 +1,6 @@
 package so.codex.sourceinterfaces.entity
 
-import java.util.*
+import java.util.Date
 
 /**
  * Information about event.

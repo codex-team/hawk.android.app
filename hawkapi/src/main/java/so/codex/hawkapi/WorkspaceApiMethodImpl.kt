@@ -2,12 +2,15 @@ package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
 import io.reactivex.Observable
-import so.codex.hawkapi.api.TokenInterceptor
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.OnlyWorkspaceEntity
 import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
+import java.util.Date
 
 /**
  * Class that used [ApolloClient] for sending GraphQL request and converted response to RxJava2.
@@ -15,15 +18,29 @@ import so.codex.sourceinterfaces.response.WorkspaceResponse
  * @see WorkspacesApiMethods
  * @author Shiplayer
  */
-class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods {
+class WorkspaceApiMethodImpl(private val apolloClient: ApolloClient) : WorkspacesApiMethods,
+    KoinComponent {
+
+    /**
+     * Use for getting access token
+     */
+    private val userTokenProvider by inject<UserTokenProvider>()
+
+    /**
+     * Send request used by [apolloClient] for getting workspace information of user
+     * @param token Token
+     * @param limit Limited number of workspaces that we can get from the api
+     * @param skip Count of workspaces that need to skipped
+     * @return Observable with [WorkspaceResponse]
+     */
     override fun getWorkspaces(
         token: String,
         limit: Int,
         skip: Int
     ): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
-        TokenInterceptor.instance.updateToken(token)
         return apolloClient.retryQuery(
-            GetFullWorkspacesQuery(limit = limit, skip = skip)
+            GetFullWorkspacesQuery(),
+            userTokenProvider
         ).handleHttpErrorsSingle().map {
             mutableListOf<WorkspaceResponse<FullWorkspaceEntity>>().apply {
                 it.workspaces?.filterNotNull()?.forEach {

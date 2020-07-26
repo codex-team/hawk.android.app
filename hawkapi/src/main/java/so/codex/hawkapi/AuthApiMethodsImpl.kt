@@ -1,6 +1,7 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
+import io.reactivex.Observable
 import io.reactivex.Single
 import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.sourceinterfaces.entity.AuthEntity
@@ -52,5 +53,16 @@ class AuthApiMethodsImpl(private val apolloClient: ApolloClient) : AuthApiMethod
         ).handleHttpErrors().map {
             TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)
         }
+    }
+
+    /**
+     * Use [handleHttpErrorsSingle] checking errors in message and converting from Response to mutation data of Token.
+     */
+    override fun refreshTokenObservable(token: TokenEntity): Observable<TokenResponse> {
+        return apolloClient.retryMutate(
+            RefreshTokensMutation(token.refreshToken)
+        ).handleHttpErrors().map {
+            TokenResponse(it.refreshTokens.accessToken, it.refreshTokens.refreshToken)
+        }.toObservable()
     }
 }

@@ -37,11 +37,11 @@ apollo {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(":SourceInterfaces:")
+    implementation project(":core")
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Retrofit2
@@ -55,6 +55,9 @@ dependencies {
     implementation "com.apollographql.apollo:apollo-runtime:$apollo_version"
     implementation "com.apollographql.apollo:apollo-android-support:$apollo_version"
     implementation "com.apollographql.apollo:apollo-rx2-support:$apollo_version"
+
+    // Koin
+    api "org.koin:koin-core:$koin_version"
 }
 repositories {
     mavenCentral()

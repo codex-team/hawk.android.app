@@ -3,15 +3,18 @@ package so.codex.codexbl.presenter
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
+import so.codex.codexbl.base.Logger
+import so.codex.codexbl.base.info
 import so.codex.codexbl.interactors.IUserInteractor
-import so.codex.codexbl.view.IAuthorizedView
+import so.codex.codexbl.main.CodexKoinComponent
+import so.codex.codexbl.view.auth.IAuthorizedView
 
 /**
- * Presentor for validation of user, check if user is authorized or not, then clear all data,
+ * Presenter for validation of user, check if user is authorized or not, then clear all data,
  * session and logout
  * @author Shiplayer
  */
-class AuthorizedPresenter : BasePresenter<IAuthorizedView>(), KoinComponent {
+class AuthorizedPresenter(val logger: Logger) : BasePresenter<IAuthorizedView>(), KoinComponent {
     /**
      * Interactor for checking user authorization state and logout
      */
@@ -26,10 +29,16 @@ class AuthorizedPresenter : BasePresenter<IAuthorizedView>(), KoinComponent {
      * Check if user authorized.
      */
     fun checkAuthorization() {
+        logger.info("check Authorization")
         if (!userInteractor.getLastSession().let {
                 it != null && it.accessToken.isNotEmpty() && it.refreshToken.isNotEmpty()
-            })
-            view?.logout()
+            }) {
+            view?.logout().also {
+                logger.info("logout")
+            }
+        } else {
+            CodexKoinComponent.updateDependencies(CodexKoinComponent.ScopeDependencies.MAIN_SCOPE)
+        }
     }
 
     /**

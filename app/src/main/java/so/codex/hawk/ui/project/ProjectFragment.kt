@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_project.*
+import kotlinx.android.synthetic.main.fragment_project.fa_exit
+import kotlinx.android.synthetic.main.fragment_garage.rv_project_list
+import kotlinx.android.synthetic.main.fragment_garage.rv_refresh_layout
+import kotlinx.android.synthetic.main.fragment_garage.tv_empty_workspace
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.presenter.projects.ProjectPresenter
 import so.codex.codexbl.view.projects.IProjectView

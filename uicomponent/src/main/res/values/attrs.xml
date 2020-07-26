@@ -29,6 +29,11 @@
     </declare-styleable>
 
     <attr name="projectItemViewStyle" format="reference" />
+    <attr name="workspaceItemViewStyle" format="reference"/>
+
+    <declare-styleable name="WorkspaceItemView">
+        <attr name="src_ws" format="reference" />
+    </declare-styleable>
 
     <declare-styleable name="ProjectItemView">
         <attr name="src" format="reference" />

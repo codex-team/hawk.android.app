@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import so.codex.codexbl.presenter.AuthorizedPresenter
-import so.codex.codexbl.view.IAuthorizedView
+import so.codex.codexbl.view.auth.IAuthorizedView
+import so.codex.hawk.info
 import so.codex.hawk.router.ILogoutRouter
 import so.codex.hawk.ui.login.LoginActivity
 
@@ -16,7 +17,8 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
     /**
      * Implementation [IAuthorizedView] like as anonymous class.
      */
-    private val mAuthorizedView: IAuthorizedView = object : IAuthorizedView {
+    private val mAuthorizedView: IAuthorizedView = object :
+        IAuthorizedView {
         override fun showErrorMessage(message: String) {
 
         }
@@ -30,7 +32,7 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
     /**
      * Presenter that responsibility of authorization of user
      */
-    private val mAuthPresenter = AuthorizedPresenter()
+    private val mAuthPresenter = AuthorizedPresenter(HawkLogger)
 
     /**
      * How will the activity be created then the [mAuthPresenter] is attached to the [mAuthorizedView]
@@ -38,6 +40,7 @@ abstract class AuthorizedSingleFragmentActivity : BaseSingleFragmentActivity(), 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuthPresenter.attached(mAuthorizedView)
+        info("AuthPresenter is attached")
     }
 
     /**

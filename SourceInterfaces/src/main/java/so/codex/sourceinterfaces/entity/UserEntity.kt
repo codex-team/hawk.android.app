@@ -10,8 +10,8 @@ package so.codex.sourceinterfaces.entity
  * @author Shiplayer
  */
 data class UserEntity(
-    val id: String,
-    val email: String,
-    val name: String,
-    val picture: String
+    val id: String = "",
+    val email: String = "",
+    val name: String = "",
+    val picture: String = ""
 )
