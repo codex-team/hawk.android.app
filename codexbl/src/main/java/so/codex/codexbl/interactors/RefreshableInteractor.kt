@@ -1,6 +1,7 @@
 package so.codex.codexbl.interactors
 
 import android.util.Log
+import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -9,10 +10,8 @@ import org.koin.core.inject
 import so.codex.codexbl.exceptions.NoAuthorizedException
 import so.codex.codexbl.interactors.interfaces.IRefreshableInteractor
 import so.codex.core.UserTokenProvider
-import so.codex.core.entity.SessionData
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.sourceinterfaces.IAuthApi
-import so.codex.sourceinterfaces.entity.TokenEntity
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -95,17 +94,8 @@ open class RefreshableInteractor : IRefreshableInteractor, KoinComponent {
         return retryWhen {
             it.flatMap {
                 if (it is AccessTokenExpiredException && userInteractor.getLastSession() != null) {
-                    authApi.refreshToken(TokenEntity(userInteractor.getLastSession()!!.refreshToken))
-                        .doOnSuccess {
-                            val lastSession = userInteractor.getLastSession()!!
-                            userInteractor.saveSession(
-                                SessionData(
-                                    lastSession.email,
-                                    it.accessToken,
-                                    it.refreshToken
-                                )
-                            )
-                        }.toFlowable()
+                    userTokenProvider.updateToken(it.token?.refreshToken ?: "")
+                    userTokenProvider.getTokenObservable().toFlowable(BackpressureStrategy.LATEST)
                 } else {
                     Flowable.error(it)
                 }

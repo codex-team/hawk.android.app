@@ -11,22 +11,24 @@ import so.codex.hawkapi.api.CoreApi
  * of Profile.
  * @author YorkIsMine
  */
-class ProfileInteractor : IProfileInteractor {
+class ProfileInteractor : RefreshableInteractor(), IProfileInteractor {
 
     /**
      * Implementation of getProfile
      * @return [Single] with current Profile
      */
     override fun getProfile(): Single<Profile> {
-        return CoreApi.instance.getProfileApi().getProfileResponse().map {
-            Profile(
-                it.entity.id,
-                it.entity.email,
-                it.entity.name,
-                it.entity.picture
-            )
+        return CoreApi.instance.getProfileApi().getProfileResponse()
+            .refreshTokenSingle()
+            .map {
+                Profile(
+                    it.entity.id,
+                    it.entity.email,
+                    it.entity.name,
+                    it.entity.picture
+                )
 
-        }.subscribeOn(Schedulers.io())
+            }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
