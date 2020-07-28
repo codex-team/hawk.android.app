@@ -1,15 +1,15 @@
 package so.codex.hawk.base
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import so.codex.hawk.router.IBaseRouter
 
 /**
  * Abstract class for activity that should contain only one container for fragment. Add feature for retain fragment
  * after changing system settings.
  */
-abstract class BaseSingleFragmentActivity : FragmentActivity(), IBaseRouter {
+abstract class BaseSingleFragmentActivity : AppCompatActivity(), IBaseRouter {
     /**
      * Unique identification container that can change fragment on layout
      */

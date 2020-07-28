@@ -11,19 +11,23 @@ import kotlinx.android.synthetic.main.fragment_project.rv_project_list
 import kotlinx.android.synthetic.main.fragment_project.rv_refresh_layout
 import kotlinx.android.synthetic.main.fragment_project.tv_empty_workspace
 import so.codex.codexbl.entity.Workspace
-import so.codex.codexbl.presenter.workspace.WorkspacePresenter
+import so.codex.codexbl.presenter.projects.ProjectPresenter
+import so.codex.codexbl.view.projects.IProjectView
 import so.codex.codexbl.view.workspace.IWorkspaceView
 import so.codex.hawk.R
 import so.codex.hawk.SelectedWorkspaceListener
 import so.codex.hawk.adapters.ProjectsItemsAdapter
 import so.codex.hawk.base.AuthorizedSingleFragmentActivity
 import so.codex.hawk.base.BaseFragment
+import so.codex.hawk.base.text.TextListener
+import so.codex.hawk.base.toolbar.CanChangeToolbar
+import so.codex.hawk.base.toolbar.ToolbarComponentViewModel
 
 /**
  * Fragment for showing all information about Garage, showing list of project
  * Implementation interface [IWorkspaceView], where declared method for communication with workspace
  */
-class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener {
+class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener, TextListener {
     companion object {
         private const val WORKSPACE_KEY = "workspace"
 
@@ -41,18 +45,23 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
         }
     }
 
+    private val toolbarViewModel = ToolbarComponentViewModel(
+        title = "All projects",
+        textListener = this
+    )
+
     /**
      * Initialize presenter of workspace
      */
     private val presenter by lazy {
-        WorkspacePresenter()
+        ProjectPresenter()
     }
 
     /**
      * Show all projects in [Workspace]
      * @param workspaces list of [Workspace] that contain projects
      */
-    override fun showProjects(workspaces: List<Workspace>) {
+    fun showProjects(workspaces: List<Workspace>) {
         if (rv_project_list.visibility == View.GONE) {
             rv_project_list.visibility = View.VISIBLE
             tv_empty_workspace.visibility = View.GONE
@@ -69,25 +78,27 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
 
     /**
      * Show progress bar
-     */
+     *//*
     override fun showLoader() {
         rv_refresh_layout.isRefreshing = true
     }
 
+    */
     /**
      * Hide progress bar
-     */
+     *//*
     override fun hideLoader() {
         rv_refresh_layout.isRefreshing = false
     }
 
+    */
     /**
      * Show message if list of projects is empty
-     */
+     *//*
     override fun showEmptyProjects() {
         rv_project_list.visibility = View.GONE
         tv_empty_workspace.visibility = View.VISIBLE
-    }
+    }*/
 
     /**
      * Show error if it occurred
@@ -116,7 +127,7 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
         presenter.attached(this)
 
         rv_refresh_layout.setOnRefreshListener {
-            presenter.loadAllWorkspaces()
+            //presenter.loadAllWorkspaces()
         }
 
         rv_project_list.apply {
@@ -132,9 +143,22 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
         }
 
         if (arguments?.getParcelable<Workspace>(WORKSPACE_KEY) == null) {
-            presenter.loadAllWorkspaces()
+            //presenter.loadAllWorkspaces()
         } else {
             TODO("Load project for one workspace")
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (activity is CanChangeToolbar) {
+            (activity as CanChangeToolbar).updateToolbar(
+                ToolbarComponentViewModel(
+                    menuIcon = R.drawable.ic_hamburger,
+                    title = "All projects",
+                    showSearchIcon = true
+                )
+            )
         }
     }
 
@@ -151,10 +175,14 @@ class ProjectFragment: BaseFragment(), IWorkspaceView, SelectedWorkspaceListener
      */
     override fun onDestroy() {
         super.onDestroy()
-        presenter.unsubscribe()
+        //presenter.unsubscribe()
     }
 
     override fun select(workspace: Workspace) {
         TODO("Not yet implemented")
+    }
+
+    override fun searchText(text: String) {
+        //presenter.loadAllWorkspaces()
     }
 }

@@ -100,7 +100,7 @@ class SignUpFormFragment : BaseFragment(),
      * Show dialog with information of successful registration and show sing in fragment
      */
     override fun successfulSignUp() {
-        AlertDialog.Builder(activity!!)
+        AlertDialog.Builder(requireActivity())
             .setTitle(R.string.sign_up_dialog_title)
             .setMessage(R.string.sign_up_dialog_message)
             .setPositiveButton(R.string.button_name_ok) { dialog, _ ->

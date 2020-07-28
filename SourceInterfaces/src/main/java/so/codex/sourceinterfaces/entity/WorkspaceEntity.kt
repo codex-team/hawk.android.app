@@ -21,6 +21,25 @@ sealed class WorkspaceEntity(
 )
 
 /**
+ * Workspace with only common properties
+ * @property id Unique identifier of Workspace
+ * @property name Name of Workspace
+ * @property description Common information about Workspace
+ * @property image Link of image
+ */
+data class OnlyWorkspaceEntity(
+    override val id: String,
+    override val name: String,
+    override val description: String? = null,
+    override val image: String
+) : WorkspaceEntity(
+    id,
+    name,
+    description,
+    image
+)
+
+/**
  * Workspace with additional property for list of projects
  * @property id Unique identifier of Workspace
  * @property name Name of Workspace

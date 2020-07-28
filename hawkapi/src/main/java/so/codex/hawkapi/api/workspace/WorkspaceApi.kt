@@ -45,7 +45,7 @@ class WorkspaceApi private constructor(private val service: WorkspacesApiMethods
      * Documentation for getting information about workspace with projects
      */
     override fun getWorkspaceWithProjects(token: String): Observable<WorkspaceResponse<WorkspaceWithProjectsEntity>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return service.getWorkspacesWithProjects(token).subscribeOnIO()
     }
 
     /**

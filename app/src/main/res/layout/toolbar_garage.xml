@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:gravity="center_vertical"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/toolbar_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp"
+        tools:src="@drawable/ic_hamburger" />
+
+    <so.codex.uicomponent.BorderedImageView
+        android:id="@+id/toolbar_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:layout_marginStart="14dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        app:corners="@dimen/logo_corners"
+        tools:src="@drawable/hawk_logo_image" />
+
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_bold"
+            android:text="hello"
+            android:textColor="@color/very_light_blue"
+            android:textSize="20dp"
+            tools:text="CodeX" />
+
+        <EditText
+            android:id="@+id/toolbar_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="Search"
+            android:imeOptions="actionSearch"
+            android:background="@null"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/toolbar_search_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="12dp"
+        android:src="@drawable/ic_search" />
+
+
+</LinearLayout>
