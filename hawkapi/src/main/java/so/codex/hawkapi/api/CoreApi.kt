@@ -50,7 +50,11 @@ class CoreApi private constructor() : SourceApi {
             }
 
             override fun decode(value: CustomTypeValue<*>): Date {
-                return dateFormat.parse(value.value.toString())
+                val dateValue = value.value.toString().toFloatOrNull()
+                return if(dateValue != null)
+                    Date((dateValue * 1000).toLong())
+                else
+                    dateFormat.parse(value.value.toString())
             }
         }
 

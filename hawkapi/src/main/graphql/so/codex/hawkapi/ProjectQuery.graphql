@@ -1,0 +1,26 @@
+query ProjectRecentEvents (
+    $projectId: ID!
+) {
+    project(id: $projectId) {
+        id
+        name
+        description
+        image
+        unreadCount
+        recentEvents(limit: 50, skip: 0) {
+            ...RecentEventList
+        }
+    }
+}
+
+fragment RecentEventList on RecentEvents {
+    events {
+        ...SimpleEventsList
+    }
+
+}
+
+fragment SimpleEventsList on Event {
+    id
+    catcherType
+}

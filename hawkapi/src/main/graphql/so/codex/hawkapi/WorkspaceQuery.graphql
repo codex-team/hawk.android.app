@@ -9,6 +9,33 @@ query getWorkspacesQuery($ids: [ID], $limit: Int = 30, $skip: Int = 0){
     }
 }
 
+query getWorkspacesWithProjectsQuery($ids: [ID]){
+    workspaces(ids: $ids) {
+        id
+        name
+        image
+        projects {
+            ...OnlyProjectsList
+        }
+    }
+}
+
+query getOnlyWorkspaceQuery($ids: [ID]){
+    workspaces(ids: $ids) {
+        id
+        name
+        image
+        description
+    }
+}
+
+fragment OnlyProjectsList on Project {
+    id
+    name
+    image
+    description
+}
+
 fragment ProjectsList on Project {
     id
     name

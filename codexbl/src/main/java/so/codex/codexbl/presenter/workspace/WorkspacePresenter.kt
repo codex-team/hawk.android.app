@@ -30,24 +30,24 @@ class WorkspacePresenter : LoaderPresenter<IWorkspaceView>(), KoinComponent {
      */
     fun loadAllWorkspaces() {
         compositeDisposable.of(
-                workspaceInteractor
-                        .getWorkspaces()
-                    .doOnSubscribe {
-                        Log.i("WorkspacePresenter", "subscribe getWorkspace")
-                    }
-                    .doOnDispose {
-                        Log.i("WorkspacePresenter", "dispose getWorkspace")
-                    }
-                        .attachLoader()
-                        .subscribe({
-                            if (!it.isNullOrEmpty())
-                                view?.showProjects(it)
-                            else
-                                view?.showEmptyProjects()
-                        }, {
-                            it.printStackTrace()
-                            view?.showErrorMessage(it.message ?: " error")
-                        })
+            workspaceInteractor
+                .getWorkspaces()
+                .doOnSubscribe {
+                    Log.i("WorkspacePresenter", "subscribe getWorkspace")
+                }
+                .doOnDispose {
+                    Log.i("WorkspacePresenter", "dispose getWorkspace")
+                }
+                .attachLoader()
+                .subscribe({
+                    if (!it.isNullOrEmpty())
+                        view?.showProjects(it)
+                    else
+                        view?.showEmptyProjects()
+                }, {
+                    it.printStackTrace()
+                    view?.showErrorMessage(it.message ?: " error")
+                })
         )
     }
 

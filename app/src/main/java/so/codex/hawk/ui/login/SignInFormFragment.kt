@@ -15,7 +15,7 @@ import so.codex.codexbl.view.auth.ISignInView
 import so.codex.hawk.R
 import so.codex.hawk.base.BaseFragment
 import so.codex.hawk.router.ILoginRouter
-import so.codex.hawk.ui.MainActivity
+import so.codex.hawk.ui.GarageActivity
 
 /**
  * Fragment form for sign in
@@ -81,10 +81,10 @@ class SignInFormFragment : BaseFragment(), ISignInView {
     }
 
     /**
-     * Start [MainActivity] after successful Login in service and finish current activity
+     * Start [GarageActivity] after successful Login in service and finish current activity
      */
     override fun successfulLogin() {
-        startActivity(Intent(context, MainActivity::class.java))
+        startActivity(Intent(context, GarageActivity::class.java))
         activity?.finish()
     }
 }

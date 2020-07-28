@@ -1,6 +1,7 @@
 package so.codex.uicomponent
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Outline
 import android.util.AttributeSet
 import android.view.View
@@ -38,6 +39,7 @@ class BorderedImageView @JvmOverloads constructor(
             mCorners = getDimension(R.styleable.BorderedImageView_corners, 0f)
             recycle()
         }
+        setBackgroundColor(Color.WHITE)
     }
 
     /**
