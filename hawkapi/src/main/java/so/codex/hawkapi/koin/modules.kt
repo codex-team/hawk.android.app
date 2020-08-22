@@ -9,8 +9,11 @@ import so.codex.hawkapi.ProfileApiMethodsImpl
 import so.codex.hawkapi.WorkspaceApiMethodImpl
 import so.codex.hawkapi.api.ApolloTokenInterceptor
 import so.codex.hawkapi.api.auth.AuthApi
+import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.hawkapi.api.profile.ProfileApi
+import so.codex.hawkapi.api.profile.ProfileApiMethods
 import so.codex.hawkapi.api.workspace.WorkspaceApi
+import so.codex.hawkapi.api.workspace.WorkspacesApiMethods
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.IProfileApi
 import so.codex.sourceinterfaces.IWorkspaceApi
@@ -44,7 +47,7 @@ val coreNetworkModule = module {
  * @author Shiplayer
  */
 val authApiModule = module {
-    single { AuthApiMethodsImpl(get()) }
+    single<AuthApiMethods> { AuthApiMethodsImpl(get()) }
     single<IAuthApi> { AuthApi(get()) }
 
 }
@@ -53,8 +56,8 @@ val authApiModule = module {
  * Modules for dependencies API classes and getting necessary information
  */
 val networkModule = module {
-    single { WorkspaceApiMethodImpl(get()) }
+    single<WorkspacesApiMethods> { WorkspaceApiMethodImpl(get()) }
     single<IWorkspaceApi> { WorkspaceApi(get(), get()) }
-    single { ProfileApiMethodsImpl(get()) }
+    single<ProfileApiMethods> { ProfileApiMethodsImpl(get()) }
     single<IProfileApi> { ProfileApi(get()) }
 }
