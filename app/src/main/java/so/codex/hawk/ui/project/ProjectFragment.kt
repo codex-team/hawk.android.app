@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.android.synthetic.main.fragment_project.fa_exit
 import kotlinx.android.synthetic.main.fragment_project.rv_project_list
 import kotlinx.android.synthetic.main.fragment_project.rv_refresh_layout
 import kotlinx.android.synthetic.main.fragment_project.tv_empty_workspace
 import so.codex.codexbl.entity.Workspace
-import so.codex.codexbl.presenter.projects.ProjectPresenter
-import so.codex.codexbl.view.projects.IProjectView
+import so.codex.codexbl.view.base.IReactiveBaseView
 import so.codex.codexbl.view.workspace.IWorkspaceView
 import so.codex.hawk.R
 import so.codex.hawk.SelectedWorkspaceListener
@@ -49,6 +49,8 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         title = "All projects",
         textListener = this
     )
+
+    private val adapter = ProjectsItemsAdapter()
 
     /**
      * Initialize presenter of workspace
@@ -127,6 +129,7 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         presenter.attached(this)
 
         rv_refresh_layout.setOnRefreshListener {
+            presenter
             //presenter.loadAllWorkspaces()
         }
 
@@ -184,5 +187,14 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
 
     override fun searchText(text: String) {
         //presenter.loadAllWorkspaces()
+    }
+
+    override fun showUi(model: IProjectView.ProjectViewModel) {
+        rv_refresh_layout.isRefreshing = model.showLoader
+        adapter.data = model.projects
+    }
+
+    override fun observeUiEvent(): Observable<IReactiveBaseView.UiEvent> {
+        return Observable.empty()
     }
 }

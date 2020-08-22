@@ -1,6 +1,6 @@
 package so.codex.codexbl.presenter
 
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter

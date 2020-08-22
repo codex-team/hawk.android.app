@@ -1,8 +1,11 @@
 package so.codex.codexbl.interactors.projects
 
-class ProjectInteractor : IProjectInteractor {
+import so.codex.codexbl.interactors.RefreshableInteractor
+
+class ProjectInteractor : RefreshableInteractor(), IProjectInteractor {
+
     override fun getProjects() {
-        TODO("Not yet implemented")
+
     }
 
     override fun refresh() {

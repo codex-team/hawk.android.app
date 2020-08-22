@@ -1,6 +1,6 @@
 package so.codex.sourceinterfaces
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.WorkspaceEntity
 import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity
@@ -39,5 +39,5 @@ interface IWorkspaceApi {
      * @param token Access token for identification of user and access to api methods
      * @return [Observable] with response of request.
      */
-    fun getFullWorkspace(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>>
+    fun getFullWorkspace(token: String): Observable<out WorkspaceResponse<FullWorkspaceEntity>>
 }

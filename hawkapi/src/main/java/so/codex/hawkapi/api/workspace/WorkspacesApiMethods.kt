@@ -1,6 +1,6 @@
 package so.codex.hawkapi.api.workspace
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
 import so.codex.sourceinterfaces.entity.OnlyWorkspaceEntity
 import so.codex.sourceinterfaces.entity.WorkspaceWithProjectsEntity

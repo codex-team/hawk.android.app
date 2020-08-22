@@ -1,4 +1,6 @@
 ext.versions = [
+        kotlin_version: '1.3.72',
+        koin_version: '2.1.6',
         picasso : "2.71828",
         coreKtx: "1.0.2",
         material: "1.1.0",
@@ -12,5 +14,6 @@ ext.libs = [
         material : "com.google.android.material:material:$versions.material",
         navFragment : "androidx.navigation:navigation-fragment-ktx:$versions.navigation",
         navUi : "androidx.navigation:navigation-ui-ktx:$versions.navigation",
-        swiperefreshlayout : "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swiperefreshlayout"
+        swiperefreshlayout : "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swiperefreshlayout",
+        kotlin : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin_version",
 ]

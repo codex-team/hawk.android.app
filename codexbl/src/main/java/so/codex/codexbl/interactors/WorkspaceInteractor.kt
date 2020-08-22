@@ -1,12 +1,13 @@
 package so.codex.codexbl.interactors
 
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
+import so.codex.codexbl.providers.workspaces.WorkspaceProvider
 import so.codex.sourceinterfaces.IWorkspaceApi
 
 /**
@@ -19,6 +20,7 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
      * Workspace
      */
     private val api: IWorkspaceApi by inject()
+    private val provider: WorkspaceProvider by inject()
 
     /**
      * Send request to get workspace

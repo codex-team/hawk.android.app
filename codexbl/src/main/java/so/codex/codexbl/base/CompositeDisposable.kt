@@ -1,6 +1,7 @@
 package so.codex.codexbl.base
 
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.Disposable
+
 
 /**
  * Composition of [Disposable] created for simplify storage and quick completion of rx streams

@@ -1,7 +1,7 @@
 package so.codex.hawkapi.api.auth
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
 import retrofit2.http.POST
 import so.codex.sourceinterfaces.entity.AuthEntity

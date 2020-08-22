@@ -1,8 +1,6 @@
 package so.codex.hawkapi.api.profile
 
-import io.reactivex.Single
-import so.codex.hawkapi.ProfileApiMethodsImpl
-import so.codex.hawkapi.api.CoreApi
+import io.reactivex.rxjava3.core.Single
 import so.codex.sourceinterfaces.IProfileApi
 import so.codex.sourceinterfaces.response.ProfileResponse
 
@@ -12,16 +10,7 @@ import so.codex.sourceinterfaces.response.ProfileResponse
  * @constructor Have private constructor for initialize singleton instance of class
  * @author YorkIsMine
  */
-class ProfileApi(private val service: ProfileApiMethods) : IProfileApi {
-
-    companion object {
-        /**
-         * Singleton of ProfileApi
-         */
-        val instance by lazy {
-            ProfileApi(ProfileApiMethodsImpl(CoreApi.apollo))
-        }
-    }
+class ProfileApi internal constructor(private val service: ProfileApiMethods) : IProfileApi {
 
     /**
      * Method for getting Response of Profile

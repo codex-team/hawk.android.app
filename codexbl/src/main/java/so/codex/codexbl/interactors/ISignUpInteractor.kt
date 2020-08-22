@@ -1,6 +1,6 @@
 package so.codex.codexbl.interactors
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Interface with declared methods for sign up

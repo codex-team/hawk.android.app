@@ -2,14 +2,19 @@ package so.codex.codexbl.providers
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.jakewharton.rxrelay2.PublishRelay
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.BehaviorSubject
+import com.jakewharton.rxrelay3.PublishRelay
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleTransformer
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import ru.ship.hawk.utils.commons.info
 import so.codex.core.UserTokenDAO
 import so.codex.core.UserTokenProvider
 import so.codex.core.entity.UserToken
+import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.TokenEntity
 import so.codex.sourceinterfaces.response.TokenResponse
@@ -140,6 +145,42 @@ class UserTokenProviderImpl(
         }
         tokenEventSubject.onNext(TokenEvent.TOKEN_UPDATE)
         tokenUpdatePublisher.accept(userToken.refreshToken)
+    }
+
+    override fun <U> refreshToken(): ObservableTransformer<U, U> {
+        return ObservableTransformer { transformer ->
+            var first = false
+            transformer.retryWhen { errors ->
+                errors.flatMap { error ->
+                    Log.i("RefreshableInteractor", "error ${error::class.java.simpleName}")
+                    if (error is AccessTokenExpiredException && error.token != null && !first) {
+                        first = true
+                        updateToken(error.token?.refreshToken ?: "")
+                        getTokenObservable()
+                    } else {
+                        Observable.error(error)
+                    }
+                }.doOnNext {
+                    Log.i("RefreshableInteractor", "Already to next")
+                }
+            }
+        }
+    }
+
+    override fun <U> refreshTokenSingle(): SingleTransformer<U, U> {
+        return SingleTransformer { transformer ->
+            transformer.retryWhen { errors ->
+                errors.flatMap { error ->
+                    if (error is AccessTokenExpiredException && error.token != null) {
+                        updateToken(error.token?.refreshToken ?: "")
+                        getTokenObservable()
+                            .toFlowable(BackpressureStrategy.LATEST)
+                    } else {
+                        Flowable.error(error)
+                    }
+                }
+            }
+        }
     }
 
     /**

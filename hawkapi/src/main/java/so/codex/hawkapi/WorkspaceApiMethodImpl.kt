@@ -1,7 +1,7 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.core.UserTokenProvider

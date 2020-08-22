@@ -1,6 +1,8 @@
 package so.codex.core
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableTransformer
+import io.reactivex.rxjava3.core.SingleTransformer
 import so.codex.core.entity.UserToken
 
 /**
@@ -30,4 +32,8 @@ interface UserTokenProvider {
      * @param userToken user token for updating session
      */
     fun updateToken(userToken: UserToken)
+
+    fun <U> refreshToken(): ObservableTransformer<U, U>
+
+    fun <U> refreshTokenSingle(): SingleTransformer<U, U>
 }

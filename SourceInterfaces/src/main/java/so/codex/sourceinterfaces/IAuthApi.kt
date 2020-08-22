@@ -1,7 +1,7 @@
 package so.codex.sourceinterfaces
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity
 import so.codex.sourceinterfaces.entity.TokenEntity

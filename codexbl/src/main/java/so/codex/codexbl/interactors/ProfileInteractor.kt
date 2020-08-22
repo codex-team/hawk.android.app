@@ -1,24 +1,25 @@
 package so.codex.codexbl.interactors
 
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import so.codex.codexbl.entity.Profile
-import so.codex.hawkapi.api.CoreApi
+import so.codex.sourceinterfaces.IProfileApi
 
 /**
  * Class for communication with repositories or api that provide methods for getting necessary information
  * of Profile.
  * @author YorkIsMine
  */
-class ProfileInteractor : RefreshableInteractor(), IProfileInteractor {
+class ProfileInteractor(private val profileApi: IProfileApi) : RefreshableInteractor(),
+    IProfileInteractor {
 
     /**
      * Implementation of getProfile
      * @return [Single] with current Profile
      */
     override fun getProfile(): Single<Profile> {
-        return CoreApi.instance.getProfileApi().getProfileResponse()
+        return profileApi.getProfileResponse()
             .refreshTokenSingle()
             .map {
                 Profile(

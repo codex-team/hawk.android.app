@@ -1,18 +1,18 @@
 package so.codex.codexbl.interactors
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.entity.UserAuth
 import so.codex.core.entity.SessionData
-import so.codex.hawkapi.api.CoreApi
+import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
 
 /**
  * The Interactor with implementation methods from [ISignInInteractor] for communication with API.
  * @author Shiplayer
  */
-class SignInInteractor : ISignInInteractor, KoinComponent {
+class SignInInteractor(private val authApi: IAuthApi) : ISignInInteractor, KoinComponent {
     /**
      * Used for getting and saving session
      */
@@ -22,7 +22,7 @@ class SignInInteractor : ISignInInteractor, KoinComponent {
      * Send request to login and save session
      */
     override fun signIn(userAuth: UserAuth): Single<Boolean> {
-        return CoreApi.instance.getAuthApi().login(AuthEntity(userAuth.email, userAuth.password)).doOnSuccess {
+        return authApi.login(AuthEntity(userAuth.email, userAuth.password)).doOnSuccess {
 
         }.map {
             userInteractor.saveSession(

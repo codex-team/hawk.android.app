@@ -21,6 +21,14 @@ android {
 
     }
 
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -54,7 +62,7 @@ dependencies {
     // Apollo
     implementation "com.apollographql.apollo:apollo-runtime:$apollo_version"
     implementation "com.apollographql.apollo:apollo-android-support:$apollo_version"
-    implementation "com.apollographql.apollo:apollo-rx2-support:$apollo_version"
+    implementation "com.apollographql.apollo:apollo-rx3-support:$apollo_version"
 
     // Koin
     api "org.koin:koin-core:$koin_version"
