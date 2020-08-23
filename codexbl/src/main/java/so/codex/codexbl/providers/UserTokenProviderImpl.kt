@@ -27,7 +27,7 @@ import so.codex.sourceinterfaces.response.TokenResponse
 @SuppressLint("CheckResult")
 class UserTokenProviderImpl(
     private val userTokenDAO: UserTokenDAO,
-    authApi: IAuthApi
+    private val authApi: IAuthApi
 ) : UserTokenProvider {
 
     /**
@@ -152,7 +152,7 @@ class UserTokenProviderImpl(
             var first = false
             transformer.retryWhen { errors ->
                 errors.flatMap { error ->
-                    Log.i("RefreshableInteractor", "error ${error::class.java.simpleName}")
+                    Log.i("UserTokenProviderImpl", "error ${error::class.java.simpleName}")
                     if (error is AccessTokenExpiredException && error.token != null && !first) {
                         first = true
                         updateToken(error.token?.refreshToken ?: "")
@@ -161,7 +161,7 @@ class UserTokenProviderImpl(
                         Observable.error(error)
                     }
                 }.doOnNext {
-                    Log.i("RefreshableInteractor", "Already to next")
+                    Log.i("UserTokenProviderImpl", "Already to next")
                 }
             }
         }

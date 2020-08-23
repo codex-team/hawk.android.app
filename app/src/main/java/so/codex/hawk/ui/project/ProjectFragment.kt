@@ -61,25 +61,6 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
     }
 
     /**
-     * Show all projects in [Workspace]
-     * @param workspaces list of [Workspace] that contain projects
-     */
-    fun showProjects(workspaces: List<Workspace>) {
-        if (rv_project_list.visibility == View.GONE) {
-            rv_project_list.visibility = View.VISIBLE
-            tv_empty_workspace.visibility = View.GONE
-        }
-        val adapter = rv_project_list.adapter
-        if (adapter is ProjectsItemsAdapter) {
-            adapter.data =
-                workspaces.fold(mutableListOf()) { list, w ->
-                    list.addAll(w.projects)
-                    list
-                }
-        }
-    }
-
-    /**
      * Show progress bar
      *//*
     override fun showLoader() {
@@ -131,11 +112,10 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
 
         rv_refresh_layout.setOnRefreshListener {
             presenter.submitUiEvent(IProjectView.UiEvent.Refresh)
-            //presenter.loadAllWorkspaces()
         }
 
         rv_project_list.apply {
-            adapter = ProjectsItemsAdapter()
+            adapter = this@ProjectFragment.adapter
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }
@@ -174,14 +154,6 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         presenter.detached()
     }
 
-    /**
-     * Unsubscribe of all RxJava streams
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        //presenter.unsubscribe()
-    }
-
     override fun select(workspace: Workspace) {
         TODO("Not yet implemented")
     }
@@ -194,6 +166,12 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         Log.i("ProjectFragment", "show ui models ${model.projects}")
         rv_refresh_layout.isRefreshing = model.showLoader
         adapter.data = model.projects
+        adapter.notifyDataSetChanged()
+        if (!model.projects.isEmpty()) {
+            tv_empty_workspace.visibility = View.VISIBLE
+        } else {
+            tv_empty_workspace.visibility = View.GONE
+        }
     }
 
     override fun observeUiEvent(): Observable<IReactiveBaseView.UiEvent> {

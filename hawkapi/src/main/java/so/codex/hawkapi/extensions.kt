@@ -21,6 +21,7 @@ import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.apollo.ResponseAdaptor
 import so.codex.hawkapi.exceptions.AccessTokenExpiredException
 import so.codex.hawkapi.exceptions.BaseHttpException
+import so.codex.hawkapi.exceptions.InternalServerErrorException
 import so.codex.hawkapi.exceptions.MultiHttpErrorsException
 import so.codex.hawkapi.exceptions.SomethingWentWrongException
 
@@ -34,14 +35,15 @@ import so.codex.hawkapi.exceptions.SomethingWentWrongException
  */
 
 fun Error.convert(): BaseHttpException =
-    customAttributes().let {
+    customAttributes.let {
         return if (it.containsKey("extensions")) {
             when ((it["extensions"] as LinkedHashMap<String, *>)["code"] as String) {
                 "ACCESS_TOKEN_EXPIRED_ERROR" -> AccessTokenExpiredException()
-                else -> BaseHttpException(this.message())
+                "INTERNAL_SERVER_ERROR" -> InternalServerErrorException()
+                else -> BaseHttpException(this.message)
             }
         } else
-            BaseHttpException(this.message())
+            BaseHttpException(this.message)
     }
 
 
@@ -51,7 +53,7 @@ fun Error.convert(): BaseHttpException =
  */
 fun List<Error>.hasTokenExpiredError(): Boolean {
     return find { error ->
-        error.customAttributes().let { attributes ->
+        error.customAttributes.let { attributes ->
             val extensions = attributes["extensions"]
             if (extensions is LinkedHashMap<*, *> && extensions.containsKey("code")) {
                 extensions["code"]!! == "ACCESS_TOKEN_EXPIRED_ERROR"

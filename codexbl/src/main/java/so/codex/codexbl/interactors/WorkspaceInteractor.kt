@@ -8,6 +8,7 @@ import org.koin.core.inject
 import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.providers.workspaces.WorkspaceProvider
+import so.codex.hawkapi.exceptions.InternalServerErrorException
 import so.codex.sourceinterfaces.IWorkspaceApi
 
 /**
@@ -47,6 +48,13 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
                     }
                 )
             }.toList()
+            .onErrorResumeNext {
+                if (it is InternalServerErrorException) {
+                    Single.just(emptyList())
+                } else {
+                    Single.error(it)
+                }
+            }
     }
 
     override fun selectWorkspace(id: String) {

@@ -1,5 +1,6 @@
 package so.codex.codexbl.repository
 
+import android.util.Log
 import com.jakewharton.rxrelay3.BehaviorRelay
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -29,9 +30,12 @@ class WorkspaceRepository(
                 }
                 else -> Single.error(UnknownWorkspaceEvent())
             }
-        }.subscribe {
+        }.subscribe({
             subject.accept(it)
-        }
+        }, {
+            Log.e("WorkspaceProvider", "error ${it::class.java.simpleName}")
+            it.printStackTrace()
+        })
     }
 
     override fun refresh() {
