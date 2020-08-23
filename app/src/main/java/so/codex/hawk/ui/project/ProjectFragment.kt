@@ -51,6 +51,9 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         textListener = this
     )
 
+    /**
+     * Adapter that contain all project items for showing
+     */
     private val adapter = ProjectsItemsAdapter()
 
     /**

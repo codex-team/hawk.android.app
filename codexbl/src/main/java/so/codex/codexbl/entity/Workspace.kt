@@ -21,6 +21,9 @@ data class Workspace(
     val projects: List<Project> = listOf()
 ) : Parcelable {
     companion object {
+        /**
+         * Default value that representation empty workspace
+         */
         val DEFAULT_WORKSPACE = Workspace()
     }
 }

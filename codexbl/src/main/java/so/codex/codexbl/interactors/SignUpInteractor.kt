@@ -6,6 +6,7 @@ import so.codex.sourceinterfaces.entity.SignUpEntity
 
 /**
  * The Interactor with implementation methods from [ISignUpInteractor] for communication with API.
+ * @param authApi Used for sending authorization information for sign up in system
  * @author Shiplayer
  */
 class SignUpInteractor(private val authApi: IAuthApi) : ISignUpInteractor {

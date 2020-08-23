@@ -147,6 +147,11 @@ class UserTokenProviderImpl(
         tokenUpdatePublisher.accept(userToken.refreshToken)
     }
 
+    /**
+     * Retry observable if throwable is occurred, and this throwable is [AccessTokenExpiredException],
+     * update token and save it in storage
+     * @return [ObservableTransformer] that can handling if need to refresh token
+     */
     override fun <U> refreshToken(): ObservableTransformer<U, U> {
         return ObservableTransformer { transformer ->
             var first = false
@@ -167,6 +172,11 @@ class UserTokenProviderImpl(
         }
     }
 
+    /**
+     * Retry single if throwable is occurred, and this throwable is [AccessTokenExpiredException],
+     * update token and save it in storage
+     * @return [SingleTransformer] that can handling if need to refresh token
+     */
     override fun <U> refreshTokenSingle(): SingleTransformer<U, U> {
         return SingleTransformer { transformer ->
             transformer.retryWhen { errors ->

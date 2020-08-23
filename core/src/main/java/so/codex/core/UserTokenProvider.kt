@@ -33,7 +33,16 @@ interface UserTokenProvider {
      */
     fun updateToken(userToken: UserToken)
 
+
+    /**
+     * Method for refreshing token if it expired
+     * @return [ObservableTransformer] that can handling if need to refresh token
+     */
     fun <U> refreshToken(): ObservableTransformer<U, U>
 
+    /**
+     * Method for refreshing token if it expired
+     * @return [SingleTransformer] that can handling if need to refresh token
+     */
     fun <U> refreshTokenSingle(): SingleTransformer<U, U>
 }

@@ -12,13 +12,28 @@ import so.codex.sourceinterfaces.IWorkspaceApi
 import so.codex.sourceinterfaces.entity.WorkspaceEntity
 import so.codex.sourceinterfaces.response.WorkspaceResponse
 
+/**
+ * For provide information about repository from API
+ * @param workspaceApi interface for interaction of API, need for getting information of workspaces
+ * @param userTokenProvider used for get access token and refresh token, if it need
+ */
 class WorkspaceRepository(
     private val workspaceApi: IWorkspaceApi,
     private val userTokenProvider: UserTokenProvider
 ) : SourceRepository<WorkspaceResponseDao> {
+    /**
+     * Event for handing actions
+     */
     private val eventSubject = PublishSubject.create<WorkspaceEvent>()
+
+    /**
+     * Subject that contain actual information from api
+     */
     private val subject = BehaviorRelay.create<WorkspaceResponseDao>()
 
+    /**
+     * Subscribe on event and handle action
+     */
     init {
         eventSubject.flatMapSingle { event ->
             when (event) {
@@ -42,6 +57,10 @@ class WorkspaceRepository(
         eventSubject.onNext(WorkspaceEvent.Refresh)
     }
 
+    /**
+     * Update only selected workspace by [id]
+     * @param id of [WorkspaceEntity]
+     */
     fun updateWorkspaceById(id: String) {
         eventSubject.onNext(WorkspaceEvent.UpdateWorkspace(id))
     }
@@ -53,11 +72,24 @@ class WorkspaceRepository(
         return subject.hide()
     }
 
-
+    /**
+     * Throwable if we cannot handle current [WorkspaceEvent]
+     */
     private class UnknownWorkspaceEvent() : Throwable()
 
+    /**
+     * Event for handling actions
+     */
     private sealed class WorkspaceEvent {
+        /**
+         * Refresh all information about [WorkspaceEntity]
+         */
         object Refresh : WorkspaceEvent()
+
+        /**
+         * Update selected [WorkspaceEntity] by [id]
+         * @param id of [WorkspaceEntity]
+         */
         data class UpdateWorkspace(val id: String) : WorkspaceEvent()
     }
 }

@@ -31,6 +31,9 @@ interface IProjectView : IReactiveBaseView<IProjectView.ProjectViewModel, IProje
          */
         class ClickOnProject(val id: String? = null) : UiEvent()
 
+        /**
+         * Event for updating data on screen
+         */
         object Refresh : UiEvent()
     }
 }

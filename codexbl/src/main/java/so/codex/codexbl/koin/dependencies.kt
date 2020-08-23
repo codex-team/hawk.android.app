@@ -30,7 +30,7 @@ import so.codex.core.UserTokenProvider
  * Module that need on authorization scope
  */
 val authInteractorsModule = module {
-    factory<ISignInInteractor> { SignInInteractor(get()) }
+    factory<ISignInInteractor> { SignInInteractor(get(), get()) }
     factory<ISignUpInteractor> { SignUpInteractor(get()) }
     factory<IUserInteractor> { UserInteractor() }
 }
@@ -52,8 +52,7 @@ val mainActivityInteractorsModule = module {
 }
 
 /**
- * Provide storage or other providers
- * Предоставляют какое-то хранилище для какой-то информации
+ * Provide all information for current type of providers
  */
 val providersModule = module {
     single<UserTokenProvider> { UserTokenProviderImpl(get(), get()) }
@@ -70,6 +69,9 @@ val providersModule = module {
     }
 }
 
+/**
+ * Storage and sources that can provide information from your own sources
+ */
 val repositoriesModule = module {
     single<SourceRepository<WorkspaceResponseDao>>(qualifier("workspace_api")) {
         WorkspaceRepository(get(), get())

@@ -5,10 +5,16 @@ import org.koin.core.inject
 import so.codex.codexbl.base.ReactiveBasePresenter
 import so.codex.codexbl.interactors.projects.IProjectInteractor
 
+/**
+ * Class for handling data from business and preparing for display
+ */
 class ProjectPresenter :
     ReactiveBasePresenter<IProjectView, IProjectView.ProjectViewModel, IProjectView.UiEvent>(),
     KoinComponent {
 
+    /**
+     * Interactor used for getting all projects for showing on screen
+     */
     private val interactor: IProjectInteractor by inject()
 
     override fun onAttach() {

@@ -6,12 +6,24 @@ import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.providers.workspaces.WorkspaceProvider
 
+/**
+ * Provide all information about projects
+ * @param workspaceProvider provide information about all workspaces or current selected workspace
+ */
 class ProjectProvider(private val workspaceProvider: WorkspaceProvider) {
 
+    /**
+     * Need to refresh projects.
+     */
     fun refresh() {
         workspaceProvider.refresh()
     }
 
+    /**
+     * Get projects, if we have selected Workspace, then return all projects that contains in
+     * selected workspace else get all projects
+     * @return Stream of list of projects
+     */
     fun getProjects(): Observable<List<Project>> {
         return workspaceProvider.getSelectedWorkspaceObservable()
             .switchMap { workspace ->

@@ -7,7 +7,6 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
-import so.codex.codexbl.providers.workspaces.WorkspaceProvider
 import so.codex.hawkapi.exceptions.InternalServerErrorException
 import so.codex.sourceinterfaces.IWorkspaceApi
 
@@ -21,7 +20,6 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
      * Workspace
      */
     private val api: IWorkspaceApi by inject()
-    private val provider: WorkspaceProvider by inject()
 
     /**
      * Send request to get workspace
