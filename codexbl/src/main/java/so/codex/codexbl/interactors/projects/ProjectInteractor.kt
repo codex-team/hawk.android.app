@@ -1,14 +1,16 @@
 package so.codex.codexbl.interactors.projects
 
-import so.codex.codexbl.interactors.RefreshableInteractor
+import io.reactivex.rxjava3.core.Observable
+import so.codex.codexbl.entity.Project
+import so.codex.codexbl.providers.projects.ProjectProvider
 
-class ProjectInteractor : RefreshableInteractor(), IProjectInteractor {
+class ProjectInteractor(private val projectProvider: ProjectProvider) : IProjectInteractor {
 
-    override fun getProjects() {
-
+    override fun getProjects(): Observable<List<Project>> {
+        return projectProvider.getProjects()
     }
 
     override fun refresh() {
-        TODO("Not yet implemented")
+        projectProvider
     }
 }

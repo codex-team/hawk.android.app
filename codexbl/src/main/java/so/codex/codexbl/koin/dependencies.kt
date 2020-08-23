@@ -19,6 +19,7 @@ import so.codex.codexbl.interactors.WorkspaceInteractor
 import so.codex.codexbl.interactors.projects.IProjectInteractor
 import so.codex.codexbl.interactors.projects.ProjectInteractor
 import so.codex.codexbl.providers.UserTokenProviderImpl
+import so.codex.codexbl.providers.projects.ProjectProvider
 import so.codex.codexbl.providers.workspaces.WorkspaceProvider
 import so.codex.codexbl.repository.WorkspaceRepository
 import so.codex.codexbl.repository.dao.WorkspaceResponseDao
@@ -40,7 +41,7 @@ val authInteractorsModule = module {
 val interactorsModule = module {
     factory<IWorkspaceInteractor> { WorkspaceInteractor() }
     factory<IProfileInteractor> { ProfileInteractor(get()) }
-    factory<IProjectInteractor> { ProjectInteractor() }
+    factory<IProjectInteractor> { ProjectInteractor(get()) }
 }
 
 /**
@@ -60,6 +61,11 @@ val providersModule = module {
         WorkspaceProvider(
             get(qualifier("workspace_cache")),
             get(qualifier("workspace_api"))
+        )
+    }
+    single {
+        ProjectProvider(
+            get()
         )
     }
 }

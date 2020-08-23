@@ -76,6 +76,11 @@ class GarageActivity : AuthorizedSingleFragmentActivity(), CanChangeToolbar, IGa
         replaceFragment(ProjectFragment.instance(null))
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.load()
+    }
+
     /**
      * Shows workspaces in Drawer
      * @param workspaces for showing them in Drawer

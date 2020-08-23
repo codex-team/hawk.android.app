@@ -20,13 +20,15 @@ class WorkspaceRepository(
 
     init {
         eventSubject.flatMapSingle { event ->
-            if (event is WorkspaceEvent.Refresh) {
-                workspaceApi.getFullWorkspace(userTokenProvider.getToken().accessToken)
-                    .compose(userTokenProvider.refreshToken<WorkspaceResponse<WorkspaceEntity>>())
-                    .toList()
-                    .map(::WorkspaceResponseDao)
-            } else
-                Single.error(UnknownWorkspaceEvent())
+            when (event) {
+                is WorkspaceEvent.Refresh -> {
+                    workspaceApi.getFullWorkspace(userTokenProvider.getToken().accessToken)
+                        .compose(userTokenProvider.refreshToken<WorkspaceResponse<WorkspaceEntity>>())
+                        .toList()
+                        .map(::WorkspaceResponseDao)
+                }
+                else -> Single.error(UnknownWorkspaceEvent())
+            }
         }.subscribe {
             subject.accept(it)
         }
@@ -36,7 +38,14 @@ class WorkspaceRepository(
         eventSubject.onNext(WorkspaceEvent.Refresh)
     }
 
+    fun updateWorkspaceById(id: String) {
+        eventSubject.onNext(WorkspaceEvent.UpdateWorkspace(id))
+    }
+
     override fun getObservable(): Observable<WorkspaceResponseDao> {
+        if (!subject.hasValue()) {
+            refresh()
+        }
         return subject.hide()
     }
 
@@ -45,5 +54,6 @@ class WorkspaceRepository(
 
     private sealed class WorkspaceEvent {
         object Refresh : WorkspaceEvent()
+        data class UpdateWorkspace(val id: String) : WorkspaceEvent()
     }
 }

@@ -11,6 +11,19 @@ class ProjectPresenter :
 
     private val interactor: IProjectInteractor by inject()
 
+    override fun onAttach() {
+        super.onAttach()
+        interactor.getProjects().subscribe {
+
+            view?.showUi(
+                IProjectView.ProjectViewModel(
+                    it,
+                    false
+                )
+            )
+        }
+    }
+
     override fun submitUiEvent(event: IProjectView.UiEvent) {
         if (event is IProjectView.UiEvent.Refresh) {
             interactor.refresh()

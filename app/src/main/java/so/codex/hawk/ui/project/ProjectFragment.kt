@@ -1,6 +1,7 @@
 package so.codex.hawk.ui.project
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -129,7 +130,7 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         presenter.attached(this)
 
         rv_refresh_layout.setOnRefreshListener {
-            presenter
+            presenter.submitUiEvent(IProjectView.UiEvent.Refresh)
             //presenter.loadAllWorkspaces()
         }
 
@@ -190,6 +191,7 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
     }
 
     override fun showUi(model: IProjectView.ProjectViewModel) {
+        Log.i("ProjectFragment", "show ui models ${model.projects}")
         rv_refresh_layout.isRefreshing = model.showLoader
         adapter.data = model.projects
     }
