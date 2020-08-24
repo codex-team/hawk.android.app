@@ -6,12 +6,14 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import so.codex.codexbl.koin.apiModule
-import so.codex.codexbl.koin.authApiModule
 import so.codex.codexbl.koin.authInteractorsModule
 import so.codex.codexbl.koin.interactorsModule
 import so.codex.codexbl.koin.providersModule
+import so.codex.codexbl.koin.repositoriesModule
 import so.codex.core.koin.coreModule
+import so.codex.hawkapi.koin.authApiModule
+import so.codex.hawkapi.koin.coreNetworkModule
+import so.codex.hawkapi.koin.networkModule
 
 /**
  * Class for initialized tree of dependencies.
@@ -22,7 +24,8 @@ class CodexKoinComponent {
 
         // Dependencies all time
         val globalModuleSet = setOf(
-            coreModule
+            coreModule,
+            coreNetworkModule
         )
 
         // Dependencies only on login scope
@@ -33,9 +36,10 @@ class CodexKoinComponent {
 
         // Dependencies on Authorization scope
         val authUserModulesSet = globalModuleSet + setOf(
-            apiModule,
+            networkModule,
             interactorsModule,
-            providersModule
+            providersModule,
+            repositoriesModule
         )
 
         //

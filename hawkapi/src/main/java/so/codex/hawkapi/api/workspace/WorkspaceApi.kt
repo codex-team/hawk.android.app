@@ -1,8 +1,7 @@
 package so.codex.hawkapi.api.workspace
 
-import io.reactivex.Observable
-import so.codex.hawkapi.WorkspaceApiMethodImpl
-import so.codex.hawkapi.api.CoreApi
+import io.reactivex.rxjava3.core.Observable
+import so.codex.core.UserTokenProvider
 import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IWorkspaceApi
 import so.codex.sourceinterfaces.entity.FullWorkspaceEntity
@@ -17,16 +16,10 @@ import so.codex.sourceinterfaces.response.WorkspaceResponse
  * @constructor Have private constructor for initialize singleton instance of class
  * @author Shiplayer
  */
-class WorkspaceApi private constructor(private val service: WorkspacesApiMethods) : IWorkspaceApi {
-    companion object {
-        /**
-         * Singleton of WorkspaceApi
-         */
-        val instance by lazy {
-            WorkspaceApi(WorkspaceApiMethodImpl(CoreApi.apollo))
-        }
-    }
-
+class WorkspaceApi internal constructor(
+    private val service: WorkspacesApiMethods,
+    private val userTokenProvider: UserTokenProvider
+) : IWorkspaceApi {
     /**
      * Documentation for getting only information about workspace
      */
@@ -53,7 +46,7 @@ class WorkspaceApi private constructor(private val service: WorkspacesApiMethods
      * @param token User access token
      * @return [FullWorkspaceEntity] wrapped in [WorkspaceResponse]
      */
-    override fun getFullWorkspace(token: String): Observable<WorkspaceResponse<FullWorkspaceEntity>> {
+    override fun getFullWorkspace(token: String): Observable<out WorkspaceResponse<FullWorkspaceEntity>> {
         return service.getWorkspaces(token).subscribeOnIO()
     }
 }

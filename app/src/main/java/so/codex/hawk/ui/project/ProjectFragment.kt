@@ -1,18 +1,19 @@
 package so.codex.hawk.ui.project
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.rxjava3.core.Observable
 import kotlinx.android.synthetic.main.fragment_project.fa_exit
 import kotlinx.android.synthetic.main.fragment_project.rv_project_list
 import kotlinx.android.synthetic.main.fragment_project.rv_refresh_layout
 import kotlinx.android.synthetic.main.fragment_project.tv_empty_workspace
 import so.codex.codexbl.entity.Workspace
-import so.codex.codexbl.presenter.projects.ProjectPresenter
-import so.codex.codexbl.view.projects.IProjectView
+import so.codex.codexbl.view.base.IReactiveBaseView
 import so.codex.codexbl.view.workspace.IWorkspaceView
 import so.codex.hawk.R
 import so.codex.hawk.SelectedWorkspaceListener
@@ -51,29 +52,15 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
     )
 
     /**
+     * Adapter that contain all project items for showing
+     */
+    private val adapter = ProjectsItemsAdapter()
+
+    /**
      * Initialize presenter of workspace
      */
     private val presenter by lazy {
         ProjectPresenter()
-    }
-
-    /**
-     * Show all projects in [Workspace]
-     * @param workspaces list of [Workspace] that contain projects
-     */
-    fun showProjects(workspaces: List<Workspace>) {
-        if (rv_project_list.visibility == View.GONE) {
-            rv_project_list.visibility = View.VISIBLE
-            tv_empty_workspace.visibility = View.GONE
-        }
-        val adapter = rv_project_list.adapter
-        if (adapter is ProjectsItemsAdapter) {
-            adapter.data =
-                workspaces.fold(mutableListOf()) { list, w ->
-                    list.addAll(w.projects)
-                    list
-                }
-        }
     }
 
     /**
@@ -127,11 +114,11 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         presenter.attached(this)
 
         rv_refresh_layout.setOnRefreshListener {
-            //presenter.loadAllWorkspaces()
+            presenter.submitUiEvent(IProjectView.UiEvent.Refresh)
         }
 
         rv_project_list.apply {
-            adapter = ProjectsItemsAdapter()
+            adapter = this@ProjectFragment.adapter
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }
@@ -170,19 +157,27 @@ class ProjectFragment : BaseFragment(), IProjectView, SelectedWorkspaceListener,
         presenter.detached()
     }
 
-    /**
-     * Unsubscribe of all RxJava streams
-     */
-    override fun onDestroy() {
-        super.onDestroy()
-        //presenter.unsubscribe()
-    }
-
     override fun select(workspace: Workspace) {
         TODO("Not yet implemented")
     }
 
     override fun searchText(text: String) {
         //presenter.loadAllWorkspaces()
+    }
+
+    override fun showUi(model: IProjectView.ProjectViewModel) {
+        Log.i("ProjectFragment", "show ui models ${model.projects}")
+        rv_refresh_layout.isRefreshing = model.showLoader
+        adapter.data = model.projects
+        adapter.notifyDataSetChanged()
+        if (!model.projects.isEmpty()) {
+            tv_empty_workspace.visibility = View.VISIBLE
+        } else {
+            tv_empty_workspace.visibility = View.GONE
+        }
+    }
+
+    override fun observeUiEvent(): Observable<IReactiveBaseView.UiEvent> {
+        return Observable.empty()
     }
 }

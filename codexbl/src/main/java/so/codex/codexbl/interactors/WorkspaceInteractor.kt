@@ -1,12 +1,13 @@
 package so.codex.codexbl.interactors
 
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import so.codex.codexbl.entity.Project
 import so.codex.codexbl.entity.Workspace
+import so.codex.hawkapi.exceptions.InternalServerErrorException
 import so.codex.sourceinterfaces.IWorkspaceApi
 
 /**
@@ -45,6 +46,13 @@ class WorkspaceInteractor : RefreshableInteractor(), IWorkspaceInteractor, KoinC
                     }
                 )
             }.toList()
+            .onErrorResumeNext {
+                if (it is InternalServerErrorException) {
+                    Single.just(emptyList())
+                } else {
+                    Single.error(it)
+                }
+            }
     }
 
     override fun selectWorkspace(id: String) {

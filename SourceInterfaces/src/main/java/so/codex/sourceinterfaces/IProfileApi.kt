@@ -1,6 +1,6 @@
 package so.codex.sourceinterfaces
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import so.codex.sourceinterfaces.response.ProfileResponse
 
 /**

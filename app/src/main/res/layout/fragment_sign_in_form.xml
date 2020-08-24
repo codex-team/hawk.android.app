@@ -64,7 +64,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="12dp"
-            app:codex_text="vladal56hack@yandex.ru"
             app:codex_title="@string/sign_in_email_address"
             app:codex_hasSpacing="false" />
 
@@ -74,7 +73,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:codex_inputType="textPassword"
-            app:codex_text="b584d40c7a26c078"
             app:codex_title="@string/sign_in_password" />
 
         <LinearLayout

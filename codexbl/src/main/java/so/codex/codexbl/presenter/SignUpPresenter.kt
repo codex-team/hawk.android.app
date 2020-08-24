@@ -1,7 +1,9 @@
 package so.codex.codexbl.presenter
 
 import android.util.Log
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import so.codex.codexbl.base.BasePresenter
 import so.codex.codexbl.interactors.SignUpInteractor
 import so.codex.codexbl.view.auth.ISignUpView
@@ -10,13 +12,11 @@ import so.codex.codexbl.view.auth.ISignUpView
  * Presentor for communication and handing events for registration new users
  * @author Shiplayer
  */
-class SignUpPresenter : BasePresenter<ISignUpView>() {
+class SignUpPresenter : BasePresenter<ISignUpView>(), KoinComponent {
     /**
      * Interactor for sending request and registration of new users
      */
-    private val signInInteractor by lazy {
-        SignUpInteractor()
-    }
+    private val signUpInteractor: SignUpInteractor by inject()
 
     /**
      * Function with checking on validation email and sending request via interactor
@@ -24,7 +24,8 @@ class SignUpPresenter : BasePresenter<ISignUpView>() {
      */
     fun submit(email: String) {
         if (email.contains("@")) {
-            compositeDisposable.of(signInInteractor.signUp(email)
+            compositeDisposable.of(
+                signUpInteractor.signUp(email)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         if (it) {
@@ -32,8 +33,8 @@ class SignUpPresenter : BasePresenter<ISignUpView>() {
                         }
                     }, {
                         view?.showErrorMessage(
-                                it?.message
-                                        ?: "Something went wrong"
+                            it?.message
+                                ?: "Something went wrong"
                         )
                     })
             )

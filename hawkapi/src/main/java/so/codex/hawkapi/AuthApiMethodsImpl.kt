@@ -1,8 +1,8 @@
 package so.codex.hawkapi
 
 import com.apollographql.apollo.ApolloClient
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import so.codex.hawkapi.api.auth.AuthApiMethods
 import so.codex.sourceinterfaces.entity.AuthEntity
 import so.codex.sourceinterfaces.entity.SignUpEntity

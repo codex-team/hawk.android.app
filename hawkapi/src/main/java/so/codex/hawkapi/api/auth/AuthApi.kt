@@ -1,9 +1,7 @@
 package so.codex.hawkapi.api.auth
 
-import io.reactivex.Observable
-import io.reactivex.Single
-import so.codex.hawkapi.AuthApiMethodsImpl
-import so.codex.hawkapi.api.CoreApi
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import so.codex.hawkapi.subscribeOnIO
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.entity.AuthEntity
@@ -15,16 +13,7 @@ import so.codex.sourceinterfaces.response.TokenResponse
  * Implementation of interface [IAuthApi]. Class is singleton with provide method for sending request.
  * @author Shiplayer
  */
-class AuthApi private constructor(private val service: AuthApiMethods) : IAuthApi {
-
-    companion object {
-        /**
-         * Get instance of class
-         */
-        val instance by lazy {
-            AuthApi(AuthApiMethodsImpl(CoreApi.apollo))
-        }
-    }
+class AuthApi internal constructor(private val service: AuthApiMethods) : IAuthApi {
 
     /**
      * Send request to sign in
@@ -32,8 +21,8 @@ class AuthApi private constructor(private val service: AuthApiMethods) : IAuthAp
      * @return Return response on request of authorization, contain access and refresh token
      */
     override fun login(auth: AuthEntity): Single<TokenResponse> =
-            service.login(auth)
-                .subscribeOnIO().map { it.login }
+        service.login(auth)
+            .subscribeOnIO().map { it.login }
 
     /**
      * Send request to sign up of new user

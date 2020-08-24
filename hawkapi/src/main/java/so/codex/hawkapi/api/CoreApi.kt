@@ -4,11 +4,9 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.CustomTypeAdapter
 import com.apollographql.apollo.api.CustomTypeValue
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import so.codex.hawkapi.SourceApi
-import so.codex.hawkapi.api.auth.AuthApi
-import so.codex.hawkapi.api.profile.ProfileApi
-import so.codex.hawkapi.api.workspace.WorkspaceApi
 import so.codex.sourceinterfaces.IAuthApi
 import so.codex.sourceinterfaces.IProfileApi
 import so.codex.sourceinterfaces.IWorkspaceApi
@@ -22,19 +20,9 @@ import java.util.Date
  * @author Shiplayer
  * @author YorkIsMine
  */
-class CoreApi private constructor() : SourceApi {
+class CoreApi private constructor() : SourceApi, KoinComponent {
     companion object {
         private const val baseUrl = "https://api.stage.hawk.so/graphql"
-
-        /**
-         * Lazy initializing apollo.
-         */
-        val apollo: ApolloClient by lazy {
-            ApolloClient.builder()
-                .serverUrl(baseUrl)
-                .okHttpClient(client)
-                .build()
-        }
 
         /**
          * For converting String to Long
@@ -59,21 +47,6 @@ class CoreApi private constructor() : SourceApi {
         }
 
         /**
-         * Lazy initializing of client with http logger and token interceptor.
-         * @see TokenInterceptor
-         */
-        private val client by lazy {
-            val interceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-
-            OkHttpClient.Builder()
-                //.addInterceptor(TokenInterceptor.instance)
-                .addInterceptor(interceptor)
-                .build()
-        }
-
-        /**
          * Singleton of CoreApi
          */
         val instance by lazy {
@@ -82,23 +55,35 @@ class CoreApi private constructor() : SourceApi {
     }
 
     /**
+     * Lazy initializing of client with http logger and token interceptor.
+     * @see TokenInterceptor
+     */
+    private val client: OkHttpClient by inject()
+
+
+    /**
+     * Lazy initializing apollo.
+     */
+    val apollo: ApolloClient by inject()
+
+    /**
      * Provide interface for working with Authorization.
      * @return Interface [IAuthApi], that implemented methods for sending request.
      * @see IAuthApi
      */
-    override fun getAuthApi(): IAuthApi = AuthApi.instance
+//    override fun getAuthApi(): IAuthApi = AuthApi.instance
 
     /**
      * Provide interface for working with Workspaces.
      * @return Interface [IWorkspaceApi], that implemented methods for sending request.
      * @see IWorkspaceApi
      */
-    override fun getWorkspaceApi(): IWorkspaceApi = WorkspaceApi.instance
+//    override fun getWorkspaceApi(): IWorkspaceApi = WorkspaceApi.instance
 
     /**
      * Provide interface for working with Profile.
      * @return Interface [IProfileApi], that implemented methods for sending request.
      * @see IProfileApi
      */
-    override fun getProfileApi(): IProfileApi = ProfileApi.instance
+//    override fun getProfileApi(): IProfileApi = ProfileApi.instance
 }

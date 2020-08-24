@@ -8,6 +8,6 @@ import so.codex.sourceinterfaces.entity.WorkspaceEntity
  * @see WorkspaceEntity
  * @author Shiplayer
  */
-data class WorkspaceResponse<T : WorkspaceEntity>(
+data class WorkspaceResponse<out T : WorkspaceEntity>(
     val workspaceEntity: T
 )

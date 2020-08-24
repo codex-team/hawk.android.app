@@ -1,7 +1,7 @@
 package so.codex.codexbl.interactors
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import so.codex.codexbl.entity.Workspace
 
 /**

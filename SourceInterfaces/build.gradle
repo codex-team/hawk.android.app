@@ -5,8 +5,8 @@ apply plugin: 'org.jetbrains.dokka'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava2_version"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+    implementation "io.reactivex.rxjava3:rxjava:$rxjava3_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     //implementation "com.apollographql.apollo:apollo-runtime:$apollo_version"
 }

@@ -1,6 +1,11 @@
 package so.codex.codexbl.koin
 
+import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
+import so.codex.codexbl.base.CacheRepository
+import so.codex.codexbl.base.SourceRepository
+import so.codex.codexbl.base.StorageRepository
+import so.codex.codexbl.entity.Workspace
 import so.codex.codexbl.interactors.IProfileInteractor
 import so.codex.codexbl.interactors.ISignInInteractor
 import so.codex.codexbl.interactors.ISignUpInteractor
@@ -11,33 +16,23 @@ import so.codex.codexbl.interactors.SignInInteractor
 import so.codex.codexbl.interactors.SignUpInteractor
 import so.codex.codexbl.interactors.UserInteractor
 import so.codex.codexbl.interactors.WorkspaceInteractor
+import so.codex.codexbl.interactors.projects.IProjectInteractor
+import so.codex.codexbl.interactors.projects.ProjectInteractor
 import so.codex.codexbl.providers.UserTokenProviderImpl
+import so.codex.codexbl.providers.projects.ProjectProvider
+import so.codex.codexbl.providers.workspaces.WorkspaceProvider
+import so.codex.codexbl.repository.WorkspaceRepository
+import so.codex.codexbl.repository.dao.WorkspaceResponseDao
 import so.codex.core.UserTokenProvider
-import so.codex.hawkapi.api.CoreApi
 
-/**
- * Here describe all dependencies for dependency injection
- * @author Shiplayer
- */
-
-val authApiModule = module {
-    single { CoreApi.instance.getAuthApi() }
-}
 
 /**
  * Module that need on authorization scope
  */
 val authInteractorsModule = module {
-    factory<ISignInInteractor> { SignInInteractor() }
-    factory<ISignUpInteractor> { SignUpInteractor() }
+    factory<ISignInInteractor> { SignInInteractor(get(), get()) }
+    factory<ISignUpInteractor> { SignUpInteractor(get()) }
     factory<IUserInteractor> { UserInteractor() }
-}
-
-/**
- * Modules for dependencies API classes and getting necessary information
- */
-val apiModule = module {
-    single { CoreApi.instance.getWorkspaceApi() }
 }
 
 /**
@@ -45,7 +40,8 @@ val apiModule = module {
  */
 val interactorsModule = module {
     factory<IWorkspaceInteractor> { WorkspaceInteractor() }
-    factory<IProfileInteractor> { ProfileInteractor() }
+    factory<IProfileInteractor> { ProfileInteractor(get()) }
+    factory<IProjectInteractor> { ProjectInteractor(get()) }
 }
 
 /**
@@ -56,9 +52,33 @@ val mainActivityInteractorsModule = module {
 }
 
 /**
- * Provide storage or other providers
- * Предоставляют какое-то хранилище для какой-то информации
+ * Provide all information for current type of providers
  */
 val providersModule = module {
     single<UserTokenProvider> { UserTokenProviderImpl(get(), get()) }
+    single {
+        WorkspaceProvider(
+            get(qualifier("workspace_cache")),
+            get(qualifier("workspace_api"))
+        )
+    }
+    single {
+        ProjectProvider(
+            get()
+        )
+    }
+}
+
+/**
+ * Storage and sources that can provide information from your own sources
+ */
+val repositoriesModule = module {
+    single<SourceRepository<WorkspaceResponseDao>>(qualifier("workspace_api")) {
+        WorkspaceRepository(get(), get())
+    }
+    single<StorageRepository<List<Workspace>>>(qualifier("workspace_cache")) {
+        CacheRepository(
+            emptyList()
+        )
+    }
 }
